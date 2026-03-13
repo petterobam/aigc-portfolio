@@ -1,0 +1,83 @@
+<svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <!-- Background -->
+  <rect width="960" height="420" fill="#0f1117" rx="16"/>
+
+  <!-- Title -->
+  <text x="480" y="44" text-anchor="middle" font-size="20" font-weight="bold" fill="#7dd3fc">§1 · 记忆的本质：直接获取 vs 搜索＋总结</text>
+  <line x1="40" y1="58" x2="920" y2="58" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- ===== 左侧：没有记忆 ===== -->
+  <rect x="40" y="74" width="410" height="316" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+  <!-- 标题栏 -->
+  <rect x="40" y="74" width="410" height="40" rx="12" fill="#ef444428"/>
+  <rect x="40" y="100" width="410" height="14" fill="#1e293b"/>
+  <text x="245" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#ef4444">❌  没有记忆（搜索 ＋ 总结）</text>
+
+  <!-- 节点 1 -->
+  <rect x="123" y="132" width="244" height="38" rx="8" fill="#0f2236" stroke="#3b82f6" stroke-width="1"/>
+  <text x="245" y="156" text-anchor="middle" font-size="13" fill="#93c5fd">👤 用户提问</text>
+  <!-- 箭头 -->
+  <line x1="245" y1="170" x2="245" y2="192" stroke="#475569" stroke-width="1.5"/>
+  <polygon points="245,196 240,187 250,187" fill="#475569"/>
+
+  <!-- 节点 2 -->
+  <rect x="83" y="196" width="324" height="38" rx="8" fill="#0f2236" stroke="#3b82f6" stroke-width="1"/>
+  <text x="245" y="220" text-anchor="middle" font-size="13" fill="#93c5fd">🔍 检索所有相关资料</text>
+  <!-- 箭头 -->
+  <line x1="245" y1="234" x2="245" y2="256" stroke="#475569" stroke-width="1.5"/>
+  <polygon points="245,260 240,251 250,251" fill="#475569"/>
+
+  <!-- 节点 3 -->
+  <rect x="83" y="260" width="324" height="38" rx="8" fill="#0f2236" stroke="#3b82f6" stroke-width="1"/>
+  <text x="245" y="284" text-anchor="middle" font-size="13" fill="#93c5fd">⚙️  提取 ＋ 过滤 ＋ 总结</text>
+  <!-- 箭头 -->
+  <line x1="245" y1="298" x2="245" y2="320" stroke="#475569" stroke-width="1.5"/>
+  <polygon points="245,324 240,315 250,315" fill="#475569"/>
+
+  <!-- 节点 4 （虚线，无法复用）-->
+  <rect x="123" y="324" width="244" height="38" rx="8" fill="#18181b" stroke="#52525b" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="245" y="348" text-anchor="middle" font-size="13" fill="#71717a">返回答案（无法复用）</text>
+
+  <!-- 底部标签 -->
+  <rect x="83" y="372" width="324" height="28" rx="6" fill="#ef444418" stroke="#ef4444" stroke-width="1"/>
+  <text x="245" y="391" text-anchor="middle" font-size="12" fill="#fca5a5">每次提问都要重新走一遍全流程</text>
+
+  <!-- ===== 右侧：有记忆 ===== -->
+  <rect x="510" y="74" width="410" height="316" rx="12" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
+  <!-- 标题栏 -->
+  <rect x="510" y="74" width="410" height="40" rx="12" fill="#22c55e28"/>
+  <rect x="510" y="100" width="410" height="14" fill="#1e293b"/>
+  <text x="715" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#22c55e">✅  有记忆（直接获取）</text>
+
+  <!-- 节点 1 -->
+  <rect x="593" y="132" width="244" height="38" rx="8" fill="#0d2e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="715" y="156" text-anchor="middle" font-size="13" fill="#86efac">👤 用户提问</text>
+  <!-- 箭头 -->
+  <line x1="715" y1="170" x2="715" y2="192" stroke="#475569" stroke-width="1.5"/>
+  <polygon points="715,196 710,187 720,187" fill="#475569"/>
+
+  <!-- 节点 2 -->
+  <rect x="553" y="196" width="324" height="38" rx="8" fill="#0d2e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="715" y="220" text-anchor="middle" font-size="13" fill="#86efac">⚡ 直接命中记忆库</text>
+  <!-- 箭头 -->
+  <line x1="715" y1="234" x2="715" y2="290" stroke="#475569" stroke-width="1.5"/>
+  <polygon points="715,294 710,285 720,285" fill="#475569"/>
+
+  <!-- 空白占位，让布局对称 -->
+  <text x="715" y="272" text-anchor="middle" font-size="12" fill="#166534">（无中间过程）</text>
+
+  <!-- 节点 3 （高亮答案）-->
+  <rect x="553" y="294" width="324" height="38" rx="8" fill="#14532d" stroke="#4ade80" stroke-width="2"/>
+  <text x="715" y="318" text-anchor="middle" font-size="14" font-weight="bold" fill="#bbf7d0">精准返回答案 ⚡</text>
+
+  <!-- 底部标签 -->
+  <rect x="553" y="372" width="324" height="28" rx="6" fill="#22c55e18" stroke="#22c55e" stroke-width="1"/>
+  <text x="715" y="391" text-anchor="middle" font-size="12" fill="#86efac">相同问题永远 O(1) 直接命中</text>
+
+  <!-- ===== 中间结论气泡 ===== -->
+  <!-- VS 分隔 -->
+  <circle cx="480" cy="232" r="28" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="480" y="237" text-anchor="middle" font-size="14" font-weight="bold" fill="#64748b">VS</text>
+
+</svg>

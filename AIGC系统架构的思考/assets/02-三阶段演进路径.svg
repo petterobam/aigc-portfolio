@@ -1,0 +1,62 @@
+<svg viewBox="0 0 1100 320" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <!-- Background -->
+  <rect width="1100" height="320" fill="#0f1117"/>
+
+  <!-- Title -->
+  <text x="550" y="36" text-anchor="middle" font-size="17" font-weight="bold" fill="#7dd3fc">记忆系统 · 三阶段演进路径</text>
+  <line x1="40" y1="50" x2="1060" y2="50" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- ── 阶段一 ── -->
+  <rect x="40" y="68" width="290" height="210" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="40" y="68" width="290" height="40" rx="12" fill="#f59e0b22"/>
+  <!-- top label -->
+  <text x="185" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#f59e0b">阶段一 · 当前可用</text>
+  <text x="185" y="109" text-anchor="middle" font-size="11" fill="#78716c">搜索 + 总结</text>
+  <!-- bullets -->
+  <text x="64" y="136" font-size="12" fill="#d4d4d8">• 精确检索匹配内容</text>
+  <text x="64" y="158" font-size="12" fill="#d4d4d8">• LLM 高质量总结输出</text>
+  <text x="64" y="180" font-size="12" fill="#d4d4d8">• 每次提问重复计算</text>
+  <text x="64" y="202" font-size="12" fill="#d4d4d8">• 无法积累与复用结果</text>
+  <!-- status badge -->
+  <rect x="64" y="220" width="202" height="28" rx="6" fill="#f59e0b18" stroke="#f59e0b" stroke-width="1"/>
+  <text x="165" y="239" text-anchor="middle" font-size="11" fill="#fbbf24">可用，但效率低、无记忆</text>
+
+  <!-- arrow 1→2 -->
+  <line x1="348" y1="173" x2="388" y2="173" stroke="#475569" stroke-width="2"/>
+  <polygon points="388,167 400,173 388,179" fill="#475569"/>
+  <text x="374" y="163" text-anchor="middle" font-size="10" fill="#475569">迭代</text>
+
+  <!-- ── 阶段二 ── -->
+  <rect x="405" y="68" width="290" height="210" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="405" y="68" width="290" height="40" rx="12" fill="#3b82f622"/>
+  <text x="550" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#3b82f6">阶段二 · 近期可行</text>
+  <text x="550" y="109" text-anchor="middle" font-size="11" fill="#78716c">问答映射表 + 增量学习</text>
+  <text x="429" y="136" font-size="12" fill="#d4d4d8">• 命中直接返回答案</text>
+  <text x="429" y="158" font-size="12" fill="#d4d4d8">• 未命中走搜索 + 总结</text>
+  <text x="429" y="180" font-size="12" fill="#d4d4d8">• 结果增量写入映射表</text>
+  <text x="429" y="202" font-size="12" fill="#d4d4d8">• 发散问题预生成答案</text>
+  <rect x="429" y="220" width="202" height="28" rx="6" fill="#3b82f618" stroke="#3b82f6" stroke-width="1"/>
+  <text x="530" y="239" text-anchor="middle" font-size="11" fill="#60a5fa">越用越准，逐步逼近记忆</text>
+
+  <!-- arrow 2→3 -->
+  <line x1="713" y1="173" x2="753" y2="173" stroke="#475569" stroke-width="2"/>
+  <polygon points="753,167 765,173 753,179" fill="#475569"/>
+  <text x="739" y="163" text-anchor="middle" font-size="10" fill="#475569">突破</text>
+
+  <!-- ── 阶段三 ── -->
+  <rect x="770" y="68" width="290" height="210" rx="12" fill="#1e293b" stroke="#a855f7" stroke-width="1.5"/>
+  <rect x="770" y="68" width="290" height="40" rx="12" fill="#a855f722"/>
+  <text x="915" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#a855f7">阶段三 · 终极形态</text>
+  <text x="915" y="109" text-anchor="middle" font-size="11" fill="#78716c">实时自迭代大模型</text>
+  <text x="794" y="136" font-size="12" fill="#d4d4d8">• 接收数据即实时训练</text>
+  <text x="794" y="158" font-size="12" fill="#d4d4d8">• 权重即记忆，无需检索</text>
+  <text x="794" y="180" font-size="12" fill="#d4d4d8">• 通用模型与记忆模型合一</text>
+  <text x="794" y="202" font-size="12" fill="#d4d4d8">• 机器自主思考与进化</text>
+  <rect x="794" y="220" width="242" height="28" rx="6" fill="#a855f718" stroke="#a855f7" stroke-width="1"/>
+  <text x="915" y="239" text-anchor="middle" font-size="11" fill="#c084fc">机器拥有灵魂，社会大变革</text>
+
+  <!-- bottom note -->
+  <text x="550" y="298" text-anchor="middle" font-size="11" fill="#334155">当前技术限制：训练周期以天/月/年计，无法边输入边实时完成训练 — 终极形态有待技术突破</text>
+
+</svg>

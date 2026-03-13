@@ -1,0 +1,122 @@
+<svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <defs>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#f97316"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="620" fill="#0f1117"/>
+
+  <!-- Title -->
+  <text x="550" y="42" text-anchor="middle" font-size="20" font-weight="bold" fill="#e2e8f0">§4 · 预处理机制 + Skill 自迭代飞轮</text>
+  <line x1="60" y1="58" x2="1040" y2="58" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- ===================== LEFT: 预处理流程 ===================== -->
+  <rect x="60" y="76" width="460" height="506" rx="14" fill="#0d1f33" stroke="#06b6d4" stroke-width="1.5"/>
+  <!-- header -->
+  <rect x="60" y="76" width="460" height="44" rx="14" fill="#06b6d418"/>
+  <rect x="60" y="96" width="460" height="24" fill="#06b6d418"/>
+  <text x="290" y="104" text-anchor="middle" font-size="15" font-weight="bold" fill="#06b6d4">预处理流程（数据入库）</text>
+
+  <!-- Step 1 -->
+  <rect x="100" y="140" width="380" height="52" rx="10" fill="#0c2744" stroke="#0ea5e9" stroke-width="1.2"/>
+  <text x="290" y="161" text-anchor="middle" font-size="12" fill="#7dd3fc" font-weight="bold">📥 原始数据输入</text>
+  <text x="290" y="180" text-anchor="middle" font-size="11" fill="#64748b">小说章节 / 角色设定 / 知识库文档</text>
+
+  <!-- Arrow -->
+  <line x1="290" y1="192" x2="290" y2="216" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+
+  <!-- Step 2 -->
+  <rect x="100" y="220" width="380" height="52" rx="10" fill="#0c2744" stroke="#0ea5e9" stroke-width="1.2"/>
+  <text x="290" y="241" text-anchor="middle" font-size="12" fill="#7dd3fc" font-weight="bold">🤖 LLM 发散生成问题</text>
+  <text x="290" y="260" text-anchor="middle" font-size="11" fill="#64748b">单批生成 1,000 ~ 10,000 条不重复相关问题</text>
+
+  <!-- Arrow -->
+  <line x1="290" y1="272" x2="290" y2="296" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+
+  <!-- Step 3 -->
+  <rect x="100" y="300" width="380" height="52" rx="10" fill="#0c2744" stroke="#0ea5e9" stroke-width="1.2"/>
+  <text x="290" y="321" text-anchor="middle" font-size="12" fill="#7dd3fc" font-weight="bold">✍️ LLM 生成高质量答案</text>
+  <text x="290" y="340" text-anchor="middle" font-size="11" fill="#64748b">为每个问题生成精准、完整的答案摘要</text>
+
+  <!-- Arrow -->
+  <line x1="290" y1="352" x2="290" y2="376" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+
+  <!-- Step 4 -->
+  <rect x="100" y="380" width="380" height="52" rx="10" fill="#0c2744" stroke="#0ea5e9" stroke-width="1.2"/>
+  <text x="290" y="401" text-anchor="middle" font-size="12" fill="#7dd3fc" font-weight="bold">⚖️ 打分 + 排序 + 去重 + 筛选</text>
+  <text x="290" y="420" text-anchor="middle" font-size="11" fill="#64748b">保留高置信度、高覆盖率的优质问答对</text>
+
+  <!-- Arrow -->
+  <line x1="290" y1="432" x2="290" y2="456" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#arr-cyan)"/>
+
+  <!-- Step 5: 写入记忆库 -->
+  <rect x="100" y="460" width="380" height="52" rx="10" fill="#14293d" stroke="#22c55e" stroke-width="1.8"/>
+  <text x="290" y="481" text-anchor="middle" font-size="12" fill="#86efac" font-weight="bold">🗄️ 写入问答映射表（记忆库）</text>
+  <text x="290" y="500" text-anchor="middle" font-size="11" fill="#64748b">结构化存储，支持快速命中检索</text>
+
+  <!-- 覆盖率标注 -->
+  <rect x="100" y="530" width="380" height="36" rx="8" fill="#0f1f0f" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="290" y="553" text-anchor="middle" font-size="11" fill="#4ade80">✅ 预处理完成后，常见问题可直接命中，无需实时搜索</text>
+
+  <!-- ===================== RIGHT: Skill 自迭代飞轮 ===================== -->
+  <rect x="580" y="76" width="460" height="506" rx="14" fill="#1a0e2e" stroke="#f97316" stroke-width="1.5"/>
+  <!-- header -->
+  <rect x="580" y="76" width="460" height="44" rx="14" fill="#f9731618"/>
+  <rect x="580" y="96" width="460" height="24" fill="#f9731618"/>
+  <text x="810" y="104" text-anchor="middle" font-size="15" font-weight="bold" fill="#f97316">Skill 自迭代飞轮</text>
+
+  <!-- 飞轮中心 -->
+  <circle cx="810" cy="340" r="72" fill="#1a0e2e" stroke="#f97316" stroke-width="2" stroke-dasharray="7,4"/>
+  <text x="810" y="332" text-anchor="middle" font-size="26" fill="#f97316">🔄</text>
+  <text x="810" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#fb923c">越用越准</text>
+  <text x="810" y="374" text-anchor="middle" font-size="11" fill="#78350f">正向飞轮</text>
+
+  <!-- 飞轮四个节点 -->
+  <!-- TOP: 收集未命中问题 -->
+  <rect x="670" y="136" width="280" height="52" rx="10" fill="#2d1a0e" stroke="#f97316" stroke-width="1.2"/>
+  <text x="810" y="157" text-anchor="middle" font-size="12" fill="#fdba74" font-weight="bold">📬 收集未命中问题</text>
+  <text x="810" y="176" text-anchor="middle" font-size="11" fill="#64748b">用户真实提问中未被记忆库覆盖的 case</text>
+
+  <!-- RIGHT: 分析提问模式 -->
+  <rect x="920" y="300" width="100" height="80" rx="10" fill="#2d1a0e" stroke="#f97316" stroke-width="1.2"/>
+  <text x="970" y="326" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">🔬 分析</text>
+  <text x="970" y="344" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">提问</text>
+  <text x="970" y="362" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">模式</text>
+
+  <!-- BOTTOM: 优化问题生成Skill -->
+  <rect x="640" y="492" width="340" height="52" rx="10" fill="#2d1a0e" stroke="#f97316" stroke-width="1.2"/>
+  <text x="810" y="513" text-anchor="middle" font-size="12" fill="#fdba74" font-weight="bold">🛠️ 优化问题生成 Skill</text>
+  <text x="810" y="532" text-anchor="middle" font-size="11" fill="#64748b">使 Skill 更贴合大部分用户的真实思维方式</text>
+
+  <!-- LEFT: 提升预处理覆盖率 -->
+  <rect x="590" y="300" width="100" height="80" rx="10" fill="#2d1a0e" stroke="#f97316" stroke-width="1.2"/>
+  <text x="640" y="326" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">📈 提升</text>
+  <text x="640" y="344" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">预处理</text>
+  <text x="640" y="362" text-anchor="middle" font-size="11" fill="#fdba74" font-weight="bold">覆盖率</text>
+
+  <!-- 飞轮箭头：TOP → RIGHT -->
+  <path d="M 890 162 Q 990 200 968 298" fill="none" stroke="#f97316" stroke-width="1.8" marker-end="url(#arr-orange)"/>
+
+  <!-- 飞轮箭头：RIGHT → BOTTOM -->
+  <path d="M 968 382 Q 990 470 812 490" fill="none" stroke="#f97316" stroke-width="1.8" marker-end="url(#arr-orange)"/>
+
+  <!-- 飞轮箭头：BOTTOM → LEFT -->
+  <path d="M 642 492 Q 600 460 640 382" fill="none" stroke="#f97316" stroke-width="1.8" marker-end="url(#arr-orange)"/>
+
+  <!-- 飞轮箭头：LEFT → TOP -->
+  <path d="M 642 298 Q 620 200 668 162" fill="none" stroke="#f97316" stroke-width="1.8" marker-end="url(#arr-orange)"/>
+
+  <!-- 连接两侧：Skill 优化 → 预处理 -->
+  <path d="M 640 490 Q 540 548 460 510" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-purple)"/>
+  <text x="540" y="574" text-anchor="middle" font-size="11" fill="#a78bfa">Skill 升级驱动新一轮预处理</text>
+
+</svg>
