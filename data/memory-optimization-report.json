@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-03-20T17:34:47.419Z",
+  "config": {
+    "archiveAfterDays": 30,
+    "minImportance": 2,
+    "minContentLength": 50,
+    "protectedTag": "protected",
+    "deleteArchived": false
+  },
+  "stats": {
+    "totalProcessed": 12,
+    "archived": 0,
+    "deleted": 0,
+    "protected": 0,
+    "lowQuality": 0,
+    "duplicate": 0,
+    "importanceUpdated": 0
+  },
+  "summary": {
+    "totalProcessed": 12,
+    "archived": 0,
+    "deleted": 0,
+    "protected": 0,
+    "optimizationRate": "0.00%"
+  },
+  "recommendations": []
+}

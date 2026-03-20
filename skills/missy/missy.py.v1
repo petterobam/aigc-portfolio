@@ -1,0 +1,1687 @@
+#!/usr/bin/env python3
+"""
+MissY - 短剧下载器 (重构版 v2)
+功能：搜索短剧、解析任务、同步下载上传、管理百度网盘
+流程：
+1. missy parse <分享文本> - 解析创建任务，返回剧ID
+2. missy sync <#ID> - 并行下载上传
+3. missy status <#ID> - 查看任务状态
+4. missy login/logout - 百度网盘登录管理
+"""
+
+import argparse
+import asyncio
+import hashlib
+import json
+import os
+import re
+import subprocess
+import tempfile
+import time
+import urllib.parse
+from pathlib import Path
+from typing import Optional, Callable, Tuple, Dict, Any, List
+from enum import Enum
+from dataclasses import dataclass, field
+
+import aiohttp
+
+# ============================================================================
+# 配置
+# ============================================================================
+
+DOWNLOAD_DIR = Path.home() / "Downloads" / "Missy"
+SESSIONS_FILE = DOWNLOAD_DIR / "session.json"
+
+# 52api 配置
+API_BASE_URL = "https://www.52api.cn/api/hg_duanju"
+API_KEY = "vLZTNpjSbQsFOzZ68OcMUaJWbf"
+
+# 百度网盘配置
+BAIDU_APP_KEY = "7skXEyvQWb9fzYoC4sSgyEiaasuSMTfw"
+BAIDU_SECRET_KEY = "YwIQIRtX8GjSYqqwaQWEnbHZjwA2xfOP"
+BAIDU_TOKEN_URL = "https://openapi.baidu.com/oauth/2.0/token"
+BAIDU_DEVICE_CODE_URL = "https://openapi.baidu.com/oauth/2.0/device/code"
+BAIDU_UPLOAD_DOMAIN = "https://c3.pcs.baidu.com"
+BAIDU_APP_NAME = "missy-videos"
+
+# 并发配置
+MAX_CONCURRENT_DOWNLOADS = 5
+MAX_CONCURRENT_UPLOADS = 5
+MAX_CONCURRENT_PROCESSING = 5  # 同时处理的剧集数
+MAX_RETRY_COUNT = 3  # 最大重试次数
+MAX_LOCAL_FILES = 5
+CHUNK_SIZE = 4 * 1024 * 1024  # 4MB 分片
+
+
+# ============================================================================
+# 数据模型
+# ============================================================================
+
+class TaskStatus(str, Enum):
+    PENDING = "pending"
+    DOWNLOADING = "downloading"
+    DOWNLOADED = "downloaded"
+    UPLOADING = "uploading"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+
+
+@dataclass
+class Episode:
+    index: int
+    title: str
+    video_id: str
+    status: TaskStatus = TaskStatus.PENDING
+    local_path: str = ""
+    remote_path: str = ""
+    file_size: int = 0
+    downloaded_size: int = 0
+    uploaded_size: int = 0
+    error: str = ""
+    # 时间戳字段
+    started_at: str = ""  # 任务开始时间（下载开始）
+    download_started_at: str = ""  # 下载开始时间
+    download_completed_at: str = ""  # 下载完成时间
+    upload_started_at: str = ""  # 上传开始时间
+    upload_completed_at: str = ""  # 上传完成时间
+    completed_at: str = ""  # 任务完成时间（上传完成）
+    # 断点上传字段
+    uploadid: str = ""  # 百度网盘上传ID
+    uploaded_chunks: List[int] = field(default_factory=list)  # 已上传的分片索引列表
+    # 视频URL缓存
+    video_url: str = ""  # 解析得到的视频下载URL
+    video_url_expires_at: str = ""  # URL过期时间（如果API返回）
+
+    def to_dict(self) -> dict:
+        return {
+            "index": self.index,
+            "title": self.title,
+            "video_id": self.video_id,
+            "status": self.status.value,
+            "local_path": self.local_path,
+            "remote_path": self.remote_path,
+            "file_size": self.file_size,
+            "downloaded_size": self.downloaded_size,
+            "uploaded_size": self.uploaded_size,
+            "error": self.error,
+            "started_at": self.started_at,
+            "download_started_at": self.download_started_at,
+            "download_completed_at": self.download_completed_at,
+            "upload_started_at": self.upload_started_at,
+            "upload_completed_at": self.upload_completed_at,
+            "completed_at": self.completed_at,
+            "uploadid": self.uploadid,
+            "uploaded_chunks": self.uploaded_chunks,
+            "video_url": self.video_url,
+            "video_url_expires_at": self.video_url_expires_at,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Episode":
+        return cls(
+            index=data.get("index", 0),
+            title=data.get("title", ""),
+            video_id=data.get("video_id", ""),
+            status=TaskStatus(data.get("status", "pending")),
+            local_path=data.get("local_path", ""),
+            remote_path=data.get("remote_path", ""),
+            file_size=data.get("file_size", 0),
+            downloaded_size=data.get("downloaded_size", 0),
+            uploaded_size=data.get("uploaded_size", 0),
+            error=data.get("error", ""),
+            started_at=data.get("started_at", ""),
+            download_started_at=data.get("download_started_at", ""),
+            download_completed_at=data.get("download_completed_at", ""),
+            upload_started_at=data.get("upload_started_at", ""),
+            upload_completed_at=data.get("upload_completed_at", ""),
+            completed_at=data.get("completed_at", ""),
+            uploadid=data.get("uploadid", ""),
+            uploaded_chunks=data.get("uploaded_chunks", []),
+            video_url=data.get("video_url", ""),
+            video_url_expires_at=data.get("video_url_expires_at", ""),
+        )
+
+
+@dataclass
+class DramaTask:
+    drama_id: str
+    drama_name: str
+    total_episodes: int
+    episodes: Dict[str, Episode] = field(default_factory=dict)
+    created_at: str = ""
+    updated_at: str = ""
+    pid: Optional[int] = None  # 运行中的进程ID
+
+    def __post_init__(self):
+        if not self.created_at:
+            self.created_at = time.strftime("%Y-%m-%d %H:%M:%S")
+        if not self.updated_at:
+            self.updated_at = self.created_at
+
+    def to_dict(self) -> dict:
+        return {
+            "drama_id": self.drama_id,
+            "drama_name": self.drama_name,
+            "total_episodes": self.total_episodes,
+            "episodes": {k: v.to_dict() for k, v in self.episodes.items()},
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "pid": self.pid,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "DramaTask":
+        task = cls(
+            drama_id=data.get("drama_id", ""),
+            drama_name=data.get("drama_name", ""),
+            total_episodes=data.get("total_episodes", 0),
+            created_at=data.get("created_at", ""),
+            updated_at=data.get("updated_at", ""),
+            pid=data.get("pid"),
+        )
+        task.episodes = {
+            k: Episode.from_dict(v) for k, v in data.get("episodes", {}).items()
+        }
+        return task
+
+    def get_summary(self) -> Dict[str, int]:
+        summary = {status.value: 0 for status in TaskStatus}
+        for ep in self.episodes.values():
+            summary[ep.status.value] = summary.get(ep.status.value, 0) + 1
+        return summary
+
+    def is_completed(self) -> bool:
+        summary = self.get_summary()
+        completed = summary.get(TaskStatus.COMPLETED.value, 0)
+        failed = summary.get(TaskStatus.FAILED.value, 0)
+        return completed + failed == self.total_episodes
+
+    def is_running(self) -> bool:
+        if self.pid:
+            try:
+                os.kill(self.pid, 0)
+                return True
+            except ProcessLookupError:
+                return False
+        return False
+
+
+# ============================================================================
+# 任务管理器
+# ============================================================================
+
+class TaskManager:
+    def __init__(self, drama_dir: Path):
+        self.drama_dir = drama_dir
+        self.task_file = drama_dir / "task.json"
+        self._ensure_dir()
+        self.task = self._load()
+
+    def _ensure_dir(self):
+        self.drama_dir.mkdir(parents=True, exist_ok=True)
+
+    def _load(self) -> DramaTask:
+        if self.task_file.exists():
+            try:
+                with open(self.task_file, "r", encoding="utf-8") as f:
+                    return DramaTask.from_dict(json.load(f))
+            except Exception:
+                pass
+        return DramaTask(drama_id="", drama_name="", total_episodes=0)
+
+    def save(self):
+        self._ensure_dir()
+        self.task.updated_at = time.strftime("%Y-%m-%d %H:%M:%S")
+        with open(self.task_file, "w", encoding="utf-8") as f:
+            json.dump(self.task.to_dict(), f, ensure_ascii=False, indent=2)
+
+    def init_drama(self, drama_id: str, drama_name: str, episodes_data: List[Dict]):
+        self.task.drama_id = drama_id
+        self.task.drama_name = drama_name
+        self.task.total_episodes = len(episodes_data)
+
+        for i, ep_data in enumerate(episodes_data, 1):
+            ep_key = str(i)
+            if ep_key not in self.task.episodes:
+                self.task.episodes[ep_key] = Episode(
+                    index=i,
+                    title=ep_data.get("title", f"第{i}集"),
+                    video_id=ep_data.get("video_id", ""),
+                )
+            else:
+                # 更新 video_id
+                self.task.episodes[ep_key].video_id = ep_data.get("video_id", "")
+                self.task.episodes[ep_key].title = ep_data.get("title", f"第{i}集")
+
+        self.save()
+
+    def get_episode(self, index: int) -> Optional[Episode]:
+        return self.task.episodes.get(str(index))
+
+    def update_episode(self, index: int, **kwargs):
+        ep = self.task.episodes.get(str(index))
+        if ep:
+            for key, value in kwargs.items():
+                if hasattr(ep, key):
+                    setattr(ep, key, value)
+            self.save()
+
+    def set_status(self, index: int, status: TaskStatus, error: str = ""):
+        update = {"status": status}
+        if error:
+            update["error"] = error
+
+        now = time.strftime("%Y-%m-%d %H:%M:%S")
+
+        if status == TaskStatus.DOWNLOADING:
+            update["started_at"] = now
+            update["download_started_at"] = now
+        if status == TaskStatus.DOWNLOADED:
+            update["download_completed_at"] = now
+        if status == TaskStatus.UPLOADING:
+            update["upload_started_at"] = now
+        if status == TaskStatus.COMPLETED:
+            update["upload_completed_at"] = now
+            update["completed_at"] = now
+        if status in [TaskStatus.FAILED, TaskStatus.SKIPPED]:
+            update["completed_at"] = now
+
+        self.update_episode(index, **update)
+
+    def get_pending_episodes(self) -> List[int]:
+        # 返回 pending 和 failed 的剧集，failed 优先，然后按集数排序
+        failed = [
+            int(k) for k, v in self.task.episodes.items()
+            if v.status == TaskStatus.FAILED
+        ]
+        pending = [
+            int(k) for k, v in self.task.episodes.items()
+            if v.status == TaskStatus.PENDING
+        ]
+        return sorted(failed) + sorted(pending)
+
+    def set_pid(self, pid: Optional[int]):
+        self.task.pid = pid
+        self.save()
+
+
+# ============================================================================
+# API 客户端
+# ============================================================================
+
+class DramaAPI:
+    """52api 短剧接口"""
+
+    def __init__(self):
+        self.api_key = API_KEY
+        self.base_url = API_BASE_URL
+
+    async def request(self, req_type: str, params: dict = None) -> dict:
+        form_data = {"key": self.api_key, "type": req_type}
+        if params:
+            form_data.update(params)
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self.base_url, data=form_data) as resp:
+                return await resp.json()
+
+    async def search(self, keyword: str, page: int = 1) -> dict:
+        return await self.request("search", {"keyword": keyword, "page": str(page)})
+
+    async def get_detail(self, drama_id: str) -> dict:
+        return await self.request("detail", {"id": drama_id})
+
+    async def get_video_url(self, video_id: str) -> dict:
+        return await self.request("video", {"video_id": video_id})
+
+
+# ============================================================================
+# 百度网盘认证
+# ============================================================================
+
+class BaiduAuth:
+    """百度网盘认证管理"""
+
+    def __init__(self, user_id: str = "default"):
+        self.user_id = user_id
+        self.access_token: Optional[str] = None
+        self.refresh_token: Optional[str] = None
+        self.expires_at: Optional[int] = None
+        self._load_tokens()
+
+    def _load_tokens(self):
+        if SESSIONS_FILE.exists():
+            try:
+                with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    session = data.get("sessions", {}).get(self.user_id, {})
+                    self.access_token = session.get("access_token")
+                    self.refresh_token = session.get("refresh_token")
+                    self.expires_at = session.get("expires_at")
+            except Exception:
+                pass
+
+    def _save_tokens(self, access_token: str, refresh_token: str, expires_in: int):
+        self.access_token = access_token
+        self.refresh_token = refresh_token
+        self.expires_at = int(time.time()) + expires_in
+
+        DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+        data = {}
+        if SESSIONS_FILE.exists():
+            try:
+                with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except Exception:
+                pass
+
+        if "sessions" not in data:
+            data["sessions"] = {}
+
+        data["sessions"][self.user_id] = {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "expires_at": self.expires_at,
+            "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        data["updated_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+    def is_authenticated(self) -> bool:
+        return (
+            self.access_token is not None
+            and self.expires_at is not None
+            and int(time.time()) < (self.expires_at - 86400)
+        )
+
+    async def ensure_valid_token(self) -> bool:
+        if self.is_authenticated():
+            return True
+
+        if not self.refresh_token:
+            return False
+
+        # 刷新 token
+        url = f"{BAIDU_TOKEN_URL}?grant_type=refresh_token&refresh_token={self.refresh_token}&client_id={BAIDU_APP_KEY}&client_secret={BAIDU_SECRET_KEY}"
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers={"User-Agent": "pan.baidu.com"}) as resp:
+                result = await resp.json()
+                if "access_token" in result:
+                    self._save_tokens(
+                        result["access_token"],
+                        result["refresh_token"],
+                        result.get("expires_in", 2592000),
+                    )
+                    return True
+        return False
+
+    async def login(self) -> dict:
+        DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                BAIDU_DEVICE_CODE_URL,
+                data={
+                    "client_id": BAIDU_APP_KEY,
+                    "response_type": "device_code",
+                    "scope": "basic,netdisk",
+                },
+            ) as resp:
+                device_data = await resp.json()
+
+        if "error" in device_data:
+            print(f"ERROR:{device_data.get('error_description', '获取设备码失败')}")
+            return {}
+
+        device_code = device_data["device_code"]
+        user_code = device_data["user_code"]
+        qrcode_url = device_data["qrcode_url"]
+        interval = device_data.get("interval", 5)
+        expires_in = device_data.get("expires_in", 300)
+
+        # 下载二维码
+        qr_dir = DOWNLOAD_DIR / "qrcodes"
+        qr_dir.mkdir(exist_ok=True)
+        qr_file = qr_dir / f"baidu_login_{self.user_id}.png"
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(qrcode_url) as qr_resp:
+                    if qr_resp.status == 200:
+                        with open(qr_file, "wb") as f:
+                            f.write(await qr_resp.read())
+        except Exception as e:
+            print(f"WARN:下载二维码失败: {e}")
+
+        print(f"\n请使用百度网盘APP扫描以下二维码登录:")
+        print(f"用户码: {user_code}")
+        if qr_file.exists():
+            print(f"二维码已保存: {qr_file}")
+            # 尝试打开图片
+            try:
+                subprocess.run(["open", str(qr_file)], check=False)
+            except:
+                pass
+
+        print(f"\n等待授权...")
+
+        # 轮询获取token
+        start_time = time.time()
+        while time.time() - start_time < expires_in:
+            await asyncio.sleep(interval)
+
+            token_url = (
+                f"{BAIDU_TOKEN_URL}?grant_type=device_token&code={device_code}&"
+                f"client_id={BAIDU_APP_KEY}&client_secret={BAIDU_SECRET_KEY}"
+            )
+
+            async with aiohttp.ClientSession() as session:
+                async with session.get(token_url) as resp:
+                    result = await resp.json()
+
+            if "access_token" in result:
+                self._save_tokens(
+                    result["access_token"],
+                    result["refresh_token"],
+                    result.get("expires_in", 2592000),
+                )
+                print(f"登录成功！用户: {self.user_id}")
+                # 删除二维码文件
+                try:
+                    qr_file.unlink()
+                except:
+                    pass
+                return result
+
+            if result.get("error") == "authorization_pending":
+                continue
+            else:
+                print(f"ERROR:{result.get('error_description', '登录失败')}")
+                return {}
+
+        print("ERROR:登录超时，请重试")
+        return {}
+
+    def logout(self) -> bool:
+        """退出登录"""
+        try:
+            if SESSIONS_FILE.exists():
+                with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+
+                if "sessions" in data and self.user_id in data["sessions"]:
+                    del data["sessions"][self.user_id]
+                    with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
+                        json.dump(data, f, ensure_ascii=False, indent=2)
+
+            self.access_token = None
+            self.refresh_token = None
+            self.expires_at = None
+            return True
+        except Exception as e:
+            print(f"退出登录失败: {e}")
+            return False
+
+
+# ============================================================================
+# 百度网盘上传（分片上传）
+# ============================================================================
+
+class BaiduUploader:
+    def __init__(self, auth: BaiduAuth):
+        self.auth = auth
+
+    def _normalize_path(self, remote_path: str, filename: str) -> str:
+        base_filename = Path(filename).name
+        if remote_path.startswith(f"/apps/{BAIDU_APP_NAME}"):
+            return f"{remote_path.rstrip('/')}/{base_filename}"
+        clean_path = remote_path.lstrip("/")
+        return f"/apps/{BAIDU_APP_NAME}/{clean_path}/{base_filename}"
+
+    async def _check_remote_file(self, path: str, local_size: int, local_md5: str) -> Optional[dict]:
+        """检查远程文件是否存在且MD5一致"""
+        # 使用 meta 接口获取文件详细信息（包含正确的MD5）
+        meta_url = f"https://pan.baidu.com/rest/2.0/xpan/multimedia?method=filemetas&access_token={self.auth.access_token}&fsids={json.dumps([path])}&dlink=0"
+
+        def do_meta():
+            cmd = ["curl", "-s", meta_url]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            return json.loads(result.stdout) if result.returncode == 0 else {}
+
+        loop = asyncio.get_event_loop()
+        meta_result = await loop.run_in_executor(None, do_meta)
+
+        if meta_result.get("errno") == 0:
+            for item in meta_result.get("list", []):
+                if item.get("path") == path or item.get("server_filename") == Path(path).name:
+                    remote_size = item.get("size", 0)
+                    remote_md5 = item.get("md5", "")
+
+                    if remote_size == local_size:
+                        return {
+                            "path": item.get("path", path),
+                            "size": remote_size,
+                            "fs_id": item.get("fs_id", 0),
+                            "md5": remote_md5,
+                        }
+                    else:
+                        await self._delete_remote_file(path)
+                        return None
+
+        # 如果 meta 接口失败，尝试 list 接口
+        list_url = f"https://pan.baidu.com/rest/2.0/xpan/file?method=list&access_token={self.auth.access_token}&dir={urllib.parse.quote(Path(path).parent.as_posix())}"
+
+        def do_list():
+            cmd = ["curl", "-s", list_url]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            return json.loads(result.stdout) if result.returncode == 0 else {}
+
+        list_result = await loop.run_in_executor(None, do_list)
+
+        if list_result.get("errno") == 0:
+            filename = Path(path).name
+            for item in list_result.get("list", []):
+                if item.get("server_filename") == filename:
+                    remote_size = item.get("size", 0)
+
+                    if remote_size == local_size:
+                        return {
+                            "path": item.get("path", path),
+                            "size": remote_size,
+                            "fs_id": item.get("fs_id", 0),
+                            "md5": item.get("md5", ""),
+                        }
+                    else:
+                        await self._delete_remote_file(path)
+                        return None
+        return None
+
+    async def _delete_remote_file(self, path: str):
+        """删除远程文件"""
+        delete_url = f"https://pan.baidu.com/rest/2.0/xpan/file?method=filemanager&access_token={self.auth.access_token}&opera=delete&async=0"
+
+        def do_delete():
+            filelist = json.dumps([{"path": path}], ensure_ascii=False)
+            cmd = [
+                "curl", "-X", "POST", delete_url,
+                "-H", "User-Agent: pan.baidu.com",
+                "-d", f"filelist={urllib.parse.quote(filelist)}",
+                "-s",
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            return result
+
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(None, do_delete)
+
+    async def upload(
+        self,
+        local_path: str,
+        remote_path: str,
+        on_progress: Optional[Callable[[int, int], None]] = None,
+        resume_upload: bool = False,
+        existing_uploadid: str = "",
+        existing_uploaded_chunks: List[int] = None,
+        on_chunk_uploaded: Optional[Callable[[str, List[int]], None]] = None,
+    ) -> dict:
+        if not await self.auth.ensure_valid_token():
+            raise Exception("请先登录百度网盘: missy login")
+
+        local_file = Path(local_path)
+        if not local_file.exists():
+            raise Exception(f"文件不存在: {local_path}")
+
+        file_size = local_file.stat().st_size
+        filename = local_file.name
+        normalized_path = self._normalize_path(remote_path, filename)
+
+        # 计算整个文件的MD5用于秒传检测
+        with open(local_file, "rb") as f:
+            file_md5 = hashlib.md5(f.read()).hexdigest()
+
+        # 检查远程文件是否存在且MD5一致
+        existing_file = await self._check_remote_file(normalized_path, file_size, file_md5)
+        if existing_file:
+            return existing_file
+
+        total_chunks = (file_size + CHUNK_SIZE - 1) // CHUNK_SIZE
+
+        # 计算所有分片的 MD5
+        chunk_md5s = []
+        with open(local_file, "rb") as f:
+            for _ in range(total_chunks):
+                chunk_data = f.read(CHUNK_SIZE)
+                if not chunk_data:
+                    break
+                chunk_md5s.append(hashlib.md5(chunk_data).hexdigest())
+
+        # 断点续传：如果有现有的 uploadid 和已上传分片，直接使用
+        uploadid = None
+        block_list_to_upload = None
+        all_chunks_uploaded = False
+        if resume_upload and existing_uploadid and existing_uploaded_chunks:
+            uploadid = existing_uploadid
+            # 计算还需要上传的分片
+            all_chunks = set(range(len(chunk_md5s)))
+            uploaded_set = set(existing_uploaded_chunks)
+            block_list_to_upload = list(all_chunks - uploaded_set)
+            print(f"INFO:断点续传，已上传 {len(existing_uploaded_chunks)}/{len(chunk_md5s)} 个分片")
+            # 检查是否所有分片都已上传
+            if not block_list_to_upload:
+                all_chunks_uploaded = True
+                print(f"INFO:所有分片已上传，直接创建文件")
+
+        # 如果没有 uploadid 或需要上传的分片为空（且不是所有分片都已上传），重新预上传
+        if not uploadid or (not block_list_to_upload and not all_chunks_uploaded):
+            # 预上传获取 uploadid
+            precreate_result = await self._precreate(normalized_path, file_size, chunk_md5s)
+            uploadid = precreate_result.get("uploadid")
+            if not uploadid:
+                raise Exception(f"预上传失败: {precreate_result}")
+
+            # 检查是否秒传成功
+            if precreate_result.get("return_type") == 2:
+                return {"path": normalized_path, "size": file_size, "fs_id": precreate_result.get("fs_id", 0)}
+
+            # 需要上传的分片列表
+            block_list_to_upload = precreate_result.get("block_list", list(range(len(chunk_md5s))))
+            # 重置已上传分片记录（重新开始上传）
+            existing_uploaded_chunks = []
+
+        # 如果所有分片都已上传，直接使用已上传的分片MD5创建文件
+        if all_chunks_uploaded:
+            server_md5s = chunk_md5s  # 使用本地计算的MD5
+            result = await self._create_file(normalized_path, file_size, uploadid, server_md5s)
+            result["uploadid"] = uploadid
+            result["uploaded_chunks"] = list(range(len(chunk_md5s)))
+            return result
+
+        uploaded_size = 0
+        server_md5s = [""] * len(chunk_md5s)
+        newly_uploaded_chunks = []  # 记录本次新上传的分片
+
+        # 分片上传
+        with open(local_file, "rb") as f:
+            for chunk_idx in range(total_chunks):
+                chunk_data = f.read(CHUNK_SIZE)
+                if not chunk_data:
+                    break
+
+                # 只上传需要的分片
+                if chunk_idx in block_list_to_upload:
+                    result = await self._upload_chunk(
+                        chunk_data, normalized_path, uploadid, chunk_idx, total_chunks
+                    )
+                    server_md5s[chunk_idx] = result.get("md5", chunk_md5s[chunk_idx])
+                    newly_uploaded_chunks.append(chunk_idx)
+
+                    # 定期保存 uploadid 和已上传分片（每上传5个分片保存一次）
+                    if on_chunk_uploaded and len(newly_uploaded_chunks) % 5 == 0:
+                        all_uploaded = list(set(existing_uploaded_chunks or []) | set(newly_uploaded_chunks))
+                        on_chunk_uploaded(uploadid, all_uploaded)
+
+                uploaded_size += len(chunk_data)
+                if on_progress:
+                    on_progress(uploaded_size, file_size)
+
+        # 创建文件
+        result = await self._create_file(normalized_path, file_size, uploadid, server_md5s)
+        # 返回 uploadid 和已上传分片列表，用于断点续传
+        result["uploadid"] = uploadid
+        result["uploaded_chunks"] = list(set(existing_uploaded_chunks or []) | set(newly_uploaded_chunks))
+        return result
+
+    async def _precreate(self, path: str, size: int, block_list: List[str]) -> dict:
+        """预上传获取 uploadid"""
+        precreate_url = f"https://pan.baidu.com/rest/2.0/xpan/file?method=precreate&access_token={self.auth.access_token}"
+
+        def do_precreate():
+            cmd = [
+                "curl",
+                "-X", "POST",
+                precreate_url,
+                "-H", "User-Agent: pan.baidu.com",
+                "-d", f"path={urllib.parse.quote(path)}&size={size}&isdir=0&autoinit=1&rtype=1&block_list={urllib.parse.quote(json.dumps(block_list))}",
+                "-s",
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+
+            if result.returncode != 0:
+                raise Exception(f"预上传失败: {result.stderr}")
+
+            response = json.loads(result.stdout)
+            if response.get("errno", 0) != 0:
+                raise Exception(f"预上传API错误: {response.get('errmsg', response.get('errno'))}")
+            return response
+
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, do_precreate)
+
+    async def _upload_chunk(
+        self, chunk_data: bytes, path: str, uploadid: str, chunk_idx: int, total_chunks: int
+    ):
+        upload_url = f"{BAIDU_UPLOAD_DOMAIN}/rest/2.0/pcs/superfile2?method=upload&access_token={self.auth.access_token}&path={urllib.parse.quote(path, safe='')}&uploadid={urllib.parse.quote(uploadid)}&partseq={chunk_idx}&type=tmpfile"
+
+        def do_upload():
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".tmp") as tmp:
+                tmp.write(chunk_data)
+                tmp_path = tmp.name
+
+            try:
+                cmd = [
+                    "curl",
+                    "-X",
+                    "POST",
+                    upload_url,
+                    "-H",
+                    "User-Agent: pan.baidu.com",
+                    "-F",
+                    f"file=@{tmp_path}",
+                    "--max-time",
+                    "300",
+                    "-s",
+                ]
+                result = subprocess.run(cmd, capture_output=True, text=True)
+
+                if result.returncode != 0:
+                    raise Exception(f"分片上传失败: {result.stderr}")
+
+                response = json.loads(result.stdout)
+                if "errno" in response and response["errno"] != 0:
+                    raise Exception(f"百度API错误: {response.get('error', '未知错误')}")
+                return response
+            finally:
+                try:
+                    Path(tmp_path).unlink()
+                except:
+                    pass
+
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, do_upload)
+
+    async def _create_file(self, path: str, size: int, uploadid: str, block_list: List[str]) -> dict:
+        create_url = f"https://pan.baidu.com/rest/2.0/xpan/file?method=create&access_token={self.auth.access_token}"
+
+        def do_create():
+            cmd = [
+                "curl",
+                "-X",
+                "POST",
+                create_url,
+                "-H",
+                "User-Agent: pan.baidu.com",
+                "-d",
+                f"path={urllib.parse.quote(path)}&size={size}&isdir=0&rtype=1&uploadid={urllib.parse.quote(uploadid)}&block_list={urllib.parse.quote(json.dumps(block_list))}",
+                "-s",
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+
+            if result.returncode != 0:
+                raise Exception(f"创建文件失败: {result.stderr}")
+
+            response = json.loads(result.stdout)
+            if "errno" in response and response["errno"] != 0:
+                raise Exception(f"百度API错误: {response['errno']}")
+            return response
+
+        loop = asyncio.get_event_loop()
+        result = await loop.run_in_executor(None, do_create)
+
+        return {
+            "path": result.get("path", path),
+            "size": result.get("size", size),
+            "fs_id": result.get("fs_id", 0),
+        }
+
+
+# ============================================================================
+# 视频下载器
+# ============================================================================
+
+class Downloader:
+    def __init__(self, download_dir: Path = None):
+        self.download_dir = download_dir or DOWNLOAD_DIR
+        self.download_dir.mkdir(parents=True, exist_ok=True)
+
+    def _get_temp_path(self, save_path: Path) -> Path:
+        return save_path.with_suffix(save_path.suffix + ".tmp")
+
+    async def download(
+        self,
+        url: str,
+        filename: str,
+        drama_name: str = "",
+        on_progress: Optional[Callable[[int, int, float], None]] = None,
+        resume: bool = True,
+    ) -> str:
+        save_dir = self.download_dir / drama_name if drama_name else self.download_dir
+        save_dir.mkdir(parents=True, exist_ok=True)
+        save_path = save_dir / filename
+        temp_path = self._get_temp_path(save_path)
+
+        if save_path.exists():
+            return str(save_path)
+
+        downloaded = 0
+        if resume and temp_path.exists():
+            downloaded = temp_path.stat().st_size
+
+        headers = {}
+        if downloaded > 0:
+            headers["Range"] = f"bytes={downloaded}-"
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as resp:
+                if resp.status not in [200, 206]:
+                    raise Exception(f"下载失败: HTTP {resp.status}")
+
+                content_length = int(resp.headers.get("content-length", 0))
+                if resp.status == 206:
+                    total_size = downloaded + content_length
+                else:
+                    total_size = content_length
+                    downloaded = 0
+
+                mode = "ab" if downloaded > 0 and resp.status == 206 else "wb"
+                with open(temp_path, mode) as f:
+                    async for chunk in resp.content.iter_chunked(1024 * 1024):
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if total_size and on_progress:
+                            percent = (downloaded / total_size) * 100
+                            on_progress(downloaded, total_size, percent)
+                        elif on_progress:
+                            on_progress(downloaded, total_size, 0)
+
+                temp_path.rename(save_path)
+
+        return str(save_path)
+
+
+# ============================================================================
+# 主控制器
+# ============================================================================
+
+class MissY:
+    def __init__(self, user_id: str = "default"):
+        DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        self.api = DramaAPI()
+        self.auth = BaiduAuth(user_id)
+        self.uploader = BaiduUploader(self.auth)
+        self.downloader = Downloader()
+
+    # ========================================================================
+    # 1. parse 命令 - 解析分享文本，创建任务
+    # ========================================================================
+    async def parse(self, share_text: str) -> Optional[str]:
+        """解析分享文本，创建任务，返回 drama_id"""
+        drama_name, share_url = self._parse_share_text(share_text)
+        drama_id = None
+        extracted_name = drama_name
+
+        if share_url:
+            drama_id = await self._extract_drama_id(share_url)
+
+        if not drama_id and drama_name:
+            result = await self.api.search(drama_name)
+            if result.get("code") in [200, 1]:
+                items = result.get("data", [])
+                if isinstance(items, list) and items:
+                    for item in items:
+                        if item.get("title") == drama_name:
+                            drama_id = item.get("id")
+                            extracted_name = item.get("title")
+                            break
+                    if not drama_id:
+                        drama_id = items[0].get("id")
+                        extracted_name = items[0].get("title", drama_name)
+
+        if not drama_id:
+            print("ERROR:无法获取短剧ID")
+            return None
+
+        if not extracted_name:
+            detail = await self.api.get_detail(drama_id)
+            if detail.get("code") in [200, 1]:
+                data = detail.get("data", {})
+                if isinstance(data, dict):
+                    extracted_name = data.get("name") or data.get("title") or drama_id
+
+        # 清理剧名中的非法字符
+        extracted_name = re.sub(r"[\u003c\u003e\":/\\|?*]", "_", extracted_name)
+
+        # 创建任务目录和 task.json
+        drama_dir = self.downloader.download_dir / extracted_name
+        task_manager = TaskManager(drama_dir)
+
+        # 获取剧集详情
+        detail = await self.api.get_detail(drama_id)
+        if detail.get("code") not in [200, 1]:
+            print(f"ERROR:获取剧集详情失败: {detail.get('msg', '未知错误')}")
+            return None
+
+        data = detail.get("data", detail)
+        all_episodes = (
+            data.get("lists", []) if isinstance(data, dict) else data if isinstance(data, list) else []
+        )
+
+        # 初始化任务
+        task_manager.init_drama(drama_id, extracted_name, all_episodes)
+
+        print(f"OK:{drama_id}")
+        print(f"DRAMA_NAME:{extracted_name}")
+        print(f"TOTAL_EPISODES:{len(all_episodes)}")
+        print(f"TASK_DIR:{drama_dir}")
+
+        return drama_id
+
+    def _parse_share_text(self, text: str) -> Tuple[str, str]:
+        url_pattern = r"https?://[^\s<>\"{}|\\^`\[\]]+"
+        url_match = re.search(url_pattern, text)
+        url = url_match.group(0).rstrip("/") if url_match else None
+
+        name_pattern = r"《(.+?)》"
+        name_match = re.search(name_pattern, text)
+        name = name_match.group(1) if name_match else None
+
+        return name, url
+
+    async def _extract_drama_id(self, share_url: str) -> Optional[str]:
+        if "/s/" not in share_url:
+            return None
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    share_url,
+                    allow_redirects=False,
+                    headers={
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                    },
+                    timeout=aiohttp.ClientTimeout(total=5),
+                ) as resp:
+                    location = resp.headers.get("Location", "")
+                    if location:
+                        from urllib.parse import urlparse, parse_qs
+
+                        redirect_url = urlparse(location)
+                        scheme_params = parse_qs(redirect_url.query).get(
+                            "schemeParams", []
+                        )
+                        if scheme_params:
+                            try:
+                                params = json.loads(
+                                    urllib.parse.unquote(scheme_params[0])
+                                )
+                                return params.get("video_series_id")
+                            except:
+                                pass
+        except:
+            pass
+        return None
+
+    # ========================================================================
+    # 2. sync 命令 - 同步下载上传
+    # ========================================================================
+    async def sync(self, drama_id: str, episodes: list = None, remote_dir: str = ""):
+        """同步下载上传指定剧集"""
+        # 查找任务目录
+        drama_dir = None
+        drama_name = None
+
+        for d in self.downloader.download_dir.iterdir():
+            if d.is_dir() and (d / "task.json").exists():
+                try:
+                    with open(d / "task.json", "r", encoding="utf-8") as f:
+                        task_data = json.load(f)
+                        if task_data.get("drama_id") == drama_id:
+                            drama_dir = d
+                            drama_name = task_data.get("drama_name", drama_id)
+                            break
+                except:
+                    pass
+
+        if not drama_dir:
+            print(f"ERROR:未找到剧ID {drama_id} 的任务")
+            return
+
+        task_manager = TaskManager(drama_dir)
+
+        # 检查是否已有其他进程在运行
+        if task_manager.task.is_running():
+            print(f"SKIP:短剧《{drama_name}》正在下载中 (PID: {task_manager.task.pid})")
+            return
+
+        # 检查百度网盘登录
+        if not await self.auth.ensure_valid_token():
+            print("ERROR:百度网盘未登录，请先运行: missy login")
+            return
+
+        # 保存当前进程ID
+        task_manager.set_pid(os.getpid())
+
+        # 获取待处理的剧集
+        if episodes:
+            indices_to_download = episodes
+        else:
+            indices_to_download = task_manager.get_pending_episodes()
+
+        if not indices_to_download:
+            print(f"SKIP:没有需要下载的剧集")
+            task_manager.set_pid(None)
+            return
+
+        print(f"DRAMA_ID:{drama_id}")
+        print(f"DRAMA_NAME:{drama_name}")
+        print(f"TO_DOWNLOAD:{len(indices_to_download)}")
+
+        # 使用统一的信号量控制本地文件数量（下载+上传）
+        local_file_sem = asyncio.Semaphore(MAX_LOCAL_FILES)
+        failed_count = 0
+        failed_lock = asyncio.Lock()
+
+        async def process_episode_with_retry(idx: int) -> bool:
+            """处理单集，带重试机制"""
+            nonlocal failed_count
+
+            ep = task_manager.get_episode(idx)
+            if not ep or ep.status == TaskStatus.COMPLETED:
+                return True
+
+            retry_count = ep.error.count("[重试") if ep.error else 0
+
+            # 使用数字格式文件名：001.mp4, 010.mp4, 120.mp4
+            filename = f"{idx:03d}.mp4"
+            save_dir = self.downloader.download_dir / drama_name
+            save_path = save_dir / filename
+            tmp_path = save_path.with_suffix(save_path.suffix + ".tmp")
+
+            # 检查是否已有下载完成的文件（跳过下载和获取URL，直接上传）
+            file_already_downloaded = save_path.exists() and save_path.stat().st_size > 0
+            if file_already_downloaded:
+                print(f"INFO:文件已存在，跳过下载和获取URL: {filename}")
+                actual_size = save_path.stat().st_size
+                task_manager.update_episode(idx, local_path=str(save_path), downloaded_size=actual_size, file_size=actual_size)
+                video_url = None  # 不需要下载
+            else:
+                video_url = None  # 将在循环中获取
+
+            for attempt in range(retry_count, MAX_RETRY_COUNT + 1):
+                try:
+                    # 使用统一的信号量控制本地文件数量
+                    async with local_file_sem:
+                        # 下载
+                        ep = task_manager.get_episode(idx)
+                        if ep and ep.status == TaskStatus.COMPLETED:
+                            return True
+
+                        # 只有需要下载时才获取视频URL
+                        if not file_already_downloaded:
+                            # 检查是否有缓存的URL
+                            ep = task_manager.get_episode(idx)
+                            cached_url = ep.video_url if ep else ""
+
+                            if cached_url:
+                                # 使用缓存的URL
+                                video_url = cached_url
+                                print(f"INFO:使用缓存的视频URL: {filename}")
+                            else:
+                                # 从API获取URL
+                                video_result = await self.api.get_video_url(ep.video_id)
+                                if video_result.get("code") not in [200, 1]:
+                                    raise Exception("获取视频URL失败")
+
+                                video_data = video_result.get("data", video_result)
+                                video_url = (
+                                    video_data.get("url")
+                                    if isinstance(video_data, dict)
+                                    else video_result.get("url")
+                                )
+                                if not video_url:
+                                    raise Exception("无视频URL")
+
+                                # 保存URL到task.json
+                                task_manager.update_episode(idx, video_url=video_url)
+                                print(f"INFO:已缓存视频URL: {filename}")
+
+                            # 设置状态为下载中
+                            task_manager.set_status(idx, TaskStatus.DOWNLOADING)
+
+                            # 如果存在 .tmp 文件，恢复之前的下载进度
+                            if tmp_path.exists():
+                                downloaded_size = tmp_path.stat().st_size
+                                task_manager.update_episode(idx, downloaded_size=downloaded_size)
+                                print(f"INFO:发现未完成的下载，断点续传: {filename} ({downloaded_size} bytes)")
+
+                            last_progress = [0]
+
+                            def on_progress(d, t, p):
+                                if t and (d - last_progress[0]) > t * 0.05:  # 每5%更新一次
+                                    task_manager.update_episode(
+                                        idx, downloaded_size=d, file_size=t
+                                    )
+                                    last_progress[0] = d
+
+                            save_path = await self.downloader.download(
+                                video_url, filename, drama_name, on_progress, resume=True
+                            )
+
+                            # 验证下载文件完整性
+                            save_path_obj = Path(save_path)
+                            if not save_path_obj.exists():
+                                raise Exception("下载文件不存在")
+
+                            actual_size = save_path_obj.stat().st_size
+                            ep = task_manager.get_episode(idx)
+                            expected_size = ep.file_size if ep else 0
+
+                            # 如果task.json中有记录文件大小，验证是否匹配
+                            if expected_size > 0 and actual_size != expected_size:
+                                raise Exception(f"下载文件不完整: 期望 {expected_size} bytes, 实际 {actual_size} bytes")
+
+                            # 文件大小为0，明显异常
+                            if actual_size == 0:
+                                raise Exception("下载文件大小为0，可能下载失败")
+
+                            task_manager.set_status(idx, TaskStatus.DOWNLOADED)
+                            task_manager.update_episode(idx, local_path=save_path, downloaded_size=actual_size, file_size=actual_size)
+                        else:
+                            # 文件已存在，跳过下载部分
+                            pass
+                            # 设置状态为下载中
+                            task_manager.set_status(idx, TaskStatus.DOWNLOADING)
+
+                            # 如果存在 .tmp 文件，恢复之前的下载进度
+                            if tmp_path.exists():
+                                downloaded_size = tmp_path.stat().st_size
+                                task_manager.update_episode(idx, downloaded_size=downloaded_size)
+                                print(f"INFO:发现未完成的下载，断点续传: {filename} ({downloaded_size} bytes)")
+
+                            last_progress = [0]
+
+                            def on_progress(d, t, p):
+                                if t and (d - last_progress[0]) > t * 0.05:  # 每5%更新一次
+                                    task_manager.update_episode(
+                                        idx, downloaded_size=d, file_size=t
+                                    )
+                                    last_progress[0] = d
+
+                            save_path = await self.downloader.download(
+                                video_url, filename, drama_name, on_progress, resume=True
+                            )
+
+                            # 验证下载文件完整性
+                            save_path_obj = Path(save_path)
+                            if not save_path_obj.exists():
+                                raise Exception("下载文件不存在")
+
+                            actual_size = save_path_obj.stat().st_size
+                            ep = task_manager.get_episode(idx)
+                            expected_size = ep.file_size if ep else 0
+
+                            # 如果task.json中有记录文件大小，验证是否匹配
+                            if expected_size > 0 and actual_size != expected_size:
+                                raise Exception(f"下载文件不完整: 期望 {expected_size} bytes, 实际 {actual_size} bytes")
+
+                            # 文件大小为0，明显异常
+                            if actual_size == 0:
+                                raise Exception("下载文件大小为0，可能下载失败")
+
+                            task_manager.set_status(idx, TaskStatus.DOWNLOADED)
+                            task_manager.update_episode(idx, local_path=save_path, downloaded_size=actual_size, file_size=actual_size)
+
+                        last_progress = [0]
+
+                        def on_progress(d, t, p):
+                            if t and (d - last_progress[0]) > t * 0.05:  # 每5%更新一次
+                                task_manager.update_episode(
+                                    idx, downloaded_size=d, file_size=t
+                                )
+                                last_progress[0] = d
+
+                        save_path = await self.downloader.download(
+                            video_url, filename, drama_name, on_progress, resume=True
+                        )
+
+                        # 验证下载文件完整性
+                        save_path_obj = Path(save_path)
+                        if not save_path_obj.exists():
+                            raise Exception("下载文件不存在")
+
+                        actual_size = save_path_obj.stat().st_size
+                        ep = task_manager.get_episode(idx)
+                        expected_size = ep.file_size if ep else 0
+
+                        # 如果task.json中有记录文件大小，验证是否匹配
+                        if expected_size > 0 and actual_size != expected_size:
+                            raise Exception(f"下载文件不完整: 期望 {expected_size} bytes, 实际 {actual_size} bytes")
+
+                        # 文件大小为0，明显异常
+                        if actual_size == 0:
+                            raise Exception("下载文件大小为0，可能下载失败")
+
+                        task_manager.set_status(idx, TaskStatus.DOWNLOADED)
+                        task_manager.update_episode(idx, local_path=save_path, downloaded_size=actual_size, file_size=actual_size)
+
+                        # 上传（在同一个信号量内完成）
+                        ep = task_manager.get_episode(idx)
+                        save_path = ep.local_path if ep else ""
+                        if not save_path or not Path(save_path).exists():
+                            raise Exception("本地文件不存在")
+
+                        task_manager.set_status(idx, TaskStatus.UPLOADING)
+
+                        # 检查是否有断点上传记录
+                        ep = task_manager.get_episode(idx)
+                        resume_upload = ep and ep.uploadid and ep.uploaded_chunks
+                        if resume_upload:
+                            print(f"INFO:发现未完成的上传，断点续传: {filename} (已传 {len(ep.uploaded_chunks)} 个分片)")
+
+                        last_upload = [0]
+
+                        def on_upload(uploaded, total):
+                            if total and (uploaded - last_upload[0]) > total * 0.01:
+                                task_manager.update_episode(idx, uploaded_size=uploaded)
+                                last_upload[0] = uploaded
+
+                        # 回调函数：保存 uploadid 和已上传分片
+                        def on_chunk_uploaded(uploadid, uploaded_chunks):
+                            task_manager.update_episode(idx, uploadid=uploadid, uploaded_chunks=uploaded_chunks)
+
+                        result = await self.uploader.upload(
+                            save_path, remote_dir or drama_name, on_upload,
+                            resume_upload=resume_upload,
+                            existing_uploadid=ep.uploadid if ep else "",
+                            existing_uploaded_chunks=ep.uploaded_chunks if ep else [],
+                            on_chunk_uploaded=on_chunk_uploaded
+                        )
+
+                        # 保存 uploadid 和已上传分片，用于断点续传
+                        if result.get("uploadid"):
+                            task_manager.update_episode(idx, uploadid=result["uploadid"], uploaded_chunks=result.get("uploaded_chunks", []))
+
+                        ep = task_manager.get_episode(idx)
+                        if ep and ep.file_size > 0:
+                            task_manager.update_episode(idx, remote_path=result.get("path", ""), uploaded_size=ep.file_size)
+                        else:
+                            task_manager.update_episode(idx, remote_path=result.get("path", ""))
+                        task_manager.set_status(idx, TaskStatus.COMPLETED)
+
+                        # 上传完成，清空 uploadid、uploaded_chunks 和 error
+                        task_manager.update_episode(idx, uploadid="", uploaded_chunks=[], error="")
+
+                        # 删除本地文件
+                        try:
+                            Path(save_path).unlink()
+                            task_manager.update_episode(idx, local_path="")
+                        except Exception as e:
+                            print(f"WARN:删除本地文件失败 {save_path}: {e}")
+
+                    return True
+
+                except Exception as e:
+                    error_msg = str(e)
+                    if attempt < MAX_RETRY_COUNT:
+                        retry_info = f"[重试{attempt + 1}/{MAX_RETRY_COUNT}]"
+                        task_manager.set_status(idx, TaskStatus.FAILED, f"{retry_info} {error_msg}")
+                        # 指数退避：5秒、10秒、20秒（针对服务器错误增加等待时间）
+                        sleep_time = 5 * (2 ** attempt)
+                        print(f"WARN:第{idx}集失败，{sleep_time}秒后重试: {error_msg[:80]}")
+                        await asyncio.sleep(sleep_time)
+                    else:
+                        task_manager.set_status(idx, TaskStatus.FAILED, f"[最终失败] {error_msg}")
+                        async with failed_lock:
+                            failed_count += 1
+                        # 清理本地文件
+                        try:
+                            ep = task_manager.get_episode(idx)
+                            if ep and ep.local_path:
+                                save_path = Path(ep.local_path)
+                                if save_path.exists():
+                                    save_path.unlink()
+                                    task_manager.update_episode(idx, local_path="")
+                        except:
+                            pass
+                        return False
+
+            return False
+
+        async def process_episode(idx: int):
+            """包装函数"""
+            return await process_episode_with_retry(idx)
+
+        # 循环处理任务，直到没有更多任务或所有任务都完成
+        round_count = 0
+        while True:
+            round_count += 1
+            print(f"INFO:第{round_count}轮处理，待处理: {len(indices_to_download)} 集")
+
+            if indices_to_download:
+                results = await asyncio.gather(*[process_episode(idx) for idx in indices_to_download])
+
+            # 检查是否有新的 failed 剧集需要重试
+            new_pending = task_manager.get_pending_episodes()
+            # 过滤掉已经处理过的 completed 剧集
+            remaining = [idx for idx in new_pending if idx not in indices_to_download or task_manager.get_episode(idx).status in [TaskStatus.PENDING, TaskStatus.FAILED]]
+
+            if not remaining:
+                print(f"INFO:所有任务处理完成")
+                break
+
+            # 检查是否还有重试次数的 failed 剧集
+            has_retryable = False
+            for idx in remaining:
+                ep = task_manager.get_episode(idx)
+                if ep and ep.status == TaskStatus.FAILED:
+                    retry_count = ep.error.count("[重试") if ep.error else 0
+                    if retry_count < MAX_RETRY_COUNT:
+                        has_retryable = True
+                        break
+
+            if not has_retryable:
+                print(f"INFO:没有可重试的任务，结束处理")
+                break
+
+            # 更新待处理列表，继续下一轮
+            indices_to_download = remaining
+            print(f"INFO:发现 {len(indices_to_download)} 集需要继续处理，开始下一轮...")
+            await asyncio.sleep(5)  # 短暂等待后重试
+
+        if failed_count > 0:
+            print(f"ERROR:有 {failed_count} 集超过最大重试次数")
+
+        summary = task_manager.task.get_summary()
+        total_processed = summary.get(TaskStatus.COMPLETED.value, 0) + summary.get(TaskStatus.FAILED.value, 0)
+        print(f"DONE:{summary.get(TaskStatus.COMPLETED.value, 0)}/{total_processed}")
+
+        # 任务完成，释放锁
+        task_manager.set_pid(None)
+
+    # ========================================================================
+    # 3. stop 命令 - 停止任务
+    # ========================================================================
+    def stop(self, drama_id: str):
+        """停止任务，退出进程，更新task.json"""
+        # 去掉 # 前缀
+        if drama_id and drama_id.startswith("#"):
+            drama_id = drama_id[1:]
+
+        # 查找任务目录
+        drama_dir = None
+        for d in self.downloader.download_dir.iterdir():
+            if d.is_dir() and (d / "task.json").exists():
+                try:
+                    with open(d / "task.json", "r", encoding="utf-8") as f:
+                        task_data = json.load(f)
+                        if task_data.get("drama_id") == drama_id:
+                            drama_dir = d
+                            break
+                except:
+                    pass
+
+        if not drama_dir:
+            print(f"ERROR:未找到剧ID {drama_id} 的任务")
+            return
+
+        task_manager = TaskManager(drama_dir)
+        task = task_manager.task
+
+        # 检查是否有运行中的进程
+        if not task.is_running():
+            print(f"SKIP:任务未在运行 (PID: {task.pid})")
+            # 清理PID
+            if task.pid:
+                task_manager.set_pid(None)
+            return
+
+        # 终止进程
+        pid = task.pid
+        try:
+            import signal
+            os.kill(pid, signal.SIGTERM)
+            # 等待进程结束
+            for _ in range(10):
+                try:
+                    os.kill(pid, 0)
+                    time.sleep(0.5)
+                except ProcessLookupError:
+                    break
+            else:
+                # 强制终止
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except:
+                    pass
+
+            print(f"OK:已停止任务 (PID: {pid})")
+        except Exception as e:
+            print(f"ERROR:停止任务失败: {e}")
+            return
+
+        # 更新task.json，清理PID
+        task_manager.set_pid(None)
+
+        # 将正在下载/上传的剧集状态重置为pending
+        # 注意：保留.tmp文件和已下载但未上传的文件，保留uploadid用于断点续传
+        for idx_str, ep in task_manager.task.episodes.items():
+            if ep.status in [TaskStatus.DOWNLOADING, TaskStatus.UPLOADING]:
+                # 下载中/上传中：重置为pending，保留.tmp文件和uploadid用于断点续传
+                task_manager.set_status(int(idx_str), TaskStatus.PENDING)
+                # 注意：保留uploadid和uploaded_chunks，不重置上传进度
+            elif ep.status == TaskStatus.DOWNLOADED:
+                # 已下载但未上传：保持DOWNLOADED状态，保留文件继续上传
+                # 不重置状态，这样sync时会直接进入上传阶段
+                pass
+
+        print(f"OK:任务已重置，可重新运行 sync 命令")
+
+    # ========================================================================
+    # 4. status 命令 - 查看任务状态
+    # ========================================================================
+    def status(self, drama_id: str = None, verbose: bool = False):
+        """查看任务状态，支持 #ID 格式"""
+        # 去掉 # 前缀
+        if drama_id and drama_id.startswith("#"):
+            drama_id = drama_id[1:]
+
+        if drama_id:
+            # 查找对应 drama_id 的任务
+            drama_dir = None
+            for d in self.downloader.download_dir.iterdir():
+                if d.is_dir() and (d / "task.json").exists():
+                    try:
+                        with open(d / "task.json", "r", encoding="utf-8") as f:
+                            task_data = json.load(f)
+                            if task_data.get("drama_id") == drama_id:
+                                drama_dir = d
+                                break
+                    except:
+                        pass
+
+            if drama_dir:
+                self._print_task_status(drama_dir, verbose)
+            else:
+                print(f"ERROR:未找到剧ID {drama_id} 的任务")
+        else:
+            # 列出所有任务
+            if not self.downloader.download_dir.exists():
+                print("暂无任务")
+                return
+
+            task_dirs = [d for d in self.downloader.download_dir.iterdir() if d.is_dir() and (d / "task.json").exists()]
+
+            if not task_dirs:
+                print("暂无任务")
+                return
+
+            print(f"共有 {len(task_dirs)} 个任务:\n")
+            for d in sorted(task_dirs):
+                self._print_task_summary(d)
+
+    def _print_task_summary(self, drama_dir: Path):
+        task_manager = TaskManager(drama_dir)
+        task = task_manager.task
+        summary = task.get_summary()
+
+        completed = summary.get(TaskStatus.COMPLETED.value, 0)
+        total = task.total_episodes
+        failed = summary.get(TaskStatus.FAILED.value, 0)
+        downloading = summary.get(TaskStatus.DOWNLOADING.value, 0)
+
+        progress = f"{completed}/{total}" if total > 0 else "-"
+        percent = completed / total * 100 if total > 0 else 0
+
+        if task.is_completed():
+            mark = "✅"
+        elif failed > 0:
+            mark = "⚠️"
+        elif downloading > 0:
+            mark = "⬇️"
+        else:
+            mark = "⏳"
+
+        running_status = ""
+        if task.is_running():
+            running_status = f" [运行中 PID:{task.pid}]"
+
+        print(f"{mark} {task.drama_name}{running_status}")
+        print(f"   ID: #{task.drama_id}")
+        print(f"   进度: {progress} ({percent:.0f}%)")
+        if failed > 0:
+            print(f"   失败: {failed} 集")
+        print()
+
+    def _print_task_status(self, drama_dir: Path, verbose: bool):
+        task_manager = TaskManager(drama_dir)
+        task = task_manager.task
+
+        print(f"\n{'='*50}")
+        print(f"剧名: {task.drama_name}")
+        print(f"ID: #{task.drama_id}")
+        print(f"总集数: {task.total_episodes}")
+        if task.is_running():
+            print(f"状态: 运行中 (PID: {task.pid})")
+        print(f"{'='*50}\n")
+
+        summary = task.get_summary()
+        print("状态统计:")
+        for status in TaskStatus:
+            count = summary.get(status.value, 0)
+            if count > 0:
+                print(f"  {status.value}: {count}")
+
+        if verbose:
+            print("\n分集详情:")
+            for idx_str in sorted(task.episodes.keys(), key=int):
+                ep = task.episodes[idx_str]
+                icons = {
+                    TaskStatus.COMPLETED.value: "✅",
+                    TaskStatus.FAILED.value: "❌",
+                    TaskStatus.DOWNLOADING.value: "⬇️",
+                    TaskStatus.UPLOADING.value: "⬆️",
+                    TaskStatus.DOWNLOADED.value: "📥",
+                    TaskStatus.PENDING.value: "⏳",
+                }
+                # 计算进度百分比
+                progress_str = ""
+                if ep.status == TaskStatus.DOWNLOADING and ep.file_size > 0:
+                    percent = ep.downloaded_size / ep.file_size * 100
+                    progress_str = f" ({percent:.1f}%)"
+                elif ep.status == TaskStatus.UPLOADING and ep.file_size > 0:
+                    percent = ep.uploaded_size / ep.file_size * 100
+                    progress_str = f" ({percent:.1f}%)"
+                elif ep.status == TaskStatus.COMPLETED:
+                    progress_str = " (100%)"
+                print(f"  {icons.get(ep.status.value, '❓')} 第{idx_str}集 - {ep.status.value}{progress_str}")
+
+    # ========================================================================
+    # 4. login/logout 命令
+    # ========================================================================
+    async def login(self):
+        """登录百度网盘"""
+        if self.auth.is_authenticated():
+            if await self.auth.ensure_valid_token():
+                print("ALREADY_LOGGED_IN")
+                return
+
+        result = await self.auth.login()
+        if result:
+            print("OK:登录成功")
+        else:
+            print("ERROR:登录失败")
+
+    def logout(self):
+        """退出百度网盘登录"""
+        if self.auth.logout():
+            print("OK:已退出登录")
+        else:
+            print("ERROR:退出登录失败")
+
+
+# ============================================================================
+# 命令行入口
+# ============================================================================
+
+def main():
+    parser = argparse.ArgumentParser(description="MissY - 短剧下载器")
+    subparsers = parser.add_subparsers(dest="command", help="命令")
+
+    # parse - 解析分享文本，创建任务
+    parse_p = subparsers.add_parser("parse", help="解析分享文本，创建任务")
+    parse_p.add_argument("text", help="分享文本（包含剧名和链接）")
+
+    # sync - 同步下载上传
+    sync_p = subparsers.add_parser("sync", help="同步下载上传剧集")
+    sync_p.add_argument("drama_id", help="短剧ID（格式：#ID 或 ID）")
+    sync_p.add_argument("-e", "--episodes", nargs="+", type=int, help="指定集数（默认全部）")
+    sync_p.add_argument("-r", "--remote-dir", default="", help="远程目录")
+
+    # stop - 停止任务
+    stop_p = subparsers.add_parser("stop", help="停止任务")
+    stop_p.add_argument("drama_id", help="短剧ID（格式：#ID 或 ID）")
+
+    # status - 查看任务状态
+    status_p = subparsers.add_parser("status", help="查看任务状态")
+    status_p.add_argument("drama_id", nargs="?", default=None, help="短剧ID（格式：#ID 或 ID，默认列出所有）")
+    status_p.add_argument("-v", "--verbose", action="store_true", help="显示详细信息")
+
+    # login - 登录百度网盘
+    login_p = subparsers.add_parser("login", help="登录百度网盘")
+
+    # logout - 退出登录
+    logout_p = subparsers.add_parser("logout", help="退出百度网盘登录")
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        return
+
+    missy = MissY()
+
+    if args.command == "parse":
+        asyncio.run(missy.parse(args.text))
+    elif args.command == "sync":
+        # 去掉 # 前缀
+        drama_id = args.drama_id
+        if drama_id.startswith("#"):
+            drama_id = drama_id[1:]
+        asyncio.run(missy.sync(drama_id, args.episodes, args.remote_dir))
+    elif args.command == "stop":
+        missy.stop(args.drama_id)
+    elif args.command == "status":
+        missy.status(args.drama_id, args.verbose)
+    elif args.command == "login":
+        asyncio.run(missy.login())
+    elif args.command == "logout":
+        missy.logout()
+
+
+if __name__ == "__main__":
+    main()

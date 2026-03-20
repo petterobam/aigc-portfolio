@@ -1,0 +1,58 @@
+{
+  "url": "https://fanqienovel.com/main/writer/publish-short/7618928007813530174?enter_from=NEWCHAPTER_1",
+  "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+  "forms": [],
+  "inputs": [],
+  "buttons": [
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "text": "存草稿",
+      "type": "button",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+      "text": "下一步",
+      "type": "button",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+      "text": "去设置",
+      "type": "button",
+      "disabled": true
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+      "text": "重新检测",
+      "type": "button",
+      "disabled": false
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+      "text": "申请标注问题",
+      "type": "button",
+      "disabled": true
+    },
+    {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn",
+      "text": "下一步",
+      "type": "button",
+      "disabled": false
+    }
+  ],
+  "textareas": [],
+  "selects": []
+}

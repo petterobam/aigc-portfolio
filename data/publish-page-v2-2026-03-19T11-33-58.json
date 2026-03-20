@@ -1,0 +1,191 @@
+{
+  "timestamp": "2026-03-19T11-33-58",
+  "url": "https://fanqienovel.com/main/writer/publish-short/7618928586694591038?enter_from=NEWCHAPTER_1",
+  "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+  "structure": {
+    "url": "https://fanqienovel.com/main/writer/publish-short/7618928586694591038?enter_from=NEWCHAPTER_1",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "inputFields": [
+      {
+        "tag": "TEXTAREA",
+        "type": "textarea",
+        "id": "",
+        "name": "",
+        "className": "byte-textarea serial-textarea",
+        "placeholder": "请输入短故事名称",
+        "value": "",
+        "required": false,
+        "visible": true,
+        "disabled": false,
+        "parentElementClass": "serial-editor-free-title",
+        "parentElementId": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "radio",
+        "id": "",
+        "name": "",
+        "className": "",
+        "placeholder": "",
+        "value": "1",
+        "required": false,
+        "visible": true,
+        "disabled": false,
+        "label": "是",
+        "parentElementClass": "arco-radio",
+        "parentElementId": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "radio",
+        "id": "",
+        "name": "",
+        "className": "",
+        "placeholder": "",
+        "value": "2",
+        "required": false,
+        "visible": true,
+        "disabled": false,
+        "label": "是",
+        "parentElementClass": "arco-radio",
+        "parentElementId": ""
+      },
+      {
+        "tag": "INPUT",
+        "type": "checkbox",
+        "id": "",
+        "name": "",
+        "className": "",
+        "placeholder": "",
+        "value": "",
+        "required": false,
+        "visible": true,
+        "disabled": false,
+        "label": "",
+        "parentElementClass": "arco-checkbox serial-checkbox ",
+        "parentElementId": ""
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+        "text": "存草稿",
+        "type": "button",
+        "role": "",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+        "text": "下一步",
+        "type": "button",
+        "role": "",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "text": "去设置",
+        "type": "button",
+        "role": "",
+        "disabled": true,
+        "visible": true
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+        "text": "重新检测",
+        "type": "button",
+        "role": "",
+        "disabled": false,
+        "visible": true
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "text": "申请标注问题",
+        "type": "button",
+        "role": "",
+        "disabled": true,
+        "visible": false
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn",
+        "text": "下一步",
+        "type": "button",
+        "role": "",
+        "disabled": false,
+        "visible": true
+      }
+    ],
+    "richTextEditors": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "className": "ProseMirror payNode-helper-content",
+        "index": 0,
+        "text": "· 发表超6000字，即有机会签约，享更多流量和作者福利\n                          · 多使用分段或换行，更方便阅读\n                          · ",
+        "html": "<p><span class=\"syl-placeholder ProseMirror-widget\" style=\"cursor: text; text-indent: initial; pointer-events: none; -webkit-user-select: none; user-select: none; position: absolute;\" ignoreel=\"true\" ",
+        "visible": true,
+        "placeholder": "",
+        "parentElementClass": "syl-editor",
+        "parentElementId": ""
+      }
+    ],
+    "uploadAreas": []
+  },
+  "keyFields": {
+    "contentEditor": {
+      "tag": "DIV",
+      "id": "",
+      "className": "ProseMirror payNode-helper-content",
+      "index": 0,
+      "text": "· 发表超6000字，即有机会签约，享更多流量和作者福利\n                          · 多使用分段或换行，更方便阅读\n                          · ",
+      "html": "<p><span class=\"syl-placeholder ProseMirror-widget\" style=\"cursor: text; text-indent: initial; pointer-events: none; -webkit-user-select: none; user-select: none; position: absolute;\" ignoreel=\"true\" ",
+      "visible": true,
+      "placeholder": "",
+      "parentElementClass": "syl-editor",
+      "parentElementId": ""
+    },
+    "publishButton": {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "text": "存草稿",
+      "type": "button",
+      "role": "",
+      "disabled": false,
+      "visible": true
+    },
+    "saveDraftButton": {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "text": "存草稿",
+      "type": "button",
+      "role": "",
+      "disabled": false,
+      "visible": true
+    },
+    "nextButton": {
+      "tag": "BUTTON",
+      "id": "",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+      "text": "下一步",
+      "type": "button",
+      "role": "",
+      "disabled": false,
+      "visible": true
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-03-20T16:12:34.167Z",
+  "pageInfo": {
+    "url": "https://fanqienovel.com/main/writer/login",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": "作家专区\n番茄小说网\n作家课堂\n作家福利\n验证码登录\n扫码登录\n获取验证码\n我已阅读并同意 用户协议 和 隐私政策\n登录/注册\n密码登录\n© 2026 北京时光荏苒科技有限公司"
+  },
+  "loginStatus": {
+    "loggedIn": true,
+    "loggedOut": true,
+    "userName": null
+  },
+  "userInfo": {
+    "name": null,
+    "hasPublishPermission": false,
+    "hasManagePermission": false
+  },
+  "checkUrls": {
+    "shortManagePage": "https://fanqienovel.com/main/writer/short-manage",
+    "writerDashboard": "https://fanqienovel.com/main/writer"
+  },
+  "screenshot": "/Users/oyjie/.openclaw/workspace/data/fanqie-login-check-2026-03-20T16-12-33-311Z.png"
+}

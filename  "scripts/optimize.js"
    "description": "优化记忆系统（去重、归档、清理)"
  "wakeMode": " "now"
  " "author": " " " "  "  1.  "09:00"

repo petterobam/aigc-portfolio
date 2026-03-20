@@ -1,0 +1,8 @@
+{
+  "name": "memory-optimizer",
+  "version": "1.0.0"
+  "description": "记忆优化器 - 自动优化记忆系统，保持高效和清洁"
+  "schedule": " " kind": "every"
+    expr: "*/30 * * * *"
+    tz: "Asia/Shanghai"
+}

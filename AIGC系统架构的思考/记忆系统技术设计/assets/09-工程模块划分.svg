@@ -1,0 +1,164 @@
+<svg viewBox="0 0 1200 780" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <defs>
+    <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#475569"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#06b6d4"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="780" fill="#0f1117"/>
+
+  <!-- Title -->
+  <text x="600" y="44" text-anchor="middle" font-size="22" font-weight="bold" fill="#e2e8f0">§11 · 工程模块划分</text>
+  <text x="600" y="66" text-anchor="middle" font-size="13" fill="#475569">8 个独立服务 · 各自迭代 · 各自扩缩容</text>
+  <line x1="60" y1="80" x2="1140" y2="80" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- ══════════════════════════════════════════
+       ROW 1 — 入口层
+  ══════════════════════════════════════════ -->
+
+  <!-- Memory Gateway -->
+  <rect x="420" y="100" width="360" height="76" rx="12" fill="#0f2744" stroke="#3b82f6" stroke-width="2"/>
+  <rect x="420" y="100" width="360" height="32" rx="12" fill="#3b82f620"/>
+  <rect x="420" y="118" width="360" height="14" fill="#0f2744"/>
+  <text x="600" y="122" text-anchor="middle" font-size="14" font-weight="bold" fill="#60a5fa">① Memory Gateway</text>
+  <text x="600" y="148" text-anchor="middle" font-size="12" fill="#94a3b8">统一对外入口 · 接收所有记忆请求 · 鉴权限流</text>
+  <text x="600" y="165" text-anchor="middle" font-size="11" fill="#475569">REST / gRPC · 请求日志 · 流量治理</text>
+
+  <!-- arrow down -->
+  <line x1="600" y1="176" x2="600" y2="204" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- ══════════════════════════════════════════
+       ROW 2 — 路由层
+  ══════════════════════════════════════════ -->
+
+  <!-- Memory Router -->
+  <rect x="420" y="208" width="360" height="76" rx="12" fill="#1a0a3e" stroke="#7c3aed" stroke-width="2"/>
+  <rect x="420" y="208" width="360" height="32" rx="12" fill="#7c3aed20"/>
+  <rect x="420" y="226" width="360" height="14" fill="#1a0a3e"/>
+  <text x="600" y="230" text-anchor="middle" font-size="14" font-weight="bold" fill="#a78bfa">② Memory Router</text>
+  <text x="600" y="256" text-anchor="middle" font-size="12" fill="#94a3b8">领域识别 · 空间选择 · QueryPlan 组装</text>
+  <text x="600" y="273" text-anchor="middle" font-size="11" fill="#475569">优先级排序 · 多空间联合查询策略</text>
+
+  <!-- arrow left to Query -->
+  <line x1="420" y1="246" x2="336" y2="246" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- arrow right to Skill Engine -->
+  <line x1="780" y1="246" x2="864" y2="246" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- arrow down to Write -->
+  <line x1="600" y1="284" x2="600" y2="312" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- ══════════════════════════════════════════
+       ROW 3 — 执行层（三列）
+  ══════════════════════════════════════════ -->
+
+  <!-- Memory Query Service -->
+  <rect x="100" y="316" width="236" height="90" rx="12" fill="#0c1f2e" stroke="#06b6d4" stroke-width="1.8"/>
+  <rect x="100" y="316" width="236" height="32" rx="12" fill="#06b6d418"/>
+  <rect x="100" y="334" width="236" height="14" fill="#0c1f2e"/>
+  <text x="218" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#22d3ee">③ Memory Query Service</text>
+  <text x="218" y="364" text-anchor="middle" font-size="12" fill="#94a3b8">多空间并行召回</text>
+  <text x="218" y="381" text-anchor="middle" font-size="12" fill="#94a3b8">结果融合 · 置信度排序</text>
+  <text x="218" y="396" text-anchor="middle" font-size="11" fill="#475569">向量检索 · 精确匹配</text>
+
+  <!-- Memory Write Service -->
+  <rect x="482" y="316" width="236" height="90" rx="12" fill="#0c1f2e" stroke="#06b6d4" stroke-width="1.8"/>
+  <rect x="482" y="316" width="236" height="32" rx="12" fill="#06b6d418"/>
+  <rect x="482" y="334" width="236" height="14" fill="#0c1f2e"/>
+  <text x="600" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#22d3ee">④ Memory Write Service</text>
+  <text x="600" y="364" text-anchor="middle" font-size="12" fill="#94a3b8">候选写入 · 正式晋升</text>
+  <text x="600" y="381" text-anchor="middle" font-size="12" fill="#94a3b8">更新 · 淘汰 · 归档</text>
+  <text x="600" y="396" text-anchor="middle" font-size="11" fill="#475569">增量学习触发入口</text>
+
+  <!-- Skill Engine Service -->
+  <rect x="864" y="316" width="236" height="90" rx="12" fill="#0c1f2e" stroke="#06b6d4" stroke-width="1.8"/>
+  <rect x="864" y="316" width="236" height="32" rx="12" fill="#06b6d418"/>
+  <rect x="864" y="334" width="236" height="14" fill="#0c1f2e"/>
+  <text x="982" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#22d3ee">⑤ Skill Engine Service</text>
+  <text x="982" y="364" text-anchor="middle" font-size="12" fill="#94a3b8">统一执行各类 Skill</text>
+  <text x="982" y="381" text-anchor="middle" font-size="12" fill="#94a3b8">版本路由 · 灰度控制</text>
+  <text x="982" y="396" text-anchor="middle" font-size="11" fill="#475569">问题生成 / 总结 / 扩散 / 评分</text>
+
+  <!-- ══════════════════════════════════════════
+       ROW 4 — 流水线 & 评估层（两列）
+  ══════════════════════════════════════════ -->
+
+  <!-- arrow: Query → down -->
+  <line x1="218" y1="406" x2="218" y2="474" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- arrow: Write → down -->
+  <line x1="600" y1="406" x2="600" y2="474" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- arrow: Skill → down -->
+  <line x1="982" y1="406" x2="982" y2="474" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- Preprocess Pipeline -->
+  <rect x="100" y="478" width="360" height="90" rx="12" fill="#1a1000" stroke="#f59e0b" stroke-width="1.8"/>
+  <rect x="100" y="478" width="360" height="32" rx="12" fill="#f59e0b18"/>
+  <rect x="100" y="496" width="360" height="14" fill="#1a1000"/>
+  <text x="280" y="500" text-anchor="middle" font-size="13" font-weight="bold" fill="#fbbf24">⑥ Preprocess Pipeline Service</text>
+  <text x="280" y="526" text-anchor="middle" font-size="12" fill="#94a3b8">文档清洗 · 切分 · 结构化</text>
+  <text x="280" y="543" text-anchor="middle" font-size="12" fill="#94a3b8">批量问题生成 · 批量答案生成</text>
+  <text x="280" y="558" text-anchor="middle" font-size="11" fill="#475569">异步队列驱动 · 支持大批量任务</text>
+
+  <!-- Evaluation Service -->
+  <rect x="740" y="478" width="360" height="90" rx="12" fill="#1a0010" stroke="#f43f5e" stroke-width="1.8"/>
+  <rect x="740" y="478" width="360" height="32" rx="12" fill="#f43f5e18"/>
+  <rect x="740" y="496" width="360" height="14" fill="#1a0010"/>
+  <text x="920" y="500" text-anchor="middle" font-size="13" font-weight="bold" fill="#fb7185">⑦ Evaluation Service</text>
+  <text x="920" y="526" text-anchor="middle" font-size="12" fill="#94a3b8">质量评分 · 去重 · 候选晋升决策</text>
+  <text x="920" y="543" text-anchor="middle" font-size="12" fill="#94a3b8">命中率监控 · Skill 效果评估</text>
+  <text x="920" y="558" text-anchor="middle" font-size="11" fill="#475569">A/B 对比 · 灰度评估 · 报表</text>
+
+  <!-- ══════════════════════════════════════════
+       ROW 5 — 运营层
+  ══════════════════════════════════════════ -->
+
+  <!-- arrows down to admin -->
+  <line x1="280" y1="568" x2="280" y2="636" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <line x1="920" y1="568" x2="920" y2="636" stroke="#475569" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+  <!-- connect both to admin horizontally -->
+
+  <!-- Memory Admin Console -->
+  <rect x="220" y="640" width="760" height="80" rx="12" fill="#0f1f0f" stroke="#22c55e" stroke-width="2"/>
+  <rect x="220" y="640" width="760" height="32" rx="12" fill="#22c55e18"/>
+  <rect x="220" y="658" width="760" height="14" fill="#0f1f0f"/>
+  <text x="600" y="662" text-anchor="middle" font-size="14" font-weight="bold" fill="#4ade80">⑧ Memory Admin Console</text>
+  <text x="600" y="688" text-anchor="middle" font-size="12" fill="#94a3b8">记忆空间管理 · Skill 版本管理 · 命中数据看板 · 人工干预入口</text>
+  <text x="600" y="705" text-anchor="middle" font-size="11" fill="#475569">灰度发布控制 · 生命周期治理 · 质量阈值配置</text>
+
+  <!-- ══════════════════════════════════════════
+       变化频率注释列
+  ══════════════════════════════════════════ -->
+  <rect x="60" y="100" width="28" height="600" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="74" y="290" text-anchor="middle" font-size="10" fill="#475569" transform="rotate(-90,74,290)">变化频率：高 ←────────────────────────────────────────────→ 低</text>
+
+  <!-- 频率色块 -->
+  <rect x="61" y="101" width="26" height="76" rx="5" fill="#ef444430"/>
+  <rect x="61" y="209" width="26" height="76" rx="5" fill="#f97316 30"/>
+  <rect x="61" y="317" width="26" height="270" rx="5" fill="#f59e0b28"/>
+  <rect x="61" y="641" width="26" height="78" rx="5" fill="#22c55e20"/>
+
+  <!-- ══════════════════════════════════════════
+       底部图例
+  ══════════════════════════════════════════ -->
+  <line x1="60" y1="740" x2="1140" y2="740" stroke="#1e293b" stroke-width="1"/>
+  <circle cx="260" cy="758" r="6" fill="#3b82f620" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="274" y="763" font-size="11" fill="#64748b">入口 / 路由层</text>
+  <circle cx="390" cy="758" r="6" fill="#06b6d418" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="404" y="763" font-size="11" fill="#64748b">执行服务层</text>
+  <circle cx="510" cy="758" r="6" fill="#f59e0b18" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="524" y="763" font-size="11" fill="#64748b">流水线层</text>
+  <circle cx="620" cy="758" r="6" fill="#f43f5e18" stroke="#f43f5e" stroke-width="1.5"/>
+  <text x="634" y="763" font-size="11" fill="#64748b">评估治理层</text>
+  <circle cx="748" cy="758" r="6" fill="#22c55e18" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="762" y="763" font-size="11" fill="#64748b">运营管理层</text>
+
+</svg>

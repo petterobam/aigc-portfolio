@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# Cookie 文件（包含敏感登录信息）
+data/*cookies.json
+data/fanqie-cookies.json
+
+# 敏感数据
+data/secrets/
+*.key
+*.pem
+*.p12
+
+# Playwright
+playwright-report/
+test-results/
+
+# 临时文件
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
+*.sublime-*
+
+# 编译输出
+dist/
+build/

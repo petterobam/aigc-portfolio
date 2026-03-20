@@ -1,0 +1,30 @@
+{
+  "currentDay": 20,
+  "startDate": "2026-03-04",
+  "lastStudyDate": "2026-03-20",
+  "totalDays": 35,
+  "completedDays": 19,
+  "completedTopics": [
+    "LLM 总体架构",
+    "LLM 输入与输出",
+    "生成与解码过程",
+    "LLM 训练流程",
+    "多模态模型基础",
+    "SFT 基础（微调技术分类、指令数据来源、数据拼接）",
+    "LoRA 技术（低秩分解、初始化策略、参数效率对比）",
+    "其他微调方法（Prefix-Tuning、Adapter Tuning、Prompt 微调）",
+    "RLHF 基础（两阶段训练流程、奖励模型结构、奖励模型训练）",
+    "PPO 算法（PPO与TRPO、PPO-Clip原理、KL距离）",
+    "DPO 基础（RLHF vs DPO对比、DPO原理、训练全景图、β参数影响、隐式奖励差异）",
+    "DPO 深入与实践（数学原理推导、β参数深入、梯度更新机制、变体改进、实践案例）",
+    "CoT 思维链（CoT vs 传统问答、Self-consistency CoT、ToT/GoT、实践技巧、应用案例）",
+    "解码策略深入（多项式采样、Top-K/Top-P采样、对比搜索、投机解码）",
+    "RAG（检索增强生成：离线构建、在线服务、优化技术、框架工具）",
+    "功能调用（Function Calling 原理、Agent 架构、工具使用框架）",
+    "RL 基础概念（MDP、状态/动作/奖励、策略定义、探索与利用、三大机器学习范式）",
+    "价值函数（V(s)、Q(s,a)、Bellman 方程、TD目标与TD误差、TD(0)/多步TD/MC关系）",
+    "DQN（Deep Q-Network、经验回放、目标网络、ε-greedy 探索）"
+  ],
+  "streak": 19,
+  "skippedDays": 0
+}

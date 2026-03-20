@@ -1,0 +1,215 @@
+<svg viewBox="0 0 1100 820" xmlns="http://www.w3.org/2000/svg" font-family="'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#475569"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="820" fill="#0f1117"/>
+
+  <!-- Title -->
+  <text x="550" y="42" text-anchor="middle" font-size="22" font-weight="bold" fill="#e2e8f0">记忆分层架构 · 五层结构与优先级</text>
+  <line x1="60" y1="58" x2="1040" y2="58" stroke="#1e293b" stroke-width="1.5"/>
+
+  <!-- ═══════════════════════════════════════════
+       LEFT: 五层堆叠结构
+  ════════════════════════════════════════════ -->
+
+  <!-- 优先级标注 -->
+  <text x="62" y="82" font-size="12" fill="#475569">查询优先级 HIGH</text>
+  <line x1="56" y1="90" x2="56" y2="650" stroke="#334155" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="62" y="666" font-size="12" fill="#475569">LOW</text>
+  <polygon points="56,654 52,643 60,643" fill="#475569"/>
+
+  <!-- Layer 1: 会话记忆 -->
+  <rect x="80" y="88" width="520" height="78" rx="10" fill="#0f2744" stroke="#3b82f6" stroke-width="2"/>
+  <rect x="80" y="88" width="6" height="78" rx="3" fill="#3b82f6"/>
+  <!-- badge -->
+  <rect x="94" y="100" width="56" height="22" rx="5" fill="#1d4ed8"/>
+  <text x="122" y="116" text-anchor="middle" font-size="10" font-weight="bold" fill="#bfdbfe">P1</text>
+  <!-- title -->
+  <text x="164" y="116" font-size="15" font-weight="bold" fill="#93c5fd">会话记忆  Session Memory</text>
+  <!-- desc -->
+  <text x="94" y="142" font-size="12" fill="#64748b">当前对话 · 推理中间状态 · 临时约束 · 实时局部上下文</text>
+  <!-- right tag -->
+  <rect x="518" y="104" width="70" height="20" rx="4" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="553" y="119" text-anchor="middle" font-size="10" fill="#60a5fa">短期 · 实时</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="340" y1="166" x2="340" y2="184" stroke="#334155" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- Layer 2: 项目记忆 -->
+  <rect x="80" y="188" width="520" height="78" rx="10" fill="#13202e" stroke="#0ea5e9" stroke-width="1.5"/>
+  <rect x="80" y="188" width="6" height="78" rx="3" fill="#0ea5e9"/>
+  <rect x="94" y="200" width="56" height="22" rx="5" fill="#0c4a6e"/>
+  <text x="122" y="216" text-anchor="middle" font-size="10" font-weight="bold" fill="#7dd3fc">P2</text>
+  <text x="164" y="216" font-size="15" font-weight="bold" fill="#7dd3fc">项目记忆  Project Memory</text>
+  <text x="94" y="242" font-size="12" fill="#64748b">专属角色设定 · 剧情脉络 · 项目风格约束 · 项目内问答积累</text>
+  <rect x="518" y="204" width="70" height="20" rx="4" fill="#082f49" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="553" y="219" text-anchor="middle" font-size="10" fill="#38bdf8">中期 · 私有</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="340" y1="266" x2="340" y2="284" stroke="#334155" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- Layer 3: 领域记忆 (展开子项) -->
+  <rect x="80" y="288" width="520" height="112" rx="10" fill="#1a1230" stroke="#a855f7" stroke-width="1.5"/>
+  <rect x="80" y="288" width="6" height="112" rx="3" fill="#a855f7"/>
+  <rect x="94" y="300" width="56" height="22" rx="5" fill="#4c1d95"/>
+  <text x="122" y="316" text-anchor="middle" font-size="10" font-weight="bold" fill="#d8b4fe">P3</text>
+  <text x="164" y="316" font-size="15" font-weight="bold" fill="#c4b5fd">领域记忆  Domain Memory</text>
+  <!-- 子空间标签 -->
+  <rect x="94" y="332" width="110" height="28" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="149" y="351" text-anchor="middle" font-size="11" fill="#c084fc">📖 小说创作</text>
+  <rect x="214" y="332" width="110" height="28" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="269" y="351" text-anchor="middle" font-size="11" fill="#c084fc">🎬 导演拍摄</text>
+  <rect x="334" y="332" width="110" height="28" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="389" y="351" text-anchor="middle" font-size="11" fill="#c084fc">🎞 分镜设计</text>
+  <rect x="454" y="332" width="132" height="28" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="520" y="351" text-anchor="middle" font-size="11" fill="#c084fc">🌍 世界观设定</text>
+  <!-- desc -->
+  <text x="94" y="386" font-size="12" fill="#64748b">各方向独立存储 · 独立 Skill · 可并行召回 · 可单独版本升级</text>
+  <rect x="518" y="304" width="70" height="20" rx="4" fill="#1e1b4b" stroke="#a855f7" stroke-width="1"/>
+  <text x="553" y="319" text-anchor="middle" font-size="10" fill="#a78bfa">长期 · 共享</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="340" y1="400" x2="340" y2="418" stroke="#334155" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- Layer 4: 全局记忆 -->
+  <rect x="80" y="422" width="520" height="78" rx="10" fill="#1a1a0e" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="80" y="422" width="6" height="78" rx="3" fill="#f59e0b"/>
+  <rect x="94" y="434" width="56" height="22" rx="5" fill="#78350f"/>
+  <text x="122" y="450" text-anchor="middle" font-size="10" font-weight="bold" fill="#fcd34d">P4</text>
+  <text x="164" y="450" font-size="15" font-weight="bold" fill="#fcd34d">全局记忆  Global Memory</text>
+  <text x="94" y="476" font-size="12" fill="#64748b">通用叙事结构 · 通用影视语言 · 通用 AIGC 知识 · 平台基础答案库</text>
+  <rect x="518" y="438" width="70" height="20" rx="4" fill="#1c1008" stroke="#f59e0b" stroke-width="1"/>
+  <text x="553" y="453" text-anchor="middle" font-size="10" fill="#fbbf24">长期 · 平台</text>
+
+  <!-- Arrow 4→5 (dashed, style layer) -->
+  <line x1="340" y1="500" x2="340" y2="518" stroke="#334155" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray)"/>
+
+  <!-- Layer 5: 用户记忆 (风格层，非事实层) -->
+  <rect x="80" y="522" width="520" height="78" rx="10" fill="#0f1a1a" stroke="#14b8a6" stroke-width="1.5"/>
+  <rect x="80" y="522" width="6" height="78" rx="3" fill="#14b8a6"/>
+  <rect x="94" y="534" width="56" height="22" rx="5" fill="#134e4a"/>
+  <text x="122" y="550" text-anchor="middle" font-size="10" font-weight="bold" fill="#99f6e4">风格</text>
+  <text x="164" y="550" font-size="15" font-weight="bold" fill="#5eead4">用户记忆  User Memory</text>
+  <text x="94" y="576" font-size="12" fill="#64748b">偏好风格 · 表达习惯 · 常见否决点 · 历史倾向（不参与事实覆盖）</text>
+  <rect x="490" y="538" width="98" height="20" rx="4" fill="#042f2e" stroke="#14b8a6" stroke-width="1"/>
+  <text x="539" y="553" text-anchor="middle" font-size="10" fill="#2dd4bf">风格调制 · 个人</text>
+
+  <!-- 特殊标注：用户记忆不覆盖事实 -->
+  <rect x="80" y="612" width="520" height="26" rx="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="340" y="630" text-anchor="middle" font-size="11" fill="#2dd4bf">⚠ 用户记忆仅用于答案风格调制，不参与事实级别的覆盖与冲突决策</text>
+
+  <!-- ═══════════════════════════════════════════
+       RIGHT: 查询链路说明
+  ════════════════════════════════════════════ -->
+
+  <rect x="640" y="76" width="420" height="580" rx="14" fill="#0d1117" stroke="#334155" stroke-width="1.5"/>
+  <text x="850" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#94a3b8">查询优先级链路示例</text>
+  <line x1="660" y1="116" x2="1040" y2="116" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- 场景A -->
+  <text x="660" y="140" font-size="12" font-weight="bold" fill="#f59e0b">场景 A · 小说项目中的剧情问题</text>
+
+  <rect x="720" y="152" width="240" height="32" rx="7" fill="#1d4ed8" stroke="#3b82f6" stroke-width="1"/>
+  <text x="840" y="173" text-anchor="middle" font-size="12" fill="#bfdbfe">①  Session Memory</text>
+  <line x1="840" y1="184" x2="840" y2="197" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <rect x="720" y="200" width="240" height="32" rx="7" fill="#0c4a6e" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="840" y="221" text-anchor="middle" font-size="12" fill="#7dd3fc">②  Project Memory</text>
+  <line x1="840" y1="232" x2="840" y2="245" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <rect x="720" y="248" width="240" height="32" rx="7" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="840" y="269" text-anchor="middle" font-size="12" fill="#c4b5fd">③  Domain: 小说创作</text>
+  <line x1="840" y1="280" x2="840" y2="293" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <rect x="720" y="296" width="240" height="32" rx="7" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+  <text x="840" y="317" text-anchor="middle" font-size="12" fill="#fcd34d">④  Global Memory</text>
+  <line x1="840" y1="328" x2="840" y2="341" stroke="#334155" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr-gray)"/>
+  <rect x="720" y="344" width="240" height="32" rx="7" fill="#134e4a" stroke="#14b8a6" stroke-width="1"/>
+  <text x="840" y="365" text-anchor="middle" font-size="12" fill="#5eead4">⑤  User Memory（风格）</text>
+
+  <line x1="660" y1="390" x2="1040" y2="390" stroke="#1e293b" stroke-width="1" stroke-dasharray="3,4"/>
+
+  <!-- 场景B -->
+  <text x="660" y="412" font-size="12" font-weight="bold" fill="#a855f7">场景 B · 跨领域任务（小说→拍摄）</text>
+
+  <rect x="660" y="424" width="380" height="32" rx="7" fill="#0c4a6e" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="850" y="445" text-anchor="middle" font-size="12" fill="#7dd3fc">①  Project Memory（核心约束）</text>
+  <line x1="850" y1="456" x2="850" y2="469" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+
+  <!-- 并行召回 -->
+  <rect x="660" y="472" width="175" height="32" rx="7" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="747" y="493" text-anchor="middle" font-size="11" fill="#c4b5fd">②a  Domain: 小说</text>
+  <rect x="865" y="472" width="175" height="32" rx="7" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+  <text x="952" y="493" text-anchor="middle" font-size="11" fill="#c4b5fd">②b  Domain: 导演</text>
+  <!-- 并行标注 -->
+  <line x1="747" y1="472" x2="747" y2="462" stroke="#a855f7" stroke-width="1"/>
+  <line x1="952" y1="472" x2="952" y2="462" stroke="#a855f7" stroke-width="1"/>
+  <line x1="747" y1="462" x2="952" y2="462" stroke="#a855f7" stroke-width="1"/>
+  <text x="850" y="458" text-anchor="middle" font-size="10" fill="#a855f7">并行召回</text>
+
+  <line x1="850" y1="504" x2="850" y2="517" stroke="#475569" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <rect x="700" y="520" width="300" height="32" rx="7" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="850" y="541" text-anchor="middle" font-size="12" fill="#86efac">③  聚合 + 冲突消解 + 输出</text>
+
+  <line x1="660" y1="566" x2="1040" y2="566" stroke="#1e293b" stroke-width="1" stroke-dasharray="3,4"/>
+
+  <!-- 覆盖规则说明 -->
+  <text x="660" y="586" font-size="12" font-weight="bold" fill="#94a3b8">覆盖与融合规则</text>
+  <text x="660" y="606" font-size="11" fill="#64748b">• 高优先级层命中 → 直接返回，不再向下查</text>
+  <text x="660" y="624" font-size="11" fill="#64748b">• 未命中 → 向下一层透传查询</text>
+  <text x="660" y="642" font-size="11" fill="#64748b">• 多层均有答案 → 高优先级覆盖低优先级</text>
+  <text x="660" y="660" font-size="11" fill="#64748b">• 用户记忆仅调制输出风格，不覆盖事实</text>
+
+  <!-- ═══════════════════════════════════════════
+       BOTTOM: 继承关系图
+  ════════════════════════════════════════════ -->
+  <rect x="60" y="670" width="1000" height="120" rx="12" fill="#0d1117" stroke="#334155" stroke-width="1.5"/>
+  <text x="560" y="696" text-anchor="middle" font-size="13" font-weight="bold" fill="#94a3b8">记忆空间继承关系 · 隔离 / 组合 / 覆盖</text>
+
+  <!-- Global -->
+  <rect x="100" y="710" width="130" height="56" rx="8" fill="#1c1008" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="165" y="733" text-anchor="middle" font-size="12" font-weight="bold" fill="#fcd34d">Global Memory</text>
+  <text x="165" y="752" text-anchor="middle" font-size="10" fill="#78350f">平台底座</text>
+
+  <!-- Domains inherit from Global -->
+  <line x1="230" y1="738" x2="260" y2="738" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="260" y="710" width="115" height="56" rx="8" fill="#1a1230" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="317" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#c4b5fd">小说创作</text>
+  <text x="317" y="750" text-anchor="middle" font-size="10" fill="#7c3aed">Domain</text>
+  <rect x="385" y="710" width="115" height="56" rx="8" fill="#1a1230" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="442" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#c4b5fd">导演拍摄</text>
+  <text x="442" y="750" text-anchor="middle" font-size="10" fill="#7c3aed">Domain</text>
+  <rect x="510" y="710" width="115" height="56" rx="8" fill="#1a1230" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="567" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#c4b5fd">分镜设计</text>
+  <text x="567" y="750" text-anchor="middle" font-size="10" fill="#7c3aed">Domain</text>
+
+  <!-- Projects inherit from Domains -->
+  <line x1="625" y1="738" x2="655" y2="738" stroke="#a855f7" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="655" y="710" width="120" height="56" rx="8" fill="#13202e" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="715" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#7dd3fc">Project A</text>
+  <text x="715" y="750" text-anchor="middle" font-size="10" fill="#0c4a6e">可覆盖上层答案</text>
+  <rect x="785" y="710" width="120" height="56" rx="8" fill="#13202e" stroke="#0ea5e9" stroke-width="1.5"/>
+  <text x="845" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#7dd3fc">Project B</text>
+  <text x="845" y="750" text-anchor="middle" font-size="10" fill="#0c4a6e">可覆盖上层答案</text>
+
+  <!-- User style -->
+  <line x1="905" y1="738" x2="930" y2="738" stroke="#334155" stroke-width="1" stroke-dasharray="3,4"/>
+  <rect x="930" y="710" width="110" height="56" rx="8" fill="#0f1a1a" stroke="#14b8a6" stroke-width="1.5"/>
+  <text x="985" y="733" text-anchor="middle" font-size="11" font-weight="bold" fill="#5eead4">User</text>
+  <text x="985" y="750" text-anchor="middle" font-size="10" fill="#134e4a">风格调制</text>
+
+  <!-- inheritance label -->
+  <text x="245" y="775" text-anchor="middle" font-size="10" fill="#f59e0b">继承</text>
+  <text x="640" y="775" text-anchor="middle" font-size="10" fill="#a855f7">继承 + 覆盖</text>
+  <text x="918" y="775" text-anchor="middle" font-size="10" fill="#14b8a6">叠加</text>
+</svg>

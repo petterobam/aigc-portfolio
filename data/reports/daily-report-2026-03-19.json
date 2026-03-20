@@ -1,0 +1,120 @@
+{
+  "timestamp": "2026-03-19T11:14:45.000Z",
+  "latestFile": "story-list-all-2026-03-19T11-14-45.json",
+  "yesterdayFile": "story-list-all-2026-03-19T11-08-27.json",
+  "timeDifference": "6分钟",
+  "summary": {
+    "totalStories": 30,
+    "totalReads": 145,
+    "avgReads": "4.83",
+    "signedCount": 29,
+    "signRate": "96.67%"
+  },
+  "dailyChange": {
+    "newStories": 0,
+    "readChange": 0,
+    "note": "数据无变化，时间间隔仅6分钟"
+  },
+  "topStories": [
+    {
+      "title": "读心宠妃：皇上心里全是弹幕",
+      "read": 51,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "觉醒读心术后，我发现全家都在演我",
+      "read": 15,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "重生之我被逼顶替学籍",
+      "read": 13,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "穿越大秦：为了不陪葬我只能拼命帮政哥养生",
+      "read": 13,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "婆婆说我配不上她儿子，我把嫁妆搬走那天全家跪了",
+      "read": 11,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "崇祯听见大臣心声，满朝文武都要亡国那我就先杀光你们",
+      "read": 7,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "她死后的第七天给我发了条短信",
+      "read": 4,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "给弟弟买房给我借条，车祸后他们才知道我的身份",
+      "read": 4,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "相亲读心术，他嘴上说看重人品心里却在算计我的彩礼",
+      "read": 4,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "第13位客人进门时，必须播放45号磁带",
+      "read": 3,
+      "change": {
+        "readDiff": 0
+      }
+    }
+  ],
+  "zeroReadStories": [
+    {
+      "title": "不小心穿成职场PUA受害者，我靠人间清醒反杀全场",
+      "previewId": "7618882529520517694"
+    },
+    {
+      "title": "皇宫里全是弹幕",
+      "previewId": "7618467491462775358"
+    },
+    {
+      "title": "职场整顿：既然老板想白嫖那我只能送他进去了",
+      "previewId": "7595794277372789310"
+    },
+    {
+      "title": "全人类都装了脑机接口，只有我能听见AI的阴谋",
+      "previewId": "7595780150034186776"
+    },
+    {
+      "title": "我家猫咪在骂我，还帮我搞定了房租",
+      "previewId": "7595778444051350078"
+    },
+    {
+      "title": "我在凶宅听鬼讲八卦，红衣女鬼哭着求我帮她连WiFi",
+      "previewId": "7595776335671214654"
+    },
+    {
+      "title": "听见霸凌者的秘密，我开始了猎杀游戏",
+      "previewId": "7595519054400471576"
+    }
+  ]
+}
