@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 
 /**
- * 向量去重器 (v1.0.0)
+ * 向量去重器 (v2.0.0)
  *
  * 功能：
  * 1. 生成内容向量（使用 OpenAI Embeddings）
  * 2. 计算余弦相似度
  * 3. 查找相似记忆（相似度 > 阈值）
  * 4. 集成到优化流程
+ * 5. 向量持久化（存储到数据库）
+ * 6. 智能向量生成（检查缓存、数据库、版本）
  *
  * 使用方法：
  * const VectorDeduplicator = require('./vector-deduplicator');
  * const deduplicator = new VectorDeduplicator(db, openaiApiKey);
  * const duplicates = await deduplicator.findDuplicates(memories);
+ *
+ * 版本历史：
+ * v1.0.0 - 基础实现（向量生成、相似度计算、重复检测）
+ * v2.0.0 - 向量持久化（数据库存储、智能生成、版本控制）
  */
 
 const fs = require('fs');
@@ -24,7 +30,8 @@ const CONFIG = {
   batchSize: 10,                // 批量处理大小（避免超过 API 限制）
   model: 'text-embedding-3-small',  // OpenAI 模型
   dimensions: 1536,             // 向量维度
-  cacheEnabled: true            // 是否启用缓存
+  cacheEnabled: true,           // 是否启用缓存
+  usePersistence: true          // 是否使用向量持久化
 };
 
 /**
@@ -36,6 +43,7 @@ class VectorDeduplicator {
     this.openaiApiKey = openaiApiKey;
     this.openai = null;  // 延迟加载 OpenAI 客户端
     this.embeddingCache = new Map();  // 向量缓存
+    this.currentVersion = 'v1.0-text-embedding-3-small';  // 当前向量版本
   }
 
   /**
@@ -49,23 +57,98 @@ class VectorDeduplicator {
   }
 
   /**
-   * 生成内容向量
+   * 获取当前向量版本
    *
-   * @param {string} content - 记忆内容
-   * @returns {Promise<number[]>} 向量数组
+   * @returns {string} 向量版本
    */
-  async generateEmbedding(content) {
-    // 检查缓存
-    const contentHash = require('crypto')
+  getEmbeddingVersion() {
+    return this.currentVersion;
+  }
+
+  /**
+   * 计算内容的哈希值
+   *
+   * @param {string} content - 内容
+   * @returns {string} 哈希值
+   */
+  getContentHash(content) {
+    return require('crypto')
       .createHash('md5')
       .update(content)
       .digest('hex');
+  }
 
+  /**
+   * 检查向量是否需要更新
+   *
+   * @param {number} memoryId - 记忆 ID
+   * @param {string} content - 内容
+   * @returns {Object} { needsUpdate: boolean, storedEmbedding: number[] | null, storedVersion: string | null }
+   */
+  checkEmbeddingUpdateNeeded(memoryId, content) {
+    if (!CONFIG.usePersistence) {
+      return { needsUpdate: true, storedEmbedding: null, storedVersion: null };
+    }
+
+    // 查询数据库中的向量
+    const stored = this.db.prepare(`
+      SELECT c.embedding, m.embedding_version
+      FROM content c
+      JOIN metadata m ON c.metadata_id = m.id
+      WHERE c.metadata_id = ?
+    `).get(memoryId);
+
+    if (!stored || !stored.embedding) {
+      // 没有存储的向量，需要生成
+      return { needsUpdate: true, storedEmbedding: null, storedVersion: null };
+    }
+
+    if (!stored.embedding_version || stored.embedding_version !== this.currentVersion) {
+      // 向量版本不匹配，需要更新
+      return {
+        needsUpdate: true,
+        storedEmbedding: JSON.parse(stored.embedding),
+        storedVersion: stored.embedding_version
+      };
+    }
+
+    // 向量版本匹配，不需要更新
+    return {
+      needsUpdate: false,
+      storedEmbedding: JSON.parse(stored.embedding),
+      storedVersion: stored.embedding_version
+    };
+  }
+
+  /**
+   * 智能生成向量（带缓存和持久化）
+   *
+   * @param {number} memoryId - 记忆 ID
+   * @param {string} content - 记忆内容
+   * @returns {Promise<number[]>} 向量数组
+   */
+  async generateEmbeddingSmart(memoryId, content) {
+    const contentHash = this.getContentHash(content);
+
+    // 1. 检查内存缓存
     if (CONFIG.cacheEnabled && this.embeddingCache.has(contentHash)) {
       return this.embeddingCache.get(contentHash);
     }
 
-    // 调用 OpenAI API
+    // 2. 检查数据库中的向量
+    if (CONFIG.usePersistence) {
+      const checkResult = this.checkEmbeddingUpdateNeeded(memoryId, content);
+
+      if (!checkResult.needsUpdate && checkResult.storedEmbedding) {
+        // 向量版本匹配，直接返回存储的向量
+        if (CONFIG.cacheEnabled) {
+          this.embeddingCache.set(contentHash, checkResult.storedEmbedding);
+        }
+        return checkResult.storedEmbedding;
+      }
+    }
+
+    // 3. 调用 OpenAI API 生成新向量
     this.initOpenAI();
     const response = await this.openai.embeddings.create({
       model: CONFIG.model,
@@ -75,12 +158,57 @@ class VectorDeduplicator {
 
     const embedding = response.data[0].embedding;
 
-    // 存入缓存
+    // 4. 存储到内存缓存
     if (CONFIG.cacheEnabled) {
       this.embeddingCache.set(contentHash, embedding);
     }
 
+    // 5. 存储到数据库
+    if (CONFIG.usePersistence) {
+      this.saveEmbedding(memoryId, embedding);
+    }
+
     return embedding;
+  }
+
+  /**
+   * 生成内容向量（兼容旧接口，内部使用 generateEmbeddingSmart）
+   *
+   * @param {number|string} memoryIdOrContent - 记忆 ID 或内容
+   * @param {string} content - 记忆内容（如果第一个参数是 ID）
+   * @returns {Promise<number[]>} 向量数组
+   */
+  async generateEmbedding(memoryIdOrContent, content) {
+    // 兼容旧接口：如果第一个参数是字符串，则视为内容
+    if (typeof memoryIdOrContent === 'string') {
+      const tempContent = memoryIdOrContent;
+      const contentHash = this.getContentHash(tempContent);
+
+      // 检查内存缓存
+      if (CONFIG.cacheEnabled && this.embeddingCache.has(contentHash)) {
+        return this.embeddingCache.get(contentHash);
+      }
+
+      // 调用 OpenAI API
+      this.initOpenAI();
+      const response = await this.openai.embeddings.create({
+        model: CONFIG.model,
+        input: tempContent,
+        dimensions: CONFIG.dimensions
+      });
+
+      const embedding = response.data[0].embedding;
+
+      // 存入缓存
+      if (CONFIG.cacheEnabled) {
+        this.embeddingCache.set(contentHash, embedding);
+      }
+
+      return embedding;
+    }
+
+    // 新接口：第一个参数是 ID，第二个参数是内容
+    return this.generateEmbeddingSmart(memoryIdOrContent, content);
   }
 
   /**
@@ -97,7 +225,7 @@ class VectorDeduplicator {
 
       for (const memory of batch) {
         try {
-          const embedding = await this.generateEmbedding(memory.content);
+          const embedding = await this.generateEmbedding(memory.id, memory.content);
           results.push({ ...memory, embedding });
         } catch (error) {
           console.error(`生成向量失败 [${memory.id}]:`, error.message);
@@ -180,10 +308,14 @@ class VectorDeduplicator {
 
     // 批量生成向量
     console.log(`📊 正在为 ${memories.length} 条记忆生成向量...`);
+    const startTime = Date.now();
+
     const memoriesWithEmbeddings = await this.generateEmbeddingsBatch(memories);
     const validMemories = memoriesWithEmbeddings.filter(m => m.embedding && !m.error);
 
+    const elapsed = Date.now() - startTime;
     console.log(`✅ 成功生成 ${validMemories.length} 条向量，${memoriesWithEmbeddings.length - validMemories.length} 条失败`);
+    console.log(`⏱️  耗时: ${(elapsed / 1000).toFixed(2)} 秒`);
 
     // 查找重复
     const duplicates = [];
@@ -222,18 +354,27 @@ class VectorDeduplicator {
   }
 
   /**
-   * 存储向量到数据库（可选）
+   * 存储向量到数据库
    *
    * @param {number} memoryId - 记忆 ID
    * @param {number[]} embedding - 向量
    */
   saveEmbedding(memoryId, embedding) {
     const embeddingJson = JSON.stringify(embedding);
+
+    // 更新 content 表的 embedding 字段
     this.db.prepare(`
       UPDATE content
       SET embedding = ?
       WHERE metadata_id = ?
     `).run(embeddingJson, memoryId);
+
+    // 更新 metadata 表的 embedding_version 字段
+    this.db.prepare(`
+      UPDATE metadata
+      SET embedding_version = ?
+      WHERE id = ?
+    `).run(this.currentVersion, memoryId);
   }
 
   /**
@@ -270,6 +411,19 @@ class VectorDeduplicator {
    */
   clearCache() {
     this.embeddingCache.clear();
+  }
+
+  /**
+   * 获取缓存统计信息
+   *
+   * @returns {Object} 缓存统计
+   */
+  getCacheStats() {
+    return {
+      size: this.embeddingCache.size,
+      enabled: CONFIG.cacheEnabled,
+      usePersistence: CONFIG.usePersistence
+    };
   }
 }
 
