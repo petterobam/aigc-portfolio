@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-03-22T01:17:24.900Z",
+  "config": {
+    "archiveAfterDays": 30,
+    "minImportance": 1.5,
+    "deleteArchived": false,
+    "minContentLength": 50,
+    "protectedTag": "protected",
+    "scoreUpdateThreshold": 0.2,
+    "scoreWeights": {
+      "accessFrequency": 0.25,
+      "recency": 0.2,
+      "contentQuality": 0.25,
+      "titleQuality": 0.15,
+      "keywordDensity": 0.15
+    },
+    "categoryWeights": {
+      "breakthrough": 1.5,
+      "creation": 1.2,
+      "general": 1,
+      "operation": 0.8,
+      "task": 0.9
+    },
+    "titleQuality": {
+      "idealMin": 10,
+      "idealMax": 50,
+      "noTitleScore": 0,
+      "tooShortScore": 0.3,
+      "idealScore": 1,
+      "tooLongScore": 0.6
+    },
+    "contentQualitySegments": [
+      {
+        "maxLength": 200,
+        "score": 0.2,
+        "label": "太短"
+      },
+      {
+        "maxLength": 500,
+        "score": 0.5,
+        "label": "中等"
+      },
+      {
+        "maxLength": 1000,
+        "score": 0.7,
+        "label": "较长"
+      },
+      {
+        "maxLength": null,
+        "score": 1,
+        "label": "很长"
+      }
+    ],
+    "enableVectorDedup": true,
+    "openaiApiKey": "",
+    "vectorSimilarityThreshold": 0.95,
+    "vectorSaveToDB": false,
+    "vectorModel": "text-embedding-ada-002"
+  },
+  "stats": {
+    "totalProcessed": 12,
+    "archived": 0,
+    "deleted": 0,
+    "protected": 2,
+    "lowQuality": 0,
+    "duplicate": 0,
+    "importanceUpdated": 0
+  },
+  "summary": {
+    "totalProcessed": 12,
+    "archived": 0,
+    "deleted": 0,
+    "protected": 2,
+    "optimizationRate": "0.00%"
+  },
+  "recommendations": [
+    {
+      "type": "info",
+      "message": "2 个记忆受保护，未被优化"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Playwright MCP 配置（CDP 模式 vs 扩展模式）
 
-## CDP 模式（当前配置）
+## CDP 模式（当前配置，不推荐）
 
 **配置**：
 ```json

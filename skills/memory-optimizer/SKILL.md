@@ -53,6 +53,7 @@ cat ~/.openclaw/workspace/data/memory-optimization-report.json
    - 删除低质量记忆
    ↓
 6. 生成优化报告
+7. 生成执行日志到： `./logs/` 下
 ```
 
 ## 重要性评分

@@ -59,10 +59,7 @@ mcporter call chrome-devtools.evaluate_script function="() => {
 **Playwright MCP** 需要安装 Chrome 扩展，不支持长连接。
 
 **限制**：
-- ❌ CDP 连接被拒绝（403 Forbidden）
-- ❌ 不支持长连接
-- ❌ 不能使用单独命令
-- ⚠️ 需要配置 Chrome 扩展和 Token
+- ❌ 稳定性较差
 
 ---
 
