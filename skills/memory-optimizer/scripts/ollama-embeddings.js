@@ -4,7 +4,7 @@
  * Ollama 向量去重器 (v1.0.0)
  *
  * 功能：
- * 1. 生成内容向量（使用本地 Ollama API）
+ * 1. 使用 Ollama 生成内容向量
  * 2. 计算余弦相似度
  * 3. 查找相似记忆（相似度 > 阈值）
  * 4. 集成到优化流程
@@ -12,39 +12,44 @@
  * 6. 智能向量生成（检查缓存、数据库、版本）
  *
  * 使用方法：
- * const OllamaDeduplicator = require('./ollama-embeddings');
- * const deduplicator = new OllamaDeduplicator(db, ollamaModel, ollamaApiUrl);
- * const duplicates = await deduplicator.findDuplicates(memories);
+ * const OllamaEmbeddings = require('./ollama-embeddings');
+ * const ollama = new OllamaEmbeddings(db, config);
+ * const duplicates = await ollama.findDuplicates(memories);
+ *
+ * 配置：
+ * - OLLAMA_MODEL: Ollama 模型名称（默认 gemma:2b）
+ * - OLLAMA_API_URL: Ollama API 地址（默认 http://localhost:11434）
+ * - similarityThreshold: 相似度阈值（默认 0.95）
+ * - batchSize: 批量处理大小（默认 10）
  *
  * 版本历史：
- * v1.0.0 - Ollama Embeddings 集成（本地向量生成，零成本）
+ * v1.0.0 - 基础实现（Ollama API、向量生成、相似度计算、重复检测、向量持久化）
  */
 
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
 
-// Ollama 配置
-const OLLAMA_CONFIG = {
-  similarityThreshold: 0.92,     // 相似度阈值 > 0.92 视为重复（Ollama 模型略低于 OpenAI，阈值调整）
-  batchSize: 5,                  // 批量处理大小（本地运行，适当降低）
-  model: 'gemma:2b',            // Ollama 模型（轻量级，速度快）
-  apiUrl: 'http://localhost:11434/api/embeddings',  // Ollama API 地址
-  dimensions: 768,               // 向量维度（gemma:2b 的维度）
-  cacheEnabled: true,            // 是否启用缓存
-  usePersistence: true,          // 是否使用向量持久化
-  timeout: 30000                // API 超时时间（毫秒）
+// 默认配置
+const DEFAULT_CONFIG = {
+  similarityThreshold: 0.95,    // 相似度阈值 > 0.95 视为重复
+  batchSize: 10,                // 批量处理大小
+  model: 'gemma:2b',            // Ollama 模型
+  apiUrl: 'http://localhost:11434',  // Ollama API 地址
+  dimensions: 768,             // 向量维度（gemma:2b 的维度）
+  cacheEnabled: true,           // 是否启用缓存
+  usePersistence: true          // 是否使用向量持久化
 };
 
 /**
  * Ollama 向量去重器类
  */
-class OllamaDeduplicator {
-  constructor(db, ollamaModel = OLLAMA_CONFIG.model, ollamaApiUrl = OLLAMA_CONFIG.apiUrl) {
+class OllamaEmbeddings {
+  constructor(db, config = {}) {
     this.db = db;
-    this.model = ollamaModel;
-    this.apiUrl = ollamaApiUrl;
+    this.config = { ...DEFAULT_CONFIG, ...config };
     this.embeddingCache = new Map();  // 向量缓存
-    this.currentVersion = `v1.0-${this.model}`;  // 当前向量版本
+    this.currentVersion = `v1.0-${this.config.model}`;  // 当前向量版本
   }
 
   /**
@@ -77,7 +82,7 @@ class OllamaDeduplicator {
    * @returns {Object} { needsUpdate: boolean, storedEmbedding: number[] | null, storedVersion: string | null }
    */
   checkEmbeddingUpdateNeeded(memoryId, content) {
-    if (!OLLAMA_CONFIG.usePersistence) {
+    if (!this.config.usePersistence) {
       return { needsUpdate: true, storedEmbedding: null, storedVersion: null };
     }
 
@@ -117,44 +122,59 @@ class OllamaDeduplicator {
    * @param {string} content - 内容
    * @returns {Promise<number[]>} 向量数组
    */
-  async callOllamaAPI(content) {
-    const startTime = Date.now();
-
-    try {
-      // 使用 fetch 调用 Ollama API
-      const response = await fetch(this.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: this.model,
-          prompt: content
-        }),
-        signal: AbortSignal.timeout(OLLAMA_CONFIG.timeout)
+  async generateEmbeddingFromOllama(content) {
+    return new Promise((resolve, reject) => {
+      const postData = JSON.stringify({
+        model: this.config.model,
+        prompt: content
       });
 
-      if (!response.ok) {
-        throw new Error(`Ollama API 返回错误: ${response.status} ${response.statusText}`);
-      }
+      const options = {
+        hostname: 'localhost',
+        port: 11434,
+        path: '/api/embeddings',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData)
+        }
+      };
 
-      const data = await response.json();
-      const elapsed = Date.now() - startTime;
+      const req = http.request(options, (res) => {
+        let data = '';
 
-      console.log(`🧠 Ollama 生成向量成功 (${elapsed}ms, 模型: ${this.model})`);
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
 
-      return data.embedding || data.embeddings?.[0] || [];
-    } catch (error) {
-      const elapsed = Date.now() - startTime;
-      console.error(`❌ Ollama API 调用失败 (${elapsed}ms):`, error.message);
+        res.on('end', () => {
+          try {
+            const response = JSON.parse(data);
 
-      // 如果是超时错误，提供更详细的错误信息
-      if (error.name === 'AbortError' || error.message.includes('timeout')) {
-        throw new Error(`Ollama API 超时（${OLLAMA_CONFIG.timeout}ms），请检查 Ollama 服务是否运行正常`);
-      }
+            if (response.error) {
+              reject(new Error(`Ollama API 错误: ${response.error}`));
+              return;
+            }
 
-      throw error;
-    }
+            if (!response.embedding) {
+              reject(new Error('Ollama API 返回数据格式错误: 缺少 embedding 字段'));
+              return;
+            }
+
+            resolve(response.embedding);
+          } catch (error) {
+            reject(new Error(`解析 Ollama API 响应失败: ${error.message}`));
+          }
+        });
+      });
+
+      req.on('error', (error) => {
+        reject(new Error(`Ollama API 请求失败: ${error.message}`));
+      });
+
+      req.write(postData);
+      req.end();
+    });
   }
 
   /**
@@ -168,17 +188,17 @@ class OllamaDeduplicator {
     const contentHash = this.getContentHash(content);
 
     // 1. 检查内存缓存
-    if (OLLAMA_CONFIG.cacheEnabled && this.embeddingCache.has(contentHash)) {
+    if (this.config.cacheEnabled && this.embeddingCache.has(contentHash)) {
       return this.embeddingCache.get(contentHash);
     }
 
     // 2. 检查数据库中的向量
-    if (OLLAMA_CONFIG.usePersistence) {
+    if (this.config.usePersistence) {
       const checkResult = this.checkEmbeddingUpdateNeeded(memoryId, content);
 
       if (!checkResult.needsUpdate && checkResult.storedEmbedding) {
         // 向量版本匹配，直接返回存储的向量
-        if (OLLAMA_CONFIG.cacheEnabled) {
+        if (this.config.cacheEnabled) {
           this.embeddingCache.set(contentHash, checkResult.storedEmbedding);
         }
         return checkResult.storedEmbedding;
@@ -186,15 +206,17 @@ class OllamaDeduplicator {
     }
 
     // 3. 调用 Ollama API 生成新向量
-    const embedding = await this.callOllamaAPI(content);
+    console.log(`🔄 生成向量 [${memoryId}]... (使用 Ollama: ${this.config.model})`);
+    const embedding = await this.generateEmbeddingFromOllama(content);
+    console.log(`✅ 向量生成完成 [${memoryId}] (维度: ${embedding.length})`);
 
     // 4. 存储到内存缓存
-    if (OLLAMA_CONFIG.cacheEnabled) {
+    if (this.config.cacheEnabled) {
       this.embeddingCache.set(contentHash, embedding);
     }
 
     // 5. 存储到数据库
-    if (OLLAMA_CONFIG.usePersistence) {
+    if (this.config.usePersistence) {
       this.saveEmbedding(memoryId, embedding);
     }
 
@@ -215,15 +237,17 @@ class OllamaDeduplicator {
       const contentHash = this.getContentHash(tempContent);
 
       // 检查内存缓存
-      if (OLLAMA_CONFIG.cacheEnabled && this.embeddingCache.has(contentHash)) {
+      if (this.config.cacheEnabled && this.embeddingCache.has(contentHash)) {
         return this.embeddingCache.get(contentHash);
       }
 
       // 调用 Ollama API
-      const embedding = await this.callOllamaAPI(tempContent);
+      console.log(`🔄 生成向量... (使用 Ollama: ${this.config.model})`);
+      const embedding = await this.generateEmbeddingFromOllama(tempContent);
+      console.log(`✅ 向量生成完成 (维度: ${embedding.length})`);
 
       // 存入缓存
-      if (OLLAMA_CONFIG.cacheEnabled) {
+      if (this.config.cacheEnabled) {
         this.embeddingCache.set(contentHash, embedding);
       }
 
@@ -243,8 +267,10 @@ class OllamaDeduplicator {
   async generateEmbeddingsBatch(memories) {
     const results = [];
 
-    for (let i = 0; i < memories.length; i += OLLAMA_CONFIG.batchSize) {
-      const batch = memories.slice(i, i + OLLAMA_CONFIG.batchSize);
+    for (let i = 0; i < memories.length; i += this.config.batchSize) {
+      const batch = memories.slice(i, i + this.config.batchSize);
+
+      console.log(`📦 处理批量向量 [${i + 1}-${i + batch.length}/${memories.length}]...`);
 
       for (const memory of batch) {
         try {
@@ -282,27 +308,32 @@ class OllamaDeduplicator {
       normB += vecB[i] * vecB[i];
     }
 
-    const magnitude = Math.sqrt(normA) * Math.sqrt(normB);
-    return magnitude === 0 ? 0 : dotProduct / magnitude;
+    if (normA === 0 || normB === 0) {
+      return 0;
+    }
+
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
   }
 
   /**
    * 查找相似记忆
    *
-   * @param {number[]} targetEmbedding - 目标向量
-   * @param {Array} memories - 记忆数组（已带向量）
+   * @param {number[]} embedding - 目标向量
+   * @param {Array} memories - 记忆数组（带向量）
    * @param {number} threshold - 相似度阈值
-   * @returns {Array} 相似记忆列表
+   * @returns {Array} 相似记忆数组（按相似度降序）
    */
-  findSimilarMemories(targetEmbedding, memories, threshold = OLLAMA_CONFIG.similarityThreshold) {
+  findSimilarMemories(embedding, memories, threshold = this.config.similarityThreshold) {
     const similar = [];
 
     for (const memory of memories) {
-      if (!memory.embedding) continue;
+      if (!memory.embedding) {
+        continue;
+      }
 
-      const similarity = this.cosineSimilarity(targetEmbedding, memory.embedding);
+      const similarity = this.cosineSimilarity(embedding, memory.embedding);
 
-      if (similarity > threshold) {
+      if (similarity >= threshold) {
         similar.push({
           ...memory,
           similarity
@@ -311,182 +342,163 @@ class OllamaDeduplicator {
     }
 
     // 按相似度降序排序
-    return similar.sort((a, b) => b.similarity - a.similarity);
+    similar.sort((a, b) => b.similarity - a.similarity);
+
+    return similar;
   }
 
   /**
-   * 查找重复记忆（基于向量相似度）
+   * 查找重复记忆
    *
    * @param {Array} memories - 记忆数组
-   * @returns {Promise<Array>} 重复记忆列表
+   * @returns {Promise<Array>} 重复记忆数组
    */
   async findDuplicates(memories) {
-    console.log('🧠 Ollama 向量去重分析中...');
+    console.log(`\n🔍 查找重复记忆... (Ollama: ${this.config.model})`);
 
-    // 检查 Ollama 服务是否可用
-    try {
-      const response = await fetch(OLLAMA_CONFIG.apiUrl.replace('/api/embeddings', '/api/tags'), {
-        method: 'GET',
-        signal: AbortSignal.timeout(5000)
-      });
-
-      if (!response.ok) {
-        throw new Error(`Ollama 服务不可用: ${response.status}`);
-      }
-    } catch (error) {
-      console.warn('⚠️  Ollama 服务不可用，跳过向量去重');
-      console.warn('💡 提示: 请确保 Ollama 正在运行（`ollama serve`）');
-      return [];
-    }
-
-    // 批量生成向量
-    console.log(`📊 正在为 ${memories.length} 条记忆生成向量（模型: ${this.model}）...`);
-    const startTime = Date.now();
-
-    const memoriesWithEmbeddings = await this.generateEmbeddingsBatch(memories);
-    const validMemories = memoriesWithEmbeddings.filter(m => m.embedding && !m.error);
-
-    const elapsed = Date.now() - startTime;
-    console.log(`✅ 成功生成 ${validMemories.length} 条向量，${memoriesWithEmbeddings.length - validMemories.length} 条失败`);
-    console.log(`⏱️  耗时: ${(elapsed / 1000).toFixed(2)} 秒，平均 ${(elapsed / validMemories.length).toFixed(0)}ms/条`);
-
-    // 查找重复
     const duplicates = [];
-    const processedIds = new Set();
 
-    for (let i = 0; i < validMemories.length; i++) {
-      const memoryA = validMemories[i];
+    // 生成所有记忆的向量
+    const memoriesWithEmbeddings = await this.generateEmbeddingsBatch(memories);
 
-      if (processedIds.has(memoryA.id)) {
+    // 两两比较相似度
+    for (let i = 0; i < memoriesWithEmbeddings.length; i++) {
+      const memoryA = memoriesWithEmbeddings[i];
+
+      if (!memoryA.embedding || memoryA.embedding === 'skip') {
         continue;
       }
 
-      // 查找相似记忆（排除自己）
-      const similar = this.findSimilarMemories(
-        memoryA.embedding,
-        validMemories.filter(m => m.id !== memoryA.id),
-        OLLAMA_CONFIG.similarityThreshold
-      );
+      for (let j = i + 1; j < memoriesWithEmbeddings.length; j++) {
+        const memoryB = memoriesWithEmbeddings[j];
 
-      if (similar.length > 0) {
-        duplicates.push({
-          original: memoryA,
-          similar: similar,
-          duplicateCount: similar.length
-        });
+        if (!memoryB.embedding || memoryB.embedding === 'skip') {
+          continue;
+        }
 
-        // 标记所有相似记忆为已处理
-        processedIds.add(memoryA.id);
-        similar.forEach(m => processedIds.add(m.id));
+        const similarity = this.cosineSimilarity(memoryA.embedding, memoryB.embedding);
+
+        if (similarity >= this.config.similarityThreshold) {
+          console.log(`⚠️  发现重复: [${memoryA.id}] vs [${memoryB.id}] (相似度: ${(similarity * 100).toFixed(2)}%)`);
+
+          duplicates.push({
+            memoryA: {
+              id: memoryA.id,
+              title: memoryA.title,
+              content: memoryA.content
+            },
+            memoryB: {
+              id: memoryB.id,
+              title: memoryB.title,
+              content: memoryB.content
+            },
+            similarity
+          });
+        }
       }
     }
-
-    console.log(`🔍 发现 ${duplicates.length} 组语义重复记忆（阈值: ${OLLAMA_CONFIG.similarityThreshold}）`);
 
     return duplicates;
   }
 
   /**
-   * 存储向量到数据库
+   * 保存向量到数据库
    *
    * @param {number} memoryId - 记忆 ID
-   * @param {number[]} embedding - 向量
+   * @param {number[]} embedding - 向量数组
    */
   saveEmbedding(memoryId, embedding) {
-    const embeddingJson = JSON.stringify(embedding);
-
-    // 更新 content 表的 embedding 字段
-    this.db.prepare(`
-      UPDATE content
-      SET embedding = ?
-      WHERE metadata_id = ?
-    `).run(embeddingJson, memoryId);
-
-    // 更新 metadata 表的 embedding_version 字段
-    this.db.prepare(`
-      UPDATE metadata
-      SET embedding_version = ?
-      WHERE id = ?
-    `).run(this.currentVersion, memoryId);
-  }
-
-  /**
-   * 批量存储向量到数据库
-   *
-   * @param {Array} memories - 记忆数组（已带向量）
-   */
-  saveEmbeddingsBatch(memories) {
-    let saved = 0;
-    let failed = 0;
-
-    for (const memory of memories) {
-      if (!memory.embedding) {
-        failed++;
-        continue;
-      }
-
-      try {
-        this.saveEmbedding(memory.id, memory.embedding);
-        saved++;
-      } catch (error) {
-        console.error(`存储向量失败 [${memory.id}]:`, error.message);
-        failed++;
-      }
-    }
-
-    console.log(`💾 存储 ${saved} 条向量，${failed} 条失败`);
-
-    return { saved, failed };
-  }
-
-  /**
-   * 清空缓存
-   */
-  clearCache() {
-    this.embeddingCache.clear();
-  }
-
-  /**
-   * 获取缓存统计信息
-   *
-   * @returns {Object} 缓存统计
-   */
-  getCacheStats() {
-    return {
-      size: this.embeddingCache.size,
-      enabled: OLLAMA_CONFIG.cacheEnabled,
-      usePersistence: OLLAMA_CONFIG.usePersistence,
-      model: this.model,
-      apiUrl: this.apiUrl
-    };
-  }
-
-  /**
-   * 测试 Ollama 连接
-   *
-   * @returns {Promise<boolean>} 连接是否成功
-   */
-  async testConnection() {
     try {
-      const response = await fetch(OLLAMA_CONFIG.apiUrl.replace('/api/embeddings', '/api/tags'), {
-        method: 'GET',
-        signal: AbortSignal.timeout(5000)
+      // 保存向量到 content 表
+      this.db.prepare(`
+        UPDATE content
+        SET embedding = ?,
+            embedding_updated_at = datetime('now', 'localtime')
+        WHERE metadata_id = ?
+      `).run(JSON.stringify(embedding), memoryId);
+
+      // 更新 metadata 表的向量版本
+      this.db.prepare(`
+        UPDATE metadata
+        SET embedding_version = ?
+        WHERE id = ?
+      `).run(this.currentVersion, memoryId);
+
+      console.log(`💾 向量已保存到数据库 [${memoryId}]`);
+    } catch (error) {
+      console.error(`保存向量失败 [${memoryId}]:`, error.message);
+    }
+  }
+
+  /**
+   * 检查 Ollama 服务是否可用
+   *
+   * @returns {Promise<boolean>} 是否可用
+   */
+  async checkOllamaService() {
+    return new Promise((resolve) => {
+      const req = http.get(`${this.config.apiUrl}/api/tags`, (res) => {
+        let data = '';
+
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        res.on('end', () => {
+          try {
+            const response = JSON.parse(data);
+            resolve(response.models && response.models.length > 0);
+          } catch (error) {
+            resolve(false);
+          }
+        });
       });
 
-      if (!response.ok) {
-        throw new Error(`Ollama 服务返回错误: ${response.status}`);
-      }
+      req.on('error', () => {
+        resolve(false);
+      });
 
-      const data = await response.json();
-      console.log('✅ Ollama 连接成功，已安装模型：');
-      console.log(data.models?.map(m => `  - ${m.name} (${m.details?.parameter_size || '未知'})`).join('\n') || '  （无模型）');
+      req.setTimeout(5000, () => {
+        req.destroy();
+        resolve(false);
+      });
+    });
+  }
 
-      return true;
-    } catch (error) {
-      console.error('❌ Ollama 连接失败:', error.message);
-      return false;
-    }
+  /**
+   * 获取可用模型列表
+   *
+   * @returns {Promise<Array>} 模型数组
+   */
+  async getAvailableModels() {
+    return new Promise((resolve) => {
+      const req = http.get(`${this.config.apiUrl}/api/tags`, (res) => {
+        let data = '';
+
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        res.on('end', () => {
+          try {
+            const response = JSON.parse(data);
+            resolve(response.models || []);
+          } catch (error) {
+            resolve([]);
+          }
+        });
+      });
+
+      req.on('error', () => {
+        resolve([]);
+      });
+
+      req.setTimeout(5000, () => {
+        req.destroy();
+        resolve([]);
+      });
+    });
   }
 }
 
-module.exports = { OllamaDeduplicator, OLLAMA_CONFIG };
+module.exports = OllamaEmbeddings;

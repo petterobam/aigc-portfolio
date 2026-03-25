@@ -1,378 +1,130 @@
 ---
 name: playwright-browser
+version: 1.0.0
 description: |
-  使用浏览器 MCP 控制浏览器完成自动化任务。适用场景：网页截图、表单填写、页面内容抓取、UI 自动化测试、网页交互操作等。当用户需要打开网页、点击元素、输入文字、截图、抓取页面数据时触发。
-  Triggers: 打开网页、截图、抓取页面、填写表单、点击按钮、自动化测试、爬取数据、网页操作等、番茄数据、番茄分析。
+  使用 Playwright 控制浏览器完成自动化任务。适用于网页截图、表单填写、页面内容抓取、UI 自动化、网页交互等。
+  Triggers: 打开网页、截图、抓取页面、填写表单、点击按钮、自动化测试、爬取数据、网页操作、番茄数据、番茄分析、番茄发布。
+author: 心跳时刻 - 番茄小说创作和运营
+keywords: [playwright, browser, automation, fanqie, cookie, session]
+metadata:
+  openclaw:
+    emoji: "🌐"
 ---
 
-# 浏览器控制 Skill
+# 浏览器控制 Skill 🌐
 
-通过浏览器 MCP 工具直接控制浏览器，完成各类网页自动化任务。
-
----
-
-## 目录
-
-1. [方案对比与选择](#1-方案对比与选择)
-2. [⚠️ 会话丢失：根因与解决方案](#2-️-会话丢失根因与解决方案)
-3. [Chrome DevTools MCP（推荐）⭐⭐⭐](#3-chrome-devtools-mcp推荐)
-4. [番茄小说操作指南](#4-番茄小说操作指南)
-5. [Playwright MCP（备选）](#5-playwright-mcp备选)
-6. [工具速查表](#6-工具速查表)
-7. [详细文档索引](#7-详细文档索引)
-8. [注意事项](#8-注意事项)
+**通过 Playwright 驱动浏览器，覆盖数据抓取、会话管理、自动化发布等所有浏览器操作场景。**
 
 ---
 
-## 1. 方案对比与选择
+## 两种运行上下文（必读）
 
-| 场景 | 推荐方案 | 原因 |
-|------|----------|------|
-| **番茄小说**（需要登录） | Chrome DevTools MCP | 直接操作已有浏览器，保留登录 Cookie |
-| **抓取番茄分析数据** | Chrome DevTools MCP | 必须有登录态才能访问数据页 |
-| 爬取公开页面 | Playwright MCP `browser_run_code` | 无需登录态时可用 |
-| 截图 / 页面快照 | Chrome DevTools MCP | 直接截图当前浏览器内容 |
-| 复杂自动化流程 | Chrome DevTools MCP | 逐步调用，命令间保持状态 |
+操作前必须先确认当前上下文，两种上下文的工具和能力完全不同：
 
----
+| 上下文 | 可用工具 | Cookie / 登录态 | 适合场景 |
+|--------|----------|----------------|----------|
+| **Claude / Cline 直接对话** | `browser_navigate`、`browser_snapshot`、`browser_click`、`browser_run_code` 等 | ✅ 连接已登录的真实 Chrome，完整保留 | 交互式操作、提取 Session、临时任务 |
+| **OpenClaw GLM Agent**（heartbeat / cron） | `exec`（运行脚本） | ✅ 脚本使用持久化 Chrome 上下文或注入 Cookie | 定时抓取、自动化 job、数据监控 |
 
-## 2. ⚠️ 会话丢失：根因与解决方案
-
-### 根本原因
-
-#### 原因 A：Playwright MCP `--extension` 模式的分步调用问题
-
-Playwright MCP 在 `--extension` 模式下，**每次单独工具调用相互独立**，调用之间无法保持页面状态：
-
-```
-# ❌ 错误示例：分步调用会丢失会话
-mcporter call playwright.browser_navigate url="https://fanqienovel.com/main/writer/data"
-mcporter call playwright.browser_snapshot   # ← 页面已回到扩展页面，不再是 data 页！
-mcporter call playwright.browser_evaluate   # ← 执行环境已丢失
-```
-
-#### 原因 B：Playwright MCP 会打开全新浏览器，没有登录 Cookie
-
-Playwright MCP standalone 模式会启动**全新的浏览器实例**，该实例：
-- 没有你已登录番茄小说的 Cookie
-- 访问需要登录的页面会被重定向到登录页
-- 抓取到的"分析数据"实际上是登录页内容，数据丢失
-
-### 解决方案
-
-#### ✅ 方案 A：使用 Chrome DevTools MCP（首选）
-
-Chrome DevTools MCP **直接连接到你正在使用的 Chrome 浏览器**：
-- 保留所有已登录的 Cookie 和会话
-- 逐步调用命令，状态在调用间持久保持
-- 无需担心会话重置
-
-```javascript
-// ✅ 正确：Chrome DevTools MCP 每步调用都维持同一个浏览器会话
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/data"
-mcporter call chrome-devtools.wait_for timeout=3000
-mcporter call chrome-devtools.take_snapshot
-mcporter call chrome-devtools.evaluate_script function="() => { return document.title; }"
-```
-
-#### ✅ 方案 B：Playwright MCP 使用 `browser_run_code`（备选）
-
-如果必须使用 Playwright MCP，**所有多步操作必须打包在同一个 `browser_run_code` 中**：
-
-```javascript
-// ✅ 正确：所有操作在一次调用内完成，页面上下文不丢失
-mcporter call playwright.browser_run_code code="async (page) => {
-  await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
-  await page.waitForTimeout(2000);
-  const data = await page.evaluate(() => document.body.innerText);
-  return data;
-}"
-```
-
-> ⚠️ 注意：即使使用 `browser_run_code`，Playwright MCP 打开的是新浏览器，**仍然没有番茄小说的登录 Cookie**。抓取番茄分析数据请务必使用 Chrome DevTools MCP。
+**会话丢失的根因**：GLM Agent 如果直接用 `browser_run_code`，每次都会启动一个全新的、无 Cookie 的 Chromium，访问需要登录的页面会被跳转到登录页。**解决方案是通过 `exec` 调用脚本，脚本内部负责管理 Cookie。**
 
 ---
 
-## 3. Chrome DevTools MCP（推荐）
+## 可用脚本
 
-### 核心优势
+所有脚本位于 `~/.openclaw/workspace/scripts/`，通过 `exec` 调用。
 
-- ✅ 已验证稳定连接
-- ✅ **直接操作已有 Chrome，完整保留登录态**
-- ✅ 支持逐步调用，命令间状态持久保持
-- ✅ 无需安装 Chrome 扩展
+### 番茄小说数据抓取
 
-### 配置方法
-
-在 `~/.claude.json` 中添加：
-
-```json
-{
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "chrome-devtools-mcp@latest",
-        "--autoConnect",
-        "--channel=stable"
-      ]
-    }
-  }
-}
-```
-
-### 快速验证
-
-```javascript
-// 验证连接和登录状态
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/short-manage"
-mcporter call chrome-devtools.evaluate_script function="() => ({
-  isLoggedIn: document.body.innerText.includes('帅帅它爸'),
-  title: document.title,
-  url: window.location.href
-})"
-```
-
-**期望结果**：
-```json
-{
-  "isLoggedIn": true,
-  "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
-  "url": "https://fanqienovel.com/main/writer/short-manage"
-}
-```
-
-**详细指南**：[Chrome DevTools MCP 操作指南](./chrome-devtools/guide.md) | [更多使用示例](./chrome-devtools/examples.md)
-
----
-
-## 4. 番茄小说操作指南
-
-> 所有番茄小说操作都需要登录态，**必须使用 Chrome DevTools MCP**。
-
-### 4.1 操作前：确认登录状态
-
-```javascript
-mcporter call chrome-devtools.evaluate_script function="() => ({
-  isLoggedIn: document.body.innerText.includes('帅帅它爸'),
-  url: window.location.href
-})"
-```
-
-若 `isLoggedIn` 为 `false`，请先在 Chrome 浏览器中登录番茄小说（账号：帅帅它爸），再执行后续操作。
-
----
-
-### 4.2 抓取番茄分析数据
-
-#### 步骤一：导航并探查页面结构
-
-```javascript
-// 1. 导航到数据概览页（根据实际 URL 调整）
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/data"
-
-// 2. 等待数据加载完成
-mcporter call chrome-devtools.wait_for timeout=3000
-
-// 3. 获取页面快照，分析 DOM 结构（找到正确的选择器）
-mcporter call chrome-devtools.take_snapshot
-```
-
-#### 步骤二：根据快照提取数据
-
-```javascript
-// 根据快照中观察到的实际选择器提取数据
-mcporter call chrome-devtools.evaluate_script function="() => {
-  // 通用数据行提取（根据快照中的实际类名调整）
-  const rows = document.querySelectorAll('[class*=data-item], [class*=stat-item], [class*=overview-item]');
-  return Array.from(rows).map(row => ({
-    label: row.querySelector('[class*=label], [class*=name], [class*=title]')?.textContent?.trim() || '',
-    value: row.querySelector('[class*=value], [class*=number], [class*=count]')?.textContent?.trim() || ''
-  })).filter(item => item.label || item.value);
-}"
-```
-
-#### 步骤三：通过网络请求获取原始数据（更稳定）
-
-当页面数据来自后端 API 时，直接拦截 API 响应比解析 DOM 更稳定：
-
-```javascript
-// 1. 先导航到数据页，触发 API 请求
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/data"
-mcporter call chrome-devtools.wait_for timeout=3000
-
-// 2. 查看所有网络请求，找到数据 API
-mcporter call chrome-devtools.list_network_requests
-
-// 3. 直接调用 API（浏览器会自动携带已登录的 Cookie）
-mcporter call chrome-devtools.evaluate_script function="async () => {
-  // 将 /api/... 替换为从网络请求中找到的实际 API 路径
-  const resp = await fetch('/api/writer/data-overview', {
-    credentials: 'include'
-  });
-  if (!resp.ok) return { error: `HTTP ${resp.status}` };
-  return await resp.json();
-}"
-```
-
----
-
-### 4.3 抓取短故事列表
-
-```javascript
-// 1. 导航到短故事管理页
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/short-manage"
-
-// 2. 等待加载
-mcporter call chrome-devtools.wait_for timeout=3000
-
-// 3. 提取故事列表
-mcporter call chrome-devtools.evaluate_script function="() => {
-  const items = [];
-  document.querySelectorAll('.article-item').forEach((item, index) => {
-    items.push({
-      index: index + 1,
-      title: item.querySelector('.article-item-title')?.textContent.trim() || '',
-      read: item.querySelector('.article-item-read')?.textContent.trim() || '',
-      wordCount: item.querySelector('.article-item-number')?.textContent.trim() || ''
-    });
-  });
-  return { total: items.length, items };
-}"
-```
-
----
-
-### 4.4 分页数据抓取
-
-```javascript
-// 1. 导航到第一页
-mcporter call chrome-devtools.navigate_page url="https://fanqienovel.com/main/writer/short-manage?page=1"
-mcporter call chrome-devtools.wait_for timeout=2000
-mcporter call chrome-devtools.take_snapshot  // 观察分页控件结构
-
-// 2. 提取当前页数据
-mcporter call chrome-devtools.evaluate_script function="() => {
-  const items = Array.from(document.querySelectorAll('.article-item')).map((item, i) => ({
-    index: i + 1,
-    title: item.querySelector('.article-item-title')?.textContent.trim() || ''
-  }));
-  const totalPages = document.querySelector('[class*=total-page], [class*=page-total]')?.textContent?.trim() || '未知';
-  return { totalPages, items };
-}"
-
-// 3. 如需翻页，点击下一页按钮（根据快照中找到的 uid）
-mcporter call chrome-devtools.click uid="下一页按钮的uid"
-mcporter call chrome-devtools.wait_for timeout=2000
-```
-
----
-
-## 5. Playwright MCP（备选）
-
-当 Chrome DevTools MCP 不可用时使用。**所有多步操作必须放在同一个 `browser_run_code` 内。**
-
-### 使用限制
-
-- ❌ 打开全新浏览器，**无法访问需要登录的番茄小说页面**
-- ❌ 分步调用（`browser_navigate` + `browser_snapshot`）会丢失会话
-- ✅ 适合抓取不需要登录的公开页面
-
-### 正确用法
-
-```javascript
-// ✅ 所有操作必须在一个 browser_run_code 内完成
-mcporter call playwright.browser_run_code code="async (page) => {
-  try {
-    await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#content', { timeout: 10000 });
-    const data = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('.item')).map(el => ({
-        title: el.querySelector('.title')?.textContent.trim() || '',
-        value: el.querySelector('.value')?.textContent.trim() || ''
-      }));
-    });
-    return { success: true, total: data.length, data };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-}"
-```
-
-**详细指南**：[标准操作流程](./playwright/workflows.md) | [调试技巧](./playwright/debugging.md) | [扩展安装](./playwright/setup.md)
-
----
-
-## 6. 工具速查表
-
-### Chrome DevTools MCP 工具
-
-| 工具 | 功能 |
+| 脚本 | 说明 |
 |------|------|
-| `navigate_page` | 跳转到指定 URL |
-| `take_snapshot` | 获取页面快照（分析 DOM 结构，找选择器） |
-| `take_screenshot` | 截图 |
-| `click` | 点击页面元素（需要 uid） |
-| `type_text` | 在输入框中输入文字 |
-| `fill_form` | 批量填写表单字段 |
-| `evaluate_script` | 在页面中执行 JavaScript |
-| `wait_for` | 等待元素出现或指定时间 |
-| `list_network_requests` | 查看所有网络请求（找 API 接口） |
-| `list_console_messages` | 查看控制台日志 |
-| `handle_dialog` | 处理弹窗（alert / confirm / prompt） |
-| `upload_file` | 上传文件 |
-| `list_pages` | 列出所有标签页 |
-| `select_page` | 切换到指定标签页 |
-| `new_page` | 新建标签页 |
-| `close_page` | 关闭标签页 |
+| `fetch-story-list-chrome-v4.js` | 抓取短故事列表（含分页、阅读量、字数） |
+| `fetch-story-list-chrome-v3.js` | 抓取短故事列表（API 版本） |
+| `fetch-short-story-data.js` | 抓取短篇数据详情 |
+| `daily-data-monitor.js` | 每日数据监控 |
+| `fanqie-weekly-monitor.js` | 每周数据监控 |
 
-### Playwright MCP 工具（在 `browser_run_code` 内使用的 API）
+### Session / Cookie 管理
 
-| API | 功能 |
-|-----|------|
-| `page.goto(url, opts)` | 导航到 URL |
-| `page.waitForSelector(sel, opts)` | 等待元素出现 |
-| `page.waitForTimeout(ms)` | 等待指定毫秒 |
-| `page.waitForLoadState(state)` | 等待页面加载状态 |
-| `page.evaluate(fn)` | 在页面上下文执行 JavaScript |
-| `page.click(sel)` | 点击元素 |
-| `page.type(sel, text, opts)` | 模拟键盘输入 |
-| `page.fill(sel, text)` | 快速填写输入框 |
-| `page.screenshot(opts)` | 截图 |
-| `page.title()` | 获取页面标题 |
-| `page.url()` | 获取当前 URL |
-| `page.content()` | 获取完整页面 HTML |
+| 脚本 | 说明 |
+|------|------|
+| `extract-cookies-from-browser.js` | 通过 CDP 从已运行的 Chrome 提取完整 Cookie（含 httpOnly） |
+| `cookie-manager.js` | 加载、保存、列出、检查 Cookie 文件 |
+| `check-fanqie-login.js` | 检查番茄小说登录状态 |
+| `login-save-cookies.js` | 打开浏览器手动登录并保存 Cookie |
+
+### 内容质量
+
+| 脚本 | 说明 |
+|------|------|
+| `check-duplicates-strict.py` | 严格模式重复段落检测 |
+| `check-duplicate-paragraphs.py` | 段落级重复检测 |
+
+脚本完整说明见 `~/.openclaw/workspace/scripts/README.md`。
 
 ---
 
-## 7. 详细文档索引
+## Session 管理
 
-### Chrome DevTools MCP（推荐）⭐⭐⭐
+登录态是所有需要认证操作的基础。具体提取方法见子技能：
 
-| 文档 | 说明 |
-|------|------|
-| [Chrome DevTools MCP 操作指南](./chrome-devtools/guide.md) | 完整配置与使用指南 |
-| [Chrome DevTools MCP 使用示例](./chrome-devtools/examples.md) | 番茄小说等实用示例 |
+**→ 子技能 [`playwright-extract-session`](./extract-session/SKILL.md)**
 
-### Playwright MCP（备选）
+提取结果保存在 `~/.openclaw/workspace/cookies/latest.json`，供所有脚本通过 `loadLatestCookies(context)` 加载。
 
-| 文档 | 说明 |
-|------|------|
-| [Playwright MCP 扩展安装](./playwright/setup.md) | Chrome 扩展安装与配置 |
-| [MCP 配置说明 & 模式对比](./playwright/config.md) | 配置文件详解及 CDP vs 扩展模式对比 |
-| [标准操作流程](./playwright/workflows.md) | 12 种常用操作流程模板 |
-| [调试技巧](./playwright/debugging.md) | 常见问题排查 |
-| [使用示例](./playwright/examples.md) | 通用示例集合 |
-| [技术文档](./technical-docs.md) | 架构原理与最佳实践 |
-| [OpenClaw 浏览器备选方案](./openclaw-browser.md) | 其他备选方案 |
+番茄 `sessionid` 有效期约 **60 天**，建议每月提取一次，或在 Cookie 失效时立即刷新。
 
 ---
 
-## 8. 注意事项
+## 交互式操作工具（Claude / Cline 直接对话）
 
-1. **番茄小说操作必须使用 Chrome DevTools MCP**：分析数据、短故事管理等都需要登录态，Playwright MCP 的新浏览器无法访问
-2. **避免会话丢失**：Playwright MCP 的多步操作必须在同一个 `browser_run_code` 内完成，不能拆分为多次调用
-3. **先 `take_snapshot` 再操作**：操作页面前先获取快照，根据实际 DOM 结构确认选择器，避免用错选择器
-4. **写操作风险**：发帖、提交表单等不可逆操作，执行前必须向用户确认
-5. **敏感信息保护**：不要在日志或截图中暴露密码、Token、手机号等敏感数据
-6. **确保 Chrome 已登录**：执行任何番茄小说操作前，确认 Chrome 中已登录账号"帅帅它爸"
+在直接对话中，以下工具连接的是用户已打开、已登录的真实 Chrome：
+
+**导航与观察**：`browser_navigate` / `browser_snapshot` / `browser_take_screenshot` / `browser_navigate_back` / `browser_wait_for`
+
+**交互**：`browser_click` / `browser_type` / `browser_fill_form` / `browser_press_key` / `browser_hover` / `browser_select_option`
+
+**数据与调试**：`browser_evaluate` / `browser_run_code` / `browser_network_requests` / `browser_console_messages` / `browser_tabs`
+
+**操作节奏**：先 `browser_snapshot` 获取页面快照和元素 `ref`，再用 `ref` 执行点击、输入等操作。不要猜测 `ref`，每次操作前都应先拿快照。
+
+---
+
+## 工作目录结构
+
+```
+playwright-browser/
+├── SKILL.md              技术规范（本文件）
+├── HEARTBEAT.md          心跳 job 驱动指南
+├── README.md             系统定位与使用说明
+├── state/
+│   └── current-state.md  当前系统状态（每次心跳后更新）
+├── tasks/
+│   ├── README.md
+│   └── task-list.md      任务清单
+├── logs/
+│   └── latest.md         最新执行日志
+├── reports/              历史检查报告
+├── docs/                 设计文档与技术调研
+├── extract-session/
+│   └── SKILL.md          子技能：从 Chrome 提取 Session
+├── debugging.md          调试指南
+└── mcp-config.json       MCP 配置
+```
+
+---
+
+## 注意事项
+
+1. **GLM Agent 访问番茄小说后台必须用脚本**：通过 `exec` 调用带持久化上下文的脚本，不能裸用 `browser_run_code`
+2. **交互式工具只在 Claude/Cline 直接对话中有效**：GLM Agent 没有这些工具
+3. **写操作必须向用户确认**：发布、提交、删除等不可逆操作，执行前询问
+4. **Cookie 安全**：`cookies/` 目录下的文件包含登录凭证，不要提交到 git
+5. **先快照再操作**：`ref` 是操作元素的唯一凭证，每次交互前都需要最新快照
+
+---
+
+**当前状态**：详见 `state/current-state.md`
+**调试参考**：详见 `debugging.md`
+**维护者**：心跳时刻 - 番茄小说创作和运营
+**版本**：v1.0.0

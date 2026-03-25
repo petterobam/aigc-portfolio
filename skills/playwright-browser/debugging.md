@@ -1,314 +1,195 @@
 # 调试技巧
 
-## 常见问题诊断
+---
 
-### 1. 页面结构不清晰
+## 快速排查清单
 
-**问题**：找不到目标元素或选择器不正确
+| 现象 | 可能原因 | 解决方法 |
+|------|----------|----------|
+| 导航到番茄小说后跳转到登录页 | `browser_run_code` 用了新浏览器，无 Cookie | GLM Agent 改用 `exec` + 脚本；Claude/Cline 用个人工具 |
+| 每次运行都需要重新登录 | 用户数据目录不一致或被清除 | 确认脚本用的 `USER_DATA_DIR` 是固定路径 `data/chrome-user-data/` |
+| 脚本执行超时 | 页面加载慢 / 元素未出现 | 增大 `timeout`，或换 `waitUntil: 'domcontentloaded'` |
+| 元素找不到（选择器失效） | 页面结构变化 / 选择器过时 | 先截图，再用 `page.evaluate` 打印 HTML 结构确认 |
+| 个人工具 `ref` 不存在 | 快照过期，页面已更新 | 重新执行 `browser_snapshot` 获取新的 `ref` |
+| `browser_run_code` 数据为空 | 动态内容未加载 | 加 `waitForSelector` 等待关键元素出现 |
+| 脚本运行报 `playwright not found` | 依赖未安装 | `cd /Users/oyjie/.openclaw/workspace && npm install` |
 
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 探索 DOM 结构
-  const allDivs = await page.evaluate(() => {
-    return document.querySelectorAll('div').length;
-  });
+---
 
-  // 查找特定类名
-  const specificElements = await page.evaluate(() => {
-    const elements = document.querySelectorAll('.some-class');
-    return Array.from(elements).map(el => ({
-      tag: el.tagName,
-      className: el.className,
-      text: el.textContent.substring(0, 100)
-    }));
-  });
+## 一、GLM Agent 脚本调试
 
-  return { allDivs, specificElements };
-}"
-```
+### 1. 确认登录状态
 
-### 2. 元素点击无响应
-
-**问题**：`page.click()` 没有反应
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 方式1：先悬停再点击
-  await page.hover('#button');
-  await page.click('#button');
-
-  // 方式2：使用 evaluate 直接触发点击事件
-  await page.evaluate(() => {
-    document.querySelector('#button').click();
-  });
-
-  // 方式3：等待元素可见后再点击
-  await page.waitForSelector('#button', { state: 'visible' });
-  await page.click('#button');
-
-  return { success: true };
-}"
-```
-
-### 3. 等待动态内容
-
-**问题**：页面内容是动态加载的，固定时间等待不够可靠
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser.browser_run_code code="async (page) => {
-  // 方式1：等待特定文字出现
-  await page.waitForSelector('text=加载完成', { timeout: 10000 });
-
-  // 方式2：等待元素出现
-  await page.waitForSelector('.data-container', { timeout: 10000 });
-
-  // 方式3：等待元素可见
-  await page.waitForSelector('#content', { state: 'visible', timeout: 10000 });
-
-  // 方式4：等待网络请求完成
-  await page.waitForLoadState('networkidle');
-
-  return { success: true };
-}"
-```
-
-### 4. 网络请求调试
-
-**问题**：需要查看 API 请求或分析数据来源
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 监听网络请求
-  const requests = [];
-  page.on('request', request => {
-    requests.push({
-      url: request.url(),
-      method: request.method()
-    });
-  });
-
-  // 导航到目标页面
-  await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
-
-  // 等待网络请求完成
-  await page.waitForTimeout(3000);
-
-  return { totalRequests: requests.length, requests };
-}"
-```
-
-### 5. 控制台报错
-
-**问题**：页面有 JavaScript 错误，影响自动化脚本
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 监听控制台错误
-  const errors = [];
-  page.on('console', msg => {
-    if (msg.type() === 'error') {
-      errors.push({
-        text: msg.text(),
-        location: msg.location()
-      });
-    }
-  });
-
-  // 导航到目标页面
-  await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
-
-  // 等待一段时间收集错误
-  await page.waitForTimeout(3000);
-
-  return { totalErrors: errors.length, errors };
-}"
-```
-
-### 6. 截图调试
-
-**问题**：需要查看页面实际渲染效果
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 截取整个页面
-  await page.screenshot({ path: '/tmp/fullpage.png', fullPage: true });
-
-  // 截取特定元素
-  const element = await page.$('#content');
-  await element.screenshot({ path: '/tmp/element.png' });
-
-  // 截取视口
-  await page.screenshot({ path: '/tmp/viewport.png' });
-
-  return { success: true };
-}"
-```
-
-### 7. 获取页面 HTML
-
-**问题**：需要分析页面结构或 DOM
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 获取整个页面的 HTML
-  const html = await page.content();
-
-  // 获取特定元素的 HTML
-  const elementHtml = await page.evaluate(() => {
-    return document.querySelector('#content').outerHTML;
-  });
-
-  // 获取页面的无障碍树（用于调试选择器）
-  const snapshot = await page.accessibility.snapshot();
-
-  return {
-    htmlLength: html.length,
-    elementHtmlLength: elementHtml.length,
-    snapshot
-  };
-}"
-```
-
-### 8. 模拟用户输入
-
-**问题**：直接设置值可能不触发事件
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 方式1：模拟真实的键盘输入（推荐）
-  await page.type('#input', 'text to type', { delay: 100 });
-
-  // 方式2：使用键盘逐个按键
-  await page.focus('#input');
-  await page.keyboard.type('text to type');
-
-  // 方式3：触发输入事件
-  await page.evaluate(() => {
-    const input = document.querySelector('#input');
-    input.value = 'text to type';
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    input.dispatchEvent(new Event('change', { bubbles: true }));
-  });
-
-  return { success: true };
-}"
-```
-
-### 9. 等待时间过长
-
-**问题**：页面加载时间不确定，固定等待时间不够或太长
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 方式1：导航时使用 waitUntil
-  await page.goto('https://example.com', { waitUntil: 'networkidle' });
-
-  // 方式2：使用 waitForSelector
-  await page.waitForSelector('#content', { timeout: 10000 });
-
-  // 方式3：使用 Promise.race（超时保护）
-  await Promise.race([
-    page.waitForSelector('#content'),
-    page.waitForTimeout(5000) // 5秒超时
-  ]);
-
-  return { success: true };
-}"
-```
-
-### 10. Cookie 和 LocalStorage 操作
-
-**问题**：需要操作 Cookie 或 LocalStorage
-
-**解决方案**：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  // 获取所有 Cookie
-  const cookies = await page.context().cookies();
-
-  // 设置 Cookie
-  await page.context().addCookies([{
-    name: 'session',
-    value: 'session-value',
-    domain: 'example.com',
-    path: '/'
-  }]);
-
-  // 获取 LocalStorage
-  const localStorage = await page.evaluate(() => {
-    return JSON.stringify(localStorage);
-  });
-
-  // 设置 LocalStorage
-  await page.evaluate(() => {
-    localStorage.setItem('key', 'value');
-  });
-
-  return { cookies, localStorage };
-}"
-```
-
-## 高级调试技巧
-
-### 1. 使用 Playwright Inspector
-
-Playwright 提供了 Inspector 工具，可以交互式地编写和调试脚本。
-
-启动方式：
 ```bash
-npx playwright codegen https://example.com
+cd /Users/oyjie/.openclaw/workspace
+node scripts/check-fanqie-login.js
 ```
 
-### 2. 调试模式
+如果登录失效，重新登录：
 
-在代码中添加 `page.pause()` 可以暂停执行，打开 Inspector：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  await page.goto('https://example.com');
-  await page.pause(); // 暂停执行，打开 Inspector
-  // ... 继续执行
-}"
+```bash
+node scripts/login-save-cookies.js
 ```
 
-### 3. 日志输出
+---
 
-在代码中添加 console.log 输出调试信息：
-```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  console.log('开始导航...');
-  await page.goto('https://example.com');
-  console.log('导航完成');
+### 2. 确认用户数据目录存在
 
-  const title = await page.title();
-  console.log('页面标题:', title);
-
-  return { title };
-}"
+```bash
+ls -la /Users/oyjie/.openclaw/workspace/data/chrome-user-data/
 ```
 
-### 4. 错误处理
+如果目录为空或不存在，首次运行任意脚本时会自动创建，并提示手动登录。
 
-使用 try-catch 处理可能的异常：
+---
+
+### 3. 脚本执行失败时保存现场
+
+在脚本的 `catch` 块中加截图和日志：
+
 ```javascript
-mcporter call playwright.browser_run_code code="async (page) => {
-  try {
-    await page.goto('https://example.com', { timeout: 5000 });
-    return { success: true };
-  } catch (error) {
-    console.error('导航失败:', error.message);
-    return { success: false, error: error.message };
+} catch (error) {
+  console.error('执行失败:', error.message);
+  // 截图保留现场
+  const screenshot = `/tmp/error-${Date.now()}.png`;
+  await page.screenshot({ path: screenshot, fullPage: true });
+  console.log('错误截图:', screenshot);
+  // 打印当前 URL
+  console.log('当前 URL:', page.url());
+} finally {
+  await browser.close();
+}
+```
+
+---
+
+### 4. 验证选择器是否正确
+
+在脚本中加入结构探查（首次开发时用）：
+
+```javascript
+// 打印页面关键元素
+const debug = await page.evaluate(() => {
+  const items = document.querySelectorAll('.short-article-table-item');
+  return {
+    itemCount: items.length,
+    firstItemHtml: items[0]?.outerHTML?.slice(0, 500) || '无元素',
+    pageTitle: document.title,
+    url: window.location.href,
+  };
+});
+console.log('调试信息:', JSON.stringify(debug, null, 2));
+```
+
+---
+
+### 5. 通过网络请求找 API（更稳定的数据获取方式）
+
+```javascript
+// 监听 API 请求
+const apiCalls = [];
+page.on('response', async (response) => {
+  if (response.url().includes('/api/') && response.status() === 200) {
+    try {
+      const body = await response.json();
+      apiCalls.push({ url: response.url(), body });
+    } catch {}
   }
+});
+
+await page.goto('https://fanqienovel.com/main/writer/short-data?tab=1', {
+  waitUntil: 'networkidle',
+});
+
+console.log('捕获到的 API 调用:', apiCalls.map(c => c.url));
+// 找到数据接口后，直接 fetch 调用更稳定
+```
+
+---
+
+## 二、Claude / Cline 个人工具调试
+
+### 1. 确认页面已正确加载
+
+```
+browser_navigate url="https://fanqienovel.com/main/writer/short-data?tab=1"
+browser_snapshot
+```
+
+如果快照内容很少或是登录页，说明页面未加载完，加等待：
+
+```
+browser_wait_for text="整体数据"
+browser_snapshot
+```
+
+---
+
+### 2. 截图看实际页面状态
+
+```
+browser_take_screenshot
+```
+
+---
+
+### 3. 用 evaluate 确认选择器
+
+```
+browser_evaluate function="() => {
+  const el = document.querySelector('.article-item-title');
+  return el ? el.textContent.trim() : '未找到元素';
 }"
 ```
+
+列出候选元素：
+
+```
+browser_evaluate function="() => {
+  return Array.from(document.querySelectorAll('[class*=article-item]'))
+    .slice(0, 5)
+    .map(el => ({ class: el.className, text: el.textContent.trim().slice(0, 60) }));
+}"
+```
+
+---
+
+### 4. 查看控制台错误
+
+```
+browser_console_messages level="error"
+```
+
+---
+
+### 5. 通过网络请求找 API
+
+```
+browser_navigate url="https://fanqienovel.com/main/writer/short-data?tab=1"
+browser_wait_for time=3
+browser_network_requests
+```
+
+找到数据接口后直接调用：
+
+```
+browser_evaluate function="async () => {
+  const resp = await fetch('/api/found-endpoint', { credentials: 'include' });
+  return await resp.json();
+}"
+```
+
+---
+
+## 三、常用等待方式
+
+| 场景 | 推荐写法 |
+|------|----------|
+| 等待特定文字出现 | `browser_wait_for text="整体数据"` |
+| 等待固定时间（秒） | `browser_wait_for time=3` |
+| 等待加载提示消失 | `browser_wait_for textGone="加载中"` |
+| 脚本中等待元素出现 | `await page.waitForSelector('.target', { timeout: 10000 })` |
+| 脚本中等待网络空闲 | `await page.waitForLoadState('networkidle')` |
 
 ---
 
