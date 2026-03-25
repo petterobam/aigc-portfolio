@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-03-25T11:17:13.794Z",
+  "storyId": "35",
+  "storyTitle": "穿成太子妃，发现太子心里只有我",
+  "testSteps": [
+    {
+      "step": 1,
+      "name": "访问发布页面",
+      "success": true
+    },
+    {
+      "step": 2,
+      "name": "填写标题",
+      "success": true
+    },
+    {
+      "step": 3,
+      "name": "填写正文",
+      "success": true
+    },
+    {
+      "step": 4,
+      "name": "点击下一步",
+      "success": true
+    }
+  ],
+  "urls": {
+    "publishPage": "https://fanqienovel.com/main/writer/publish-short/7621150699497194008?enter_from=NEWCHAPTER_1",
+    "nextStep": "https://fanqienovel.com/main/writer/publish-short/7621150699497194008?enter_from=NEWCHAPTER_1"
+  },
+  "screenshots": [
+    "/Users/oyjie/.openclaw/workspace/data/publish-step1-fill-1774437427702.png",
+    "/Users/oyjie/.openclaw/workspace/data/publish-step2-1774437433632.png"
+  ],
+  "conclusion": "Playwright 能够完成番茄小说发布流程（前 4 个步骤）"
+}

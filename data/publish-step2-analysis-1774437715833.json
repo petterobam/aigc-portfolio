@@ -1,0 +1,93 @@
+{
+  "timestamp": "2026-03-25T11:21:55.814Z",
+  "pageInfo": {
+    "url": "https://fanqienovel.com/main/writer/publish-short/7621151892676035096?enter_from=NEWCHAPTER_1",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": "测试标题 - 自动化发布\n已保存\n正文字数 9\n存草稿\n下一步\n暂未设置章节，可以通过设置\n「章节标题」格式划分短故事章节\n智能分章\n标题不允许输入空格\n正文至少输入100字\n\n这是测试正文内容。\n\n\n\n\n封面设置\n封面制作\n是否使用AI\n是\n否\n作品分类\n请选择作品分类\n最多可选8个分类，其中主分类必选（分类释义详见👉🏻番茄短故事分类释义）\n试读比例\n去设置\n作品试读位置可能会影响用户解锁转化率和作品收入\n发布协议\n我已阅读短故事发布事项\n正文\n错别字\n正文插图"
+  },
+  "inputs": [
+    {
+      "index": 0,
+      "type": "radio",
+      "name": "",
+      "id": "",
+      "className": "",
+      "placeholder": "",
+      "ariaLabel": null,
+      "ariaDescribedby": null
+    },
+    {
+      "index": 1,
+      "type": "radio",
+      "name": "",
+      "id": "",
+      "className": "",
+      "placeholder": "",
+      "ariaLabel": null,
+      "ariaDescribedby": null
+    },
+    {
+      "index": 2,
+      "type": "checkbox",
+      "name": "",
+      "id": "",
+      "className": "",
+      "placeholder": "",
+      "ariaLabel": null,
+      "ariaDescribedby": null
+    }
+  ],
+  "textareas": [
+    {
+      "index": 0,
+      "name": "",
+      "id": "",
+      "className": "byte-textarea serial-textarea",
+      "placeholder": "请输入短故事名称",
+      "ariaLabel": null
+    }
+  ],
+  "buttons": [
+    {
+      "index": 0,
+      "text": "存草稿",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "id": "",
+      "disabled": false
+    },
+    {
+      "index": 1,
+      "text": "下一步",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+      "id": "",
+      "disabled": false
+    },
+    {
+      "index": 3,
+      "text": "去设置",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+      "id": "",
+      "disabled": true
+    },
+    {
+      "index": 4,
+      "text": "重新检测",
+      "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+      "id": "",
+      "disabled": false
+    },
+    {
+      "index": 5,
+      "text": "申请标注问题",
+      "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+      "id": "",
+      "disabled": true
+    }
+  ],
+  "coverElements": [
+    {
+      "type": "has-cover-text",
+      "found": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://fanqienovel.com",
+  "publishUrl": "https://fanqienovel.com/page/shortStoryPublish",
+  "selectors": {
+    "title": [],
+    "intro": [],
+    "content": [],
+    "submit": []
+  }
+}
