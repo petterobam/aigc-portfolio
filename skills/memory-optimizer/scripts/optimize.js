@@ -476,38 +476,73 @@ async function main() {
   }
   console.log('');
 
-  // 向量去重（v1.0.0）
-  if (OPTIMIZE_CONFIG.enableVectorDedup && OPTIMIZE_CONFIG.openaiApiKey) {
+  // 向量去重（v2.0.0：支持 Ollama 和 OpenAI 双方案）
+  if (OPTIMIZE_CONFIG.enableVectorDedup) {
     try {
-      console.log('🧠 识别语义重复记忆（向量相似度）...');
-      const { VectorDeduplicator } = require('./vector-deduplicator');
-      const vectorDeduplicator = new VectorDeduplicator(db, OPTIMIZE_CONFIG.openaiApiKey);
-      const vectorDuplicates = await vectorDeduplicator.findDuplicates(memories);
+      if (OPTIMIZE_CONFIG.ollamaEnabled) {
+        // 优先使用 Ollama（本地向量生成，零成本）
+        console.log('🧠 识别语义重复记忆（Ollama 向量相似度）...');
+        const { OllamaDeduplicator } = require('./ollama-embeddings');
+        const ollamaDeduplicator = new OllamaDeduplicator(
+          db,
+          OPTIMIZE_CONFIG.ollamaModel,
+          OPTIMIZE_CONFIG.ollamaApiUrl
+        );
+        const vectorDuplicates = await ollamaDeduplicator.findDuplicates(memories);
 
-      stats.vectorDuplicate = vectorDuplicates.length;
+        stats.vectorDuplicate = vectorDuplicates.length;
 
-      if (vectorDuplicates.length > 0) {
-        console.log(`发现 ${vectorDuplicates.length} 组语义重复记忆`);
-        vectorDuplicates.forEach(dup => {
-          console.log(`  - "${dup.original.title}" 有 ${dup.duplicateCount} 条相似记忆`);
-          dup.similar.forEach(sim => {
-            console.log(`    └─ 相似度 ${sim.similarity.toFixed(4)}: "${sim.title}"`);
+        if (vectorDuplicates.length > 0) {
+          console.log(`发现 ${vectorDuplicates.length} 组语义重复记忆`);
+          vectorDuplicates.forEach(dup => {
+            console.log(`  - "${dup.original.title}" 有 ${dup.duplicateCount} 条相似记忆`);
+            dup.similar.forEach(sim => {
+              console.log(`    └─ 相似度 ${sim.similarity.toFixed(4)}: "${sim.title}"`);
+            });
           });
-        });
-      }
-      console.log('');
+        }
+        console.log('');
 
-      // 保存向量到数据库（可选）
-      if (OPTIMIZE_CONFIG.vectorSaveToDB) {
-        const allMemoriesWithEmbeddings = await vectorDeduplicator.generateEmbeddingsBatch(memories);
-        vectorDeduplicator.saveEmbeddingsBatch(allMemoriesWithEmbeddings);
+        // 保存向量到数据库（可选）
+        if (OPTIMIZE_CONFIG.vectorSaveToDB) {
+          const allMemoriesWithEmbeddings = await ollamaDeduplicator.generateEmbeddingsBatch(memories);
+          ollamaDeduplicator.saveEmbeddingsBatch(allMemoriesWithEmbeddings);
+        }
+      } else if (OPTIMIZE_CONFIG.openaiApiKey) {
+        // 降级使用 OpenAI（需要 API Key）
+        console.log('🧠 识别语义重复记忆（OpenAI 向量相似度）...');
+        const { VectorDeduplicator } = require('./vector-deduplicator');
+        const vectorDeduplicator = new VectorDeduplicator(db, OPTIMIZE_CONFIG.openaiApiKey);
+        const vectorDuplicates = await vectorDeduplicator.findDuplicates(memories);
+
+        stats.vectorDuplicate = vectorDuplicates.length;
+
+        if (vectorDuplicates.length > 0) {
+          console.log(`发现 ${vectorDuplicates.length} 组语义重复记忆`);
+          vectorDuplicates.forEach(dup => {
+            console.log(`  - "${dup.original.title}" 有 ${dup.duplicateCount} 条相似记忆`);
+            dup.similar.forEach(sim => {
+              console.log(`    └─ 相似度 ${sim.similarity.toFixed(4)}: "${sim.title}"`);
+            });
+          });
+        }
+        console.log('');
+
+        // 保存向量到数据库（可选）
+        if (OPTIMIZE_CONFIG.vectorSaveToDB) {
+          const allMemoriesWithEmbeddings = await vectorDeduplicator.generateEmbeddingsBatch(memories);
+          vectorDeduplicator.saveEmbeddingsBatch(allMemoriesWithEmbeddings);
+        }
+      } else {
+        console.log('⚠️  向量去重已启用，但未配置 Ollama 或 OpenAI API Key，跳过向量去重\n');
+        console.log('💡 提示：');
+        console.log('  - 方案 1（推荐）：确保 Ollama 正在运行（`ollama serve`）');
+        console.log('  - 方案 2：配置 OPENAI_API_KEY 环境变量\n');
       }
     } catch (error) {
       console.error('❌ 向量去重失败:', error.message);
       console.log('');
     }
-  } else if (OPTIMIZE_CONFIG.enableVectorDedup && !OPTIMIZE_CONFIG.openaiApiKey) {
-    console.log('⚠️  向量去重已启用但未配置 OPENAI_API_KEY，跳过向量去重\n');
   }
 
   console.log('📊 更新重要性评分...');

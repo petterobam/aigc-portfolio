@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-25T06:19:19.434Z",
+  "timestamp": "2026-03-25T05:02:11.836Z",
   "config": {
     "archiveAfterDays": 14,
     "minImportance": 1.2,
@@ -69,7 +69,7 @@
     "lowQuality": 0,
     "duplicate": 0,
     "importanceUpdated": 0,
-    "vectorDuplicate": 2
+    "vectorDuplicate": 0
   },
   "summary": {
     "totalProcessed": 9,

@@ -76,12 +76,18 @@ const OPTIMIZE_CONFIG = {
     { maxLength: Infinity, score: 1.0, label: '很长' }
   ],
 
-  // 向量去重配置（v1.0.0）
+  // 向量去重配置（v2.0.0）
   enableVectorDedup: true,             // 是否启用向量去重
   openaiApiKey: process.env.OPENAI_API_KEY || '',  // OpenAI API Key
   vectorSimilarityThreshold: 0.95,     // 向量相似度阈值
   vectorSaveToDB: false,               // 是否将向量存储到数据库
-  vectorModel: 'text-embedding-ada-002' // 使用的嵌入模型
+  vectorModel: 'text-embedding-ada-002', // 使用的嵌入模型
+
+  // Ollama 配置（v2.0.0，本地向量生成，零成本）
+  ollamaEnabled: true,                 // 是否启用 Ollama 向量去重（优先级高于 OpenAI）
+  ollamaModel: 'gemma:2b',             // Ollama 模型（轻量级，速度快）
+  ollamaApiUrl: 'http://localhost:11434/api/embeddings',  // Ollama API 地址
+  ollamaSimilarityThreshold: 0.92,     // Ollama 相似度阈值（略低于 OpenAI）
 };
 
 // 备份脚本配置
