@@ -13,16 +13,19 @@
  *   node scripts/check-fanqie-login.js
  *
  * 依赖：
- *   - mcporter (已配置 playwright MCP)
+ *   - playwright (直接使用 Playwright API)
  *   - Chrome 浏览器（已登录番茄小说）
  */
 
-const { spawn } = require('child_process');
+const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
 // 配置
 const CONFIG = {
+  // Cookie 文件路径
+  cookieFile: path.join(__dirname, '..', 'cookies', 'latest.json'),
+
   // 数据目录
   dataDir: path.join(__dirname, '..', 'data'),
 
@@ -58,37 +61,17 @@ if (!fs.existsSync(CONFIG.dataDir)) {
 }
 
 /**
- * 执行 mcporter 命令
+ * 加载 Cookie
  */
-async function executeMcporter(code) {
-  return new Promise((resolve, reject) => {
-    const args = ['call', 'playwright.browser_run_code', `code=${code}`];
-    const mcporter = spawn('mcporter', args);
+function loadCookies() {
+  if (!fs.existsSync(CONFIG.cookieFile)) {
+    throw new Error(`Cookie 文件不存在: ${CONFIG.cookieFile}`);
+  }
 
-    let stdout = '';
-    let stderr = '';
+  const cookies = JSON.parse(fs.readFileSync(CONFIG.cookieFile, 'utf8'));
+  console.log(`✅ 已加载 ${cookies.length} 个 Cookie`);
 
-    mcporter.stdout.on('data', (data) => {
-      stdout += data.toString();
-    });
-
-    mcporter.stderr.on('data', (data) => {
-      stderr += data.toString();
-    });
-
-    mcporter.on('close', (code) => {
-      if (code === 0) {
-        try {
-          const result = JSON.parse(stdout);
-          resolve(result);
-        } catch (e) {
-          resolve(stdout);
-        }
-      } else {
-        reject(new Error(`mcporter exited with code ${code}: ${stderr}`));
-      }
-    });
-  });
+  return cookies;
 }
 
 /**
@@ -97,118 +80,121 @@ async function executeMcporter(code) {
 async function checkLoginStatus() {
   console.log('🔍 检查番茄小说登录状态...\n');
 
+  let browser = null;
+
   try {
+    // 启动浏览器
+    console.log('📍 启动 Chromium 浏览器...');
+    browser = await chromium.launch({
+      headless: false,  // 显示浏览器窗口，便于调试
+      slowMo: 100  // 减慢操作速度
+    });
+
+    // 创建页面
+    console.log('📍 创建新页面...');
+    const page = await browser.newPage();
+
+    // 加载 Cookie
+    console.log('📍 加载 Cookie...');
+    const cookies = loadCookies();
+    await page.context().addCookies(cookies);
+
     // 检查短故事管理页面（最直接的验证）
-    console.log('📍 访问短故事管理页面...');
+    console.log(`📍 访问短故事管理页面: ${CONFIG.checkUrls.shortManagePage}`);
+    await page.goto(CONFIG.checkUrls.shortManagePage, { waitUntil: 'domcontentloaded' });
 
-    const checkCode = `
-async (page) => {
-  // 导航到短故事管理页面
-  await page.goto('${CONFIG.checkUrls.shortManagePage}', { waitUntil: 'domcontentloaded' });
+    // 等待页面加载
+    await page.waitForTimeout(3000);
 
-  // 等待页面加载
-  await page.waitForTimeout(3000);
-
-  // 获取页面信息
-  const pageInfo = await page.evaluate(() => {
-    return {
-      url: page.url(),
-      title: document.title,
-      bodyText: document.body.innerText.substring(0, 500)
-    };
-  });
-
-  // 检查登录状态
-  const isLoggedIn = await page.evaluate(() => {
-    // 检查是否包含已登录特征
-    const bodyText = document.body.innerText;
-
-    const loggedIn = bodyText.includes('帅帅它爸') ||
-                   bodyText.includes('作家专区') ||
-                   bodyText.includes('工作台') ||
-                   bodyText.includes('作品管理');
-
-    // 检查是否包含未登录特征
-    const loggedOut = bodyText.includes('登录') && bodyText.includes('注册');
-
-    return {
-      loggedIn,
-      loggedOut,
-      userName: bodyText.match(/帅帅它爸/) ? '帅帅它爸' : null
-    };
-  });
-
-  // 获取用户信息
-  const userInfo = await page.evaluate(() => {
-    const userInfo = {
-      name: null,
-      hasPublishPermission: false
-    };
-
-    const bodyText = document.body.innerText;
-
-    // 提取用户名
-    const nameMatch = bodyText.match(/帅帅它爸/);
-    if (nameMatch) {
-      userInfo.name = nameMatch[0];
-    }
-
-    // 检查是否有发布权限
-    if (bodyText.includes('新建短故事') ||
-        bodyText.includes('发布') ||
-        bodyText.includes('发布短故事')) {
-      userInfo.hasPublishPermission = true;
-    }
-
-    return userInfo;
-  });
-
-  return {
-    pageInfo,
-    loginStatus: isLoggedIn,
-    userInfo
-  };
-}`;
-
-    const result = await executeMcporter(checkCode);
-
-    // 解析结果
-    let parsedResult;
-    try {
-      parsedResult = JSON.parse(result);
-    } catch (e) {
-      console.error('❌ 无法解析 mcporter 结果');
-      console.error('原始结果:', result);
-      process.exit(1);
-    }
-
-    // 打印检查结果
-    console.log('✅ 检查完成！\n');
-
-    console.log('📊 登录状态：');
+    // 获取页面信息
+    console.log('\n📊 页面信息：');
     console.log('─'.repeat(50));
 
-    if (parsedResult.loginStatus.loggedIn && !parsedResult.loginStatus.loggedOut) {
+    const pageInfo = await page.evaluate(() => {
+      return {
+        url: window.location.href,
+        title: document.title,
+        bodyText: document.body.innerText.substring(0, 500)
+      };
+    });
+
+    console.log(`URL: ${pageInfo.url}`);
+    console.log(`标题: ${pageInfo.title}`);
+
+    // 检查登录状态
+    const loginStatus = await page.evaluate(() => {
+      const bodyText = document.body.innerText;
+
+      // 检查是否包含已登录特征
+      const loggedIn = bodyText.includes('帅帅它爸') ||
+                     bodyText.includes('作家专区') ||
+                     bodyText.includes('工作台') ||
+                     bodyText.includes('作品管理');
+
+      // 检查是否包含未登录特征
+      const loggedOut = bodyText.includes('登录') && bodyText.includes('注册');
+
+      return {
+        loggedIn,
+        loggedOut
+      };
+    });
+
+    // 获取用户信息
+    const userInfo = await page.evaluate(() => {
+      const userInfo = {
+        name: null,
+        hasPublishPermission: false
+      };
+
+      const bodyText = document.body.innerText;
+
+      // 提取用户名
+      const nameMatch = bodyText.match(/帅帅它爸/);
+      if (nameMatch) {
+        userInfo.name = nameMatch[0];
+      }
+
+      // 检查是否有发布权限
+      if (bodyText.includes('新建短故事') ||
+          bodyText.includes('发布') ||
+          bodyText.includes('发布短故事')) {
+        userInfo.hasPublishPermission = true;
+      }
+
+      return userInfo;
+    });
+
+    // 打印检查结果
+    console.log('\n📊 登录状态：');
+    console.log('─'.repeat(50));
+
+    if (loginStatus.loggedIn && !loginStatus.loggedOut) {
       console.log('✅ 已登录');
-      console.log(`👤 用户名: ${parsedResult.userInfo.name || '未知'}`);
-      console.log(`📝 发布权限: ${parsedResult.userInfo.hasPublishPermission ? '✅ 有' : '❌ 无'}`);
-    } else if (parsedResult.loginStatus.loggedOut) {
+      console.log(`👤 用户名: ${userInfo.name || '未知'}`);
+      console.log(`📝 发布权限: ${userInfo.hasPublishPermission ? '✅ 有' : '❌ 无'}`);
+    } else if (loginStatus.loggedOut) {
       console.log('❌ 未登录');
       console.log('💡 建议：请先在浏览器中登录番茄小说作者账号');
     } else {
       console.log('⚠️ 登录状态不明');
-      console.log(`URL: ${parsedResult.pageInfo.url}`);
-      console.log(`页面标题: ${parsedResult.pageInfo.title}`);
+      console.log(`URL: ${pageInfo.url}`);
+      console.log(`页面标题: ${pageInfo.title}`);
     }
 
     console.log('\n' + '─'.repeat(50));
 
+    // 截图
+    const screenshotFile = path.join(CONFIG.dataDir, `check-fanqie-login-${Date.now()}.png`);
+    await page.screenshot({ path: screenshotFile, fullPage: false });
+    console.log(`\n📸 截图已保存: ${screenshotFile}`);
+
     // 保存检查报告
     const report = {
       timestamp: new Date().toISOString(),
-      pageInfo: parsedResult.pageInfo,
-      loginStatus: parsedResult.loginStatus,
-      userInfo: parsedResult.userInfo,
+      pageInfo: pageInfo,
+      loginStatus: loginStatus,
+      userInfo: userInfo,
       checkUrls: CONFIG.checkUrls
     };
 
@@ -216,19 +202,37 @@ async (page) => {
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
     console.log(`\n📄 检查报告已保存: ${reportFile}`);
+    console.log('\n✅ 检查完成！');
 
     // 返回状态码
-    if (parsedResult.loginStatus.loggedIn && !parsedResult.loginStatus.loggedOut) {
-      process.exit(0); // 已登录
+    if (loginStatus.loggedIn && !loginStatus.loggedOut) {
+      return { success: true, pageInfo, loginStatus, userInfo };
     } else {
-      process.exit(1); // 未登录
+      return { success: false, pageInfo, loginStatus, userInfo };
     }
 
   } catch (error) {
-    console.error('❌ 检查失败:', error.message);
-    process.exit(2);
+    console.error('\n❌ 检查失败:', error.message);
+    console.error(error.stack);
+    return { success: false, error: error.message };
+  } finally {
+    if (browser) {
+      await browser.close();
+      console.log('\n📍 浏览器已关闭');
+    }
   }
 }
 
 // 执行检查
-checkLoginStatus();
+checkLoginStatus()
+  .then(result => {
+    if (result.success) {
+      process.exit(0); // 已登录
+    } else {
+      process.exit(1); // 未登录或失败
+    }
+  })
+  .catch(error => {
+    console.error('❌ 检查异常:', error);
+    process.exit(2);
+  });

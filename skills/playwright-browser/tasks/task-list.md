@@ -6,6 +6,26 @@
 
 ## 🎯 P0 任务（紧急 / 进行中）
 
+### 13. 重写 check-fanqie-login.js（直接使用 Playwright API）
+
+- **状态**：⏳ 待完成
+- **创建时间**：2026-03-25 20:17 (cron heartbeat)
+- **说明**：修复脚本错误，直接使用 Playwright API，不依赖 mcporter 命令
+- **背景**：
+  - `check-fanqie-login.js` 脚本依赖 mcporter 命令
+  - 调用 `playwright.browser_run_code` MCP 时出现 `page is not defined` 错误
+  - 已知问题 #002，需要修复
+- **步骤**：
+  1. 参考 `test-playwright-simple.js` 的实现（已成功验证）
+  2. 直接使用 Playwright API（不依赖 mcporter 命令）
+  3. 验证脚本能够正常检查登录状态
+  4. 测试运行：`node scripts/check-fanqie-login.js`
+  5. 确认能正常访问番茄后台且无报错
+  6. 更新 `state/current-state.md` 中的登录检查状态
+- **验证标准**：运行 `node scripts/check-fanqie-login.js`，确认能正常访问番茄后台且无报错
+- **关联问题**：#002
+- **下一步**：完成后重新执行登录状态检查，记录到 `logs/latest.md`
+
 ### 12. 验证完整发布流程 ✅ 已完成
 
 - **状态**：✅ 已完成（2026-03-25 19:23）
@@ -221,7 +241,7 @@
 
 | 状态 | 数量 |
 |------|------|
-| P0 紧急 | 0 |
+| P0 紧急 | 1 |
 | P1 本周 | 3 |
 | P2 本月 | 4 |
 | P3 长期 | 3 |
@@ -230,6 +250,21 @@
 ---
 
 ## 📝 更新记录
+
+### 2026-03-25 20:17
+- **添加 P0 任务 #13**：重写 check-fanqie-login.js（直接使用 Playwright API）
+- **发现并记录问题 #002**：check-fanqie-login.js 脚本依赖 mcporter 命令，执行时报错 "page is not defined"
+- **更新任务统计**：P0 紧急任务从 0 增加到 1
+- **更新 state/current-state.md**：
+  * Cookie 剩余天数从 360 天更新为 359 天
+  * 登录状态从"✅ 已登录"改为"❌ 检查脚本报错"
+  * 系统健康评分从"🟢 良好"改为"🟡 一般"
+  * 添加问题 #002 到已知问题列表
+  * 添加关键发现"check-fanqie-login.js 脚本错误"
+  * 更新当前任务优先级（将重写脚本提升为最高优先级）
+  * 更新下次心跳建议（将重写脚本提升为最高优先级）
+  * 添加历史状态快照（2026-03-25 20:17）
+- **更新 logs/latest.md**：记录本次心跳的检查结果和发现
 
 ### 2026-03-25 19:23
 - **P0 任务 #12 完成**：验证完整发布流程（第二页结构分析 + 简化版自动发布脚本）

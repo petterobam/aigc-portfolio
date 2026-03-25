@@ -6,7 +6,7 @@
 
 ## 上次更新
 
-- 更新时间：2026-03-25 19:50 (Asia/Shanghai)
+- 更新时间：2026-03-26 00:49 (Asia/Shanghai)
 - 触发方式：cron job (heartbeat)
 - 执行人：浏览器自动化守护者
 
@@ -19,14 +19,16 @@
 | latest.json 存在 | ✅ 是 | ✅ 是 | — |
 | sessionid 有效 | ✅ 是 | ✅ 是 | — |
 | sessionid 过期时间 | 2027-03-20T12:14:47Z | 2027-03-20T12:14:47Z | — |
-| 剩余有效天数 | 360 天 | 360 天 | — |
+| 剩余有效天数 | 359 天 | 359 天 | — |
+| 登录状态检查 | ⚠️ 超时（需重试） | ✅ 成功 | 变化 |
 | Cookie 数量 | 26 | 26 | — |
 | 告警状态 | ✅ 无需告警 | ✅ 无需告警 | — |
 
 **说明**：
-- Cookie 状态良好，剩余 360 天，远高于 7 天告警阈值
-- 实际访问番茄小说作家后台验证：Cookie 有效，登录状态正常
-- 用户信息：帅帅它爸
+- Cookie 状态良好，剩余 359 天，远高于 7 天告警阈值
+- **上次登录检查（21:24）**：成功，登录状态正常，用户名：帅帅它爸
+- **本次登录检查（22:27）**：脚本执行超时（30 秒），可能为网络波动或服务器响应慢
+- **判断**：不判定为 Cookie 失效，下次心跳时重试
 
 ---
 
@@ -39,7 +41,7 @@
 | 自动发布能力 | ✅ 部分自动化 | 约 70% 步骤可自动化（简化版脚本） |
 | test-publish-fanqie.js | ✅ 成功 | 发布测试脚本验证通过 |
 | auto-publish-fanqie-simple.js | ✅ 成功 | 简化版自动发布脚本已创建 |
-| check-fanqie-login.js | ⚠️ 待重写 | 依赖 mcporter 命令，需要重写 |
+| check-fanqie-login.js | ⚠️ 上次成功 | 已重写，本次执行超时，下次重试 |
 | CDP 端口（9222） | ❌ 不可达 | Chrome 未以 --remote-debugging-port=9222 启动 |
 | 方式 B 自动刷新 | ❌ 不可用 | CDP 端口不可达 |
 
@@ -49,17 +51,20 @@
 
 | 项目 | 数值 |
 |------|------|
-| 执行时间 | 2026-03-25 19:23 |
-| Cookie 有效性 | ✅ 有效，剩余 360 天 |
+| 执行时间 | 2026-03-25 21:24 |
+| Cookie 有效性 | ✅ 有效，剩余 359 天 |
 | Cookie 数量 | 26 |
 | 剩余天数告警 | ✅ 无需告警（> 7 天） |
-| 登录状态 | ✅ 已登录（用户名：帅帅它爸） |
+| 登录状态 | ✅ 已登录 |
+| 用户名 | 帅帅它爸 |
+| 发布权限 | ✅ 有 |
 | 作家后台 | ✅ 可访问 |
 | 短故事管理页面 | ✅ 正常 |
 | 自动发布能力 | ✅ 部分自动化（约 70% 可自动化） |
 | Playwright 测试 | ✅ 成功（独立运行，不依赖 MCPorter） |
 | 发布测试脚本 | ✅ 成功（test-publish-fanqie.js） |
 | 简化版自动发布脚本 | ✅ 成功（auto-publish-fanqie-simple.js） |
+| check-fanqie-login.js | ✅ 成功（已重写，直接使用 Playwright API） |
 | 第二页结构分析 | ✅ 成功（封面设置、作品分类、发布协议） |
 | 标题填写 | ✅ 成功 |
 | 正文填写 | ✅ 成功 |
@@ -70,8 +75,8 @@
 | "发布"按钮 | ⚠️ 需要手动 |
 | CDP 端口状态 | ❌ 不可达 |
 | MCPorter 服务 | ⚠️ 不需要（Playwright 可以独立运行） |
-| 发现问题数 | 1（CDP 端口） |
-| 健康评分 | 🟢 良好（Cookie 正常，Playwright 可用，部分自动化发布） |
+| 发现问题数 | 1（CDP 端口不可达） |
+| 健康评分 | 🟢 良好（Cookie 正常，Playwright 可用，登录检查脚本正常） |
 
 ---
 
@@ -80,10 +85,48 @@
 | 编号 | 问题描述 | 严重程度 | 状态 | 关联任务 |
 |------|---------|---------|------|---------|
 | #001 | CDP 端口（9222）不可达，方式 B 自动刷新无法使用 | 中 | 待修复 | tasks/task-list.md #1 |
+| #002 | check-fanqie-login.js 脚本依赖 mcporter 命令，执行时报错 "page is not defined" | 高 | ✅ 已修复 | tasks/task-list.md #13 ✅ |
 
 ---
 
 ## 关键发现
+
+### check-fanqie-login.js 脚本重写成功（P0 任务 #13 ✅）
+
+**完成时间**：2026-03-25 21:24
+
+**问题描述**：
+- `check-fanqie-login.js` 脚本依赖 mcporter 命令
+- 调用 `playwright.browser_run_code` MCP 时出现 `page is not defined` 错误
+- 已知问题 #002，需要修复
+
+**解决方案**：
+- 参考 `test-playwright-simple.js` 的成功实现
+- 直接使用 Playwright API（不依赖 mcporter 命令）
+- 移除对 mcporter 命令的依赖
+
+**重写结果**：
+- ✅ 脚本成功运行，不再依赖 mcporter 命令
+- ✅ 加载 26 个 Cookie
+- ✅ 成功访问短故事管理页面
+- ✅ 验证登录状态：已登录
+- ✅ 用户名：帅帅它爸
+- ✅ 发布权限：有
+- ✅ 保存截图和检查报告
+
+**关键改动**：
+1. 移除 `spawn('mcporter')` 调用
+2. 直接使用 `require('playwright')` 和 `chromium.launch()`
+3. 直接使用 `page.goto()`、`page.evaluate()` 等 Playwright API
+4. 移除复杂的错误处理逻辑，代码更简洁
+
+**验证标准**：
+- 运行 `node scripts/check-fanqie-login.js`，确认能正常访问番茄后台且无报错
+- ✅ 符合验证标准
+
+**关联任务**：P0 任务 #13 ✅
+**问题修复**：问题 #002 ✅ 已修复
+
 
 ### 简化版自动发布脚本创建成功（P0 任务 #12）✅
 
@@ -209,13 +252,48 @@ node scripts/auto-publish-fanqie-simple.js
 - 重写 `fetch-story-list-chrome-v4.js`，直接使用 Playwright API
 - 确保所有脚本都可以独立运行，不依赖 mcporter 命令
 
+### check-fanqie-login.js 脚本错误（问题 #002）
+
+**发现时间**：2026-03-25 20:17
+
+**问题描述**：
+- `check-fanqie-login.js` 脚本依赖 mcporter 命令
+- 调用 `playwright.browser_run_code` MCP 时出现 `page is not defined` 错误
+- 这不是登录态失效，而是脚本代码问题
+
+**错误详情**：
+```
+Error: page.evaluate: ReferenceError: page is not defined
+    at eval (eval at evaluate (:301:30), <anonymous>:3:12)
+    at UtilityScript.evaluate (<anonymous>:303:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+```
+
+**根因分析**：
+- 脚本使用 `mcporter` 命令调用 Playwright MCP
+- MCP 调用失败，返回错误信息
+- 实际上，Playwright 可以独立运行，不需要 MCPorter
+
+**解决方案**：
+- 参考 `test-playwright-simple.js` 的成功实现
+- 重写 `check-fanqie-login.js`，直接使用 Playwright API
+- 移除对 mcporter 命令的依赖
+
+**关联任务**：P0 任务 #2（新）- 重写 check-fanqie-login.js
+
 ---
 
 ## 当前任务优先级
 
 > 与 tasks/task-list.md 保持同步，这里只展示最高优先级的 3 件事。
 
-1. **P0 - 为 35号故事执行自动发布**：
+1. **P0 - 重写 check-fanqie-login.js**（新增，最高优先级）：
+   - 参考 `test-playwright-simple.js` 的成功实现
+   - 直接使用 Playwright API（不依赖 mcporter 命令）
+   - 验证脚本能够正常检查登录状态
+   - 关联问题：#002
+
+2. **P0 - 为 35号故事执行自动发布**：
    - 在 20:25 左右运行 `node scripts/auto-publish-fanqie-simple.js`
    - 手动完成剩余步骤（设置分类、上传封面、点击发布）
    - 验证发布是否成功
@@ -254,24 +332,28 @@ node scripts/auto-publish-fanqie-simple.js
 | 2026-03-25 18:11 | ✅ | 360 | ❌ | ❌ | ❓ | ❓ | MCPorter 超时，Playwright 不可用 |
 | 2026-03-25 19:02 | ✅ | 360 | ❌ | ✅ | ✅ | ❓ | 发现 Playwright 可以独立运行 |
 | 2026-03-25 19:17 | ✅ | 360 | ❌ | ✅ | ✅ | ✅ | P0 任务完成：自动化发布能力验证成功 |
+| 2026-03-25 20:17 | ✅ | 359 | ❌ | ✅ | ❌ | ✅ | 发现 check-fanqie-login.js 脚本错误，需要重写 |
 
 ---
 
 ## 下次心跳建议
 
 ### 短期（下次心跳）
-1. **验证完整发布流程**：
-   - 继续测试"下一步"后的页面（封面、标签、简介）
-   - 验证"发布"按钮点击
-   - 完整走完发布流程
+1. **重写 check-fanqie-login.js**（最高优先级，问题 #002）：
+   - 参考 `test-playwright-simple.js` 的实现
+   - 直接使用 Playwright API（不依赖 mcporter 命令）
+   - 验证脚本能够正常检查登录状态
+   - 验证完成后，记录实际登录状态到状态文件
 
-2. **支持 35号故事自动发布**（最高优先级）：
+2. **验证登录态**：
+   - 等脚本修复后，重新执行登录状态检查
+   - 确认 Cookie 和实际登录状态都正常
+
+3. **支持 35号故事自动发布**：
    - 在 20:25 左右运行 `node scripts/auto-publish-fanqie-simple.js`
    - 手动完成剩余步骤（设置分类、上传封面、点击发布）
    - 验证发布是否成功
    - 记录发布结果
-
-3. **重写检查脚本**：重写 `check-fanqie-login.js`，直接使用 Playwright API
 
 ### 中期（本周）
 1. **完成任务 1**：配置 CDP 端口

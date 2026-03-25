@@ -15,8 +15,9 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-// 数据库路径
-const DB_PATH = path.resolve(__dirname, '../../../data/memory.db');
+// 数据库路径（使用共享配置）
+const CONFIG = require('./config.js');
+const DB_PATH = CONFIG.DB_CONFIG.dbPath;
 
 console.log('============================================================');
 console.log('  向量持久化数据库迁移');
