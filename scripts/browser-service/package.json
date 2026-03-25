@@ -1,0 +1,23 @@
+{
+  "name": "browser-service",
+  "version": "1.0.0",
+  "description": "番茄小说浏览器长连接服务",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "client": "node client.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "playwright": "^1.40.0"
+  },
+  "keywords": [
+    "browser",
+    "automation",
+    "fanqie",
+    "service"
+  ],
+  "author": "",
+  "license": "MIT"
+}

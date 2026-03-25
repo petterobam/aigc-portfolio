@@ -14,7 +14,7 @@ from pathlib import Path
 # 路径配置
 WORKSPACE = Path("/Users/oyjie/.openclaw/workspace")
 REPO_PATH = WORKSPACE / "LLM-RL-Visualized"
-PLAN_FILE = WORKSPACE / "llm-learning-plan.md"
+PLAN_FILE = WORKSPACE / "skills/llm-learning/plan/llm-learning-plan.md"
 PROGRESS_FILE = WORKSPACE / "skills/llm-learning/progress.json"
 LOGS_DIR = WORKSPACE / "skills/llm-learning/daily-logs"
 
@@ -28,7 +28,7 @@ class LearningProgress:
     def load_progress(self):
         """加载进度"""
         if PROGRESS_FILE.exists():
-            with open(PROGRESS_FILE, 'r', encoding='utf-8') as f:
+            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         return {
             "currentDay": 1,
@@ -38,29 +38,29 @@ class LearningProgress:
             "completedDays": 0,
             "completedTopics": [],
             "streak": 0,
-            "skippedDays": 0
+            "skippedDays": 0,
         }
 
     def save_progress(self):
         """保存进度"""
-        with open(PROGRESS_FILE, 'w', encoding='utf-8') as f:
+        with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
             json.dump(self.progress, f, indent=2, ensure_ascii=False)
 
     def get_current_day(self):
         """获取当前天数"""
-        return self.progress['currentDay']
+        return self.progress["currentDay"]
 
     def advance_day(self):
         """进入下一天"""
-        self.progress['currentDay'] += 1
-        self.progress['completedDays'] += 1
-        self.progress['lastStudyDate'] = datetime.now().strftime("%Y-%m-%d")
-        self.progress['streak'] += 1
+        self.progress["currentDay"] += 1
+        self.progress["completedDays"] += 1
+        self.progress["lastStudyDate"] = datetime.now().strftime("%Y-%m-%d")
+        self.progress["streak"] += 1
         self.save_progress()
 
     def get_completion_percentage(self):
         """获取完成百分比"""
-        return (self.progress['completedDays'] / self.progress['totalDays']) * 100
+        return (self.progress["completedDays"] / self.progress["totalDays"]) * 100
 
     def get_day_info(self, day):
         """获取某天的学习信息"""
@@ -101,7 +101,7 @@ class LearningProgress:
             "最新模型研究 (2)",
             "最新模型研究 (3)",
             "最新模型研究 (4)",
-            "最新模型研究 (5)"
+            "最新模型研究 (5)",
         ]
 
         if day <= len(topics):
@@ -114,7 +114,7 @@ class LearningProgress:
         today = datetime.now().strftime("%Y-%m-%d")
         log_file = LOGS_DIR / f"{today}.md"
 
-        with open(log_file, 'w', encoding='utf-8') as f:
+        with open(log_file, "w", encoding="utf-8") as f:
             f.write(content)
 
 

@@ -17,7 +17,7 @@
 
 - 主文档：`/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/README.md`
 - 模型索引：`/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/LLM-VLM-index.md`
-- 学习计划：`/Users/oyjie/.openclaw/workspace/llm-learning-plan.md`
+- 学习计划：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/plan/llm-learning-plan.md`
 - 进度文件：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/progress.json`
 - 日志目录：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/`
 

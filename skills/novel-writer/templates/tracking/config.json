@@ -1,0 +1,53 @@
+{
+  "novel": "小说名称",
+  "version": "1.0.0",
+  "method": "三幕结构",
+  "lastUpdated": "",
+  "status": "planning",
+
+  "progress": {
+    "currentChapter": 0,
+    "totalChaptersPlanned": 0,
+    "currentVolume": 1,
+    "totalVolumesPlanned": 1,
+    "completionPercent": 0
+  },
+
+  "wordCount": {
+    "current": 0,
+    "target": 0,
+    "averagePerChapter": 0
+  },
+
+  "spec": {
+    "genre": "",
+    "subGenre": "",
+    "targetReaders": "",
+    "coreSelling": "",
+    "pov": "第三人称有限"
+  },
+
+  "files": {
+    "storySpec": "spec/story-spec.md",
+    "constitution": "spec/writing-constitution.md",
+    "clarifications": "spec/clarifications.md",
+    "storyOutline": "outline/story-outline.md",
+    "chapters": "outline/chapters.md",
+    "worldbuilding": "outline/worldbuilding.md",
+    "styleGuide": "style-guide.md"
+  },
+
+  "setupChecklist": {
+    "methodSelected": false,
+    "styleSet": false,
+    "storySpecDone": false,
+    "clarifyDone": false,
+    "storyOutlineDone": false,
+    "chapterOutlineDone": false,
+    "trackInitDone": false
+  },
+
+  "nextAction": "/method",
+  "pendingTasks": [],
+  "notes": ""
+}
