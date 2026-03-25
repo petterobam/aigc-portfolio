@@ -38,7 +38,9 @@ const DEFAULT_CONFIG = {
   apiUrl: 'http://localhost:11434',  // Ollama API 地址
   dimensions: 768,             // 向量维度（gemma:2b 的维度）
   cacheEnabled: true,           // 是否启用缓存
-  usePersistence: true          // 是否使用向量持久化
+  usePersistence: true,         // 是否使用向量持久化
+  maxContentLength: 2000,       // 最大内容长度（避免超过模型上下文窗口）
+  preferSummary: true          // 优先使用 summary 字段生成向量
 };
 
 /**
@@ -178,6 +180,30 @@ class OllamaEmbeddings {
   }
 
   /**
+   * 准备用于生成向量的内容
+   * 优先使用 summary，如果没有则使用 content（截断到最大长度）
+   *
+   * @param {Object} memory - 记忆对象
+   * @returns {string} 用于生成向量的内容
+   */
+  prepareContentForEmbedding(memory) {
+    // 优先使用 summary
+    if (this.config.preferSummary && memory.summary && memory.summary.trim()) {
+      console.log(`  ℹ️  使用 summary 字段生成向量 [${memory.id}] (${memory.summary.length} 字符)`);
+      return memory.summary.trim();
+    }
+
+    // 使用 content，但截断到最大长度
+    let content = memory.content || '';
+    if (content.length > this.config.maxContentLength) {
+      console.log(`  ℹ️  截断 content 字段生成向量 [${memory.id}] (${content.length} → ${this.config.maxContentLength} 字符)`);
+      content = content.substring(0, this.config.maxContentLength);
+    }
+
+    return content;
+  }
+
+  /**
    * 智能生成向量（带缓存和持久化）
    *
    * @param {number} memoryId - 记忆 ID
@@ -221,6 +247,22 @@ class OllamaEmbeddings {
     }
 
     return embedding;
+  }
+
+  /**
+   * 为记忆生成向量（带智能内容处理）
+   *
+   * @param {Object} memory - 记忆对象（必须包含 id, content, summary）
+   * @returns {Promise<number[]>} 向量数组
+   */
+  async generateEmbeddingForMemory(memory) {
+    const { id } = memory;
+
+    // 准备用于生成向量的内容（优先使用 summary，截断长内容）
+    const preparedContent = this.prepareContentForEmbedding(memory);
+
+    // 生成向量（复用现有逻辑）
+    return this.generateEmbeddingSmart(id, preparedContent);
   }
 
   /**
@@ -274,7 +316,7 @@ class OllamaEmbeddings {
 
       for (const memory of batch) {
         try {
-          const embedding = await this.generateEmbedding(memory.id, memory.content);
+          const embedding = await this.generateEmbeddingForMemory(memory);
           results.push({ ...memory, embedding });
         } catch (error) {
           console.error(`生成向量失败 [${memory.id}]:`, error.message);
@@ -385,12 +427,14 @@ class OllamaEmbeddings {
             memoryA: {
               id: memoryA.id,
               title: memoryA.title,
-              content: memoryA.content
+              content: memoryA.content,
+              summary: memoryA.summary
             },
             memoryB: {
               id: memoryB.id,
               title: memoryB.title,
-              content: memoryB.content
+              content: memoryB.content,
+              summary: memoryB.summary
             },
             similarity
           });

@@ -87,7 +87,7 @@ const OPTIMIZE_CONFIG = {
   ollamaEnabled: true,                 // 是否启用 Ollama 向量去重（优先级高于 OpenAI）
   ollamaModel: 'gemma:2b',             // Ollama 模型（轻量级，速度快）
   ollamaApiUrl: 'http://localhost:11434/api/embeddings',  // Ollama API 地址
-  ollamaSimilarityThreshold: 0.92,     // Ollama 相似度阈值（略低于 OpenAI）
+  ollamaSimilarityThreshold: 0.98,     // Ollama 相似度阈值（提高阈值以减少假阳性）
 };
 
 // 备份脚本配置

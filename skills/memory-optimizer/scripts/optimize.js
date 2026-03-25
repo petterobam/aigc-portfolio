@@ -485,7 +485,8 @@ async function main() {
         const OllamaEmbeddings = require('./ollama-embeddings');
         const ollamaDeduplicator = new OllamaEmbeddings(db, {
           model: OPTIMIZE_CONFIG.ollamaModel,
-          apiUrl: OPTIMIZE_CONFIG.ollamaApiUrl
+          apiUrl: OPTIMIZE_CONFIG.ollamaApiUrl,
+          similarityThreshold: OPTIMIZE_CONFIG.ollamaSimilarityThreshold
         });
         const vectorDuplicates = await ollamaDeduplicator.findDuplicates(memories);
 
