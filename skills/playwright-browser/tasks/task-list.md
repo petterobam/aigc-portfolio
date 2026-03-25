@@ -6,7 +6,23 @@
 
 ## 🎯 P0 任务（紧急 / 进行中）
 
-_当前无 P0 任务。_
+### 10. 修复 MCPorter 守护进程（Playwright 服务恢复）
+
+- **状态**：🔴 紧急待处理
+- **发现时间**：2026-03-25 18:11 (cron heartbeat)
+- **说明**：MCPorter 守护进程启动超时，导致所有依赖 playwright 的脚本执行失败
+- **错误信息**：`Timeout while waiting for MCPorter daemon to start`
+- **影响范围**：
+  - check-fanqie-login.js 无法执行
+  - fetch-story-list-chrome-v4.js 无法执行
+  - 所有依赖 browser_run_code 的脚本不可用
+- **排查步骤**：
+  1. 检查 MCPorter 配置：`cat ~/.config/mcporter/config.json`
+  2. 查看守护进程状态：`mcporter status`
+  3. 手动启动守护进程：`mcporter daemon start`
+  4. 查看守护进程日志：`mcporter daemon logs`
+- **验证标准**：运行 `node scripts/check-fanqie-login.js`，确认能正常访问番茄后台且无报错
+- **关联问题**：state/current-state.md #002
 
 ---
 

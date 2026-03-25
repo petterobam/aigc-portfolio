@@ -482,12 +482,11 @@ async function main() {
       if (OPTIMIZE_CONFIG.ollamaEnabled) {
         // 优先使用 Ollama（本地向量生成，零成本）
         console.log('🧠 识别语义重复记忆（Ollama 向量相似度）...');
-        const { OllamaDeduplicator } = require('./ollama-embeddings');
-        const ollamaDeduplicator = new OllamaDeduplicator(
-          db,
-          OPTIMIZE_CONFIG.ollamaModel,
-          OPTIMIZE_CONFIG.ollamaApiUrl
-        );
+        const OllamaEmbeddings = require('./ollama-embeddings');
+        const ollamaDeduplicator = new OllamaEmbeddings(db, {
+          model: OPTIMIZE_CONFIG.ollamaModel,
+          apiUrl: OPTIMIZE_CONFIG.ollamaApiUrl
+        });
         const vectorDuplicates = await ollamaDeduplicator.findDuplicates(memories);
 
         stats.vectorDuplicate = vectorDuplicates.length;
@@ -495,10 +494,7 @@ async function main() {
         if (vectorDuplicates.length > 0) {
           console.log(`发现 ${vectorDuplicates.length} 组语义重复记忆`);
           vectorDuplicates.forEach(dup => {
-            console.log(`  - "${dup.original.title}" 有 ${dup.duplicateCount} 条相似记忆`);
-            dup.similar.forEach(sim => {
-              console.log(`    └─ 相似度 ${sim.similarity.toFixed(4)}: "${sim.title}"`);
-            });
+            console.log(`  - [${dup.memoryA.id}] "${dup.memoryA.title}" 与 [${dup.memoryB.id}] "${dup.memoryB.title}" 相似度: ${(dup.similarity * 100).toFixed(2)}%`);
           });
         }
         console.log('');

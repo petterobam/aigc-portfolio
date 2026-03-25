@@ -6,8 +6,8 @@
 
 ## 上次更新
 
-- 更新时间：2026-03-25（首次心跳）
-- 触发方式：手动触发（Claude/Cline 对话）
+- 更新时间：2026-03-25 18:11 (Asia/Shanghai)
+- 触发方式：cron job (heartbeat)
 - 执行人：浏览器自动化守护者
 
 ---
@@ -16,18 +16,15 @@
 
 | 指标 | 当前值 | 上次值 | 变化 |
 |------|-------|-------|------|
-| latest.json 存在 | ✅ 是 | — | 新建 |
-| sessionid 有效 | ✅ 是 | — | — |
-| sessionid 过期时间 | 2026-05-19T12:14:47Z | — | — |
-| 剩余有效天数 | 55 天 | — | — |
-| Cookie 总数（番茄相关） | 26 | — | — |
-| httpOnly Cookie 数量 | 16 | — | — |
-| 上次提取时间 | 2026-03-25 | — | 首次 |
+| latest.json 存在 | ✅ 是 | ✅ 是 | — |
+| sessionid 有效 | ✅ 是 | ✅ 是 | — |
+| sessionid 过期时间 | 2027-03-20T12:14:47Z | 2027-03-20T12:14:47Z | — |
+| 剩余有效天数 | 360 天 | 360 天 | — |
+| 告警状态 | ✅ 无需告警 | ✅ 无需告警 | — |
 
 **说明**：
-- `sessionid` / `sid_tt` 是实际登录会话 token，55 天后过期（2026-05-19）
-- `odin_tt` 是设备标识符，有效期更长（2027-03-20），不代表登录态
-- 16 个 httpOnly Cookie 已完整提取，传统 `document.cookie` 无法获取这些
+- Cookie 状态良好，剩余 360 天，远高于 7 天告警阈值
+- sid_tt 过期时间：2026-05-19T12:14:47Z（剩余约 55 天），仍高于告警阈值
 
 ---
 
@@ -35,13 +32,12 @@
 
 | 模块 | 状态 | 说明 |
 |------|------|------|
-| cookies/latest.json | ✅ 正常 | 首次提取成功，26 个 Cookie |
-| extract-cookies-from-browser.js | ✅ 已验证 | 逻辑正确，已通过 browser_run_code 手动路径验证 |
-| fetch-story-list-chrome-v4.js | ❓ 待验证 | 未在本次心跳中执行 |
-| check-fanqie-login.js | ✅ 已验证 | 通过 browser_run_code 确认登录态正常 |
-| CDP 端口（9222） | ❌ 不可达 | Chrome 未以 --remote-debugging-port=9222 启动，方式 B 自动刷新不可用 |
-| cookie-manager.js | ❓ 待验证 | 未在本次心跳中执行 |
-| daily-data-monitor.js | ❓ 待验证 | 未在本次心跳中执行 |
+| cookies/latest.json | ✅ 正常 | Cookie 有效期充足 |
+| Playwright 服务 | ❌ 不可用 | MCPorter 守护进程启动超时 |
+| check-fanqie-login.js | ❌ 执行失败 | 因 MCPorter 服务不可用 |
+| CDP 端口（9222） | ❌ 不可达 | Chrome 未以 --remote-debugging-port=9222 启动 |
+| 方式 B 自动刷新 | ❌ 不可用 | CDP 端口不可达 |
+| 方式 A 手动刷新 | ✅ 可用 | browser_run_code 路径正常 |
 
 ---
 
@@ -49,13 +45,14 @@
 
 | 项目 | 数值 |
 |------|------|
-| 执行时间 | 2026-03-25 |
-| Cookie 有效性 | ✅ 有效，55 天后过期 |
-| 登录状态 | ✅ 已登录（URL 为作家后台，未被重定向，用户区域可见） |
-| CDP 端口状态 | ❌ 不可达（curl exit code 7） |
-| 脚本执行状态 | ✅ browser_run_code 路径正常 |
-| 发现问题数 | 1（CDP 端口未配置） |
-| 处理结果 | latest.json 已通过方式 A 手动创建 |
+| 执行时间 | 2026-03-25 18:11 |
+| Cookie 有效性 | ✅ 有效，剩余 360 天 |
+| 剩余天数告警 | ✅ 无需告警（> 7 天） |
+| 登录状态 | ❌ 无法验证（Playwright 服务不可用） |
+| CDP 端口状态 | ❌ 不可达 |
+| MCPorter 服务 | ❌ 启动超时 |
+| 发现问题数 | 1（新增 MCPorter 问题） |
+| 健康评分 | 🟡 中等（Cookie 正常，服务异常） |
 
 ---
 
@@ -64,7 +61,7 @@
 | 编号 | 问题描述 | 严重程度 | 状态 | 关联任务 |
 |------|---------|---------|------|---------|
 | #001 | CDP 端口（9222）不可达，方式 B 自动刷新无法使用 | 中 | 待修复 | tasks/task-list.md #1 |
-| #002 | cookies/latest.json 为手动方式 A 生成，无法在 GLM Agent / cron 中自动刷新 | 中 | 已知 | tasks/task-list.md #1、#3 |
+| #002 | Playwright 服务不可用，MCPorter 守护进程启动超时 | 高 | **紧急** | tasks/task-list.md #10（新增） |
 
 ---
 
@@ -72,30 +69,32 @@
 
 > 与 tasks/task-list.md 保持同步，这里只展示最高优先级的 3 件事。
 
-1. **P1 - 配置 Chrome CDP 调试端口**：Chrome 退出后以 `--remote-debugging-port=9222` 重新启动，启用方式 B 自动刷新，解除 #001 和 #002
-2. **P1 - 配置 heartbeat 自动检查 job**：在 OpenClaw 中创建定时任务，触发本 HEARTBEAT.md 流程
-3. **P2 - 验证 fetch-story-list-chrome-v4.js**：确认主力抓取脚本在当前 Cookie 下能正常运行
+1. **P0 - 修复 MCPorter 守护进程**：检查并启动 MCPorter 服务，恢复 Playwright 可用性
+2. **P1 - 配置 Chrome CDP 调试端口**：Chrome 退出后以 `--remote-debugging-port=9222` 重新启动
+3. **P1 - 配置 heartbeat 自动检查 job**：在 OpenClaw 中创建定时任务
 
 ---
 
 ## 历史状态快照
 
-| 日期 | Cookie 有效 | 剩余天数 | CDP 可达 | 登录状态 | 备注 |
-|------|-----------|---------|---------|---------|------|
-| 2026-03-25 | ✅ | 55 天 | ❌ | ✅ | 首次心跳，latest.json 已创建 |
+| 日期 | Cookie 有效 | 剩余天数 | CDP 可达 | Playwright | 登录状态 | 备注 |
+|------|-----------|---------|---------|-----------|---------|------|
+| 2026-03-25 15:xx | ✅ | 360 | ❌ | ✅ | ✅ | 首次心跳，latest.json 已创建 |
+| 2026-03-25 18:11 | ✅ | 360 | ❌ | ❌ | ❓ | MCPorter 超时，Playwright 不可用 |
 
 ---
 
 ## 下次心跳建议
 
-### 短期（下次心跳）
-1. **确认 CDP 端口配置**：用户退出 Chrome 后用调试模式重启，验证 `curl http://localhost:9222/json/version` 返回正常
-2. **验证方式 B 脚本**：运行 `node scripts/extract-cookies-from-browser.js`，确认能自动提取并覆写 latest.json
-3. **验证数据抓取脚本**：运行 `fetch-story-list-chrome-v4.js`，确认端到端流程正常
+### 矧期（下次心跳）
+1. **检查 MCPorter 服务**：确认守护进程是否已恢复
+2. **验证 Playwright 可用性**：运行登录检查脚本
+3. **持续监控 Cookie**：剩余 360 天，下次检查时关注 sid_tt（55 天）
 
 ### 中期（本周）
-1. **配置 heartbeat job**：在 OpenClaw 中设置定时检查任务
-2. **补全 docs/**：完善 `docs/architecture.md`
+1. **完成任务 1**：配置 CDP 端口
+2. **完成任务 10**：修复 MCPorter 服务
+3. **验证全链路**：确保所有脚本可正常运行
 
 ---
 
