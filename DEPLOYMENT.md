@@ -35,7 +35,11 @@ vercel login
 ### 步骤 3: 部署到 Vercel
 
 ```bash
+<<<<<<< HEAD
 cd /Users/oyjie/.openclaw/workspace/财富自由之路/aigc-portfolio
+=======
+cd ~/.openclaw/workspace/aigc-portfolio
+>>>>>>> 7db67e3 (init: AIGC portfolio website (migrated from 财富自由之路))
 vercel
 ```
 
