@@ -38,7 +38,7 @@ export default function About() {
             关于我
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            AIGC 技术专家，帮助企业用 AI 提升效率
+            AIGC 技术咨询专家 | 欧阳洁
           </p>
         </div>
       </section>
@@ -51,11 +51,17 @@ export default function About() {
               个人简介
             </h2>
             <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-              AIGC 技术专家，10 年全栈开发经验，深度学习背景。精通文本、图像、音视频生成，熟练掌握 LangChain、LlamaIndex、向量数据库、RAG 架构等技术栈。
+              AIGC 技术咨询专家，10 年全栈开发经验，深度学习背景。精通文本、图像、音视频生成，熟练掌握 LangChain、LlamaIndex、向量数据库、RAG 架构等技术栈。
             </p>
             <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
               已服务 20+ 家企业，覆盖金融、教育、电商等行业。核心服务包括：AIGC 技术咨询、定制化开发、提示词工程、团队培训。目标：让每家企业都能用上 AI，提升效率，创造价值。
             </p>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a href="mailto:petterobam@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">📧 petterobam@gmail.com</a>
+              <a href="https://github.com/petterobam" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">🐙 GitHub</a>
+              <a href="https://www.zhihu.com/people/oy6666" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">📘 知乎</a>
+              <a href="https://www.linkedin.com/in/petterobam/" target="_blank" className="text-blue-600 dark:text-blue-400 hover:underline">💼 LinkedIn</a>
+            </div>
           </div>
         </div>
       </section>
