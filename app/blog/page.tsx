@@ -4,43 +4,51 @@ export default function Blog() {
   const posts = [
     {
       id: 1,
-      title: '企业如何快速落地 AI 应用？从 0 到 1 的完整指南',
-      excerpt: '分享企业 AI 落地的常见误区、技术选型、快速验证方法论和成本控制策略。',
-      date: '2026-03-25',
+      title: 'AIGC 落地实战：从 0 到 1 构建企业级 AI 应用',
+      excerpt: '分享企业 AI 落地的常见误区、技术选型、快速验证方法论和成本控制策略，帮助企业少走弯路。',
+      date: '2026-04-05',
       category: '实战指南',
-      readTime: '10 分钟'
-    },
-    {
-      id: 2,
-      title: 'LangChain 实战：7 天构建企业级知识库系统',
-      excerpt: '详细介绍如何使用 LangChain 和 ChromaDB 构建企业级知识库系统。',
-      date: '2026-03-20',
-      category: '技术实战',
       readTime: '15 分钟'
     },
     {
-      id: 3,
-      title: '提示词工程：10 个提升模型输出的实用技巧',
-      excerpt: '分享提示词工程的核心技巧，包括角色设定、提供示例、思维链等。',
-      date: '2026-03-15',
-      category: '技术技巧',
-      readTime: '8 分钟'
-    },
-    {
-      id: 4,
-      title: 'AI 模型对比：GPT vs Claude vs Gemini，哪个更适合你的企业？',
-      excerpt: '对比主流 LLM 的能力、成本、适用场景，提供决策框架。',
-      date: '2026-03-10',
-      category: '技术选型',
+      id: 2,
+      title: 'AIGC 时代的技术管理：如何带领团队拥抱 AI？',
+      excerpt: 'AI 不是取代团队，而是放大团队能力。分享如何在技术管理中有效整合 AI 工具和工作流。',
+      date: '2026-04-07',
+      category: '技术管理',
       readTime: '12 分钟'
     },
     {
+      id: 3,
+      title: '从技术人到技术顾问：我的转型之路',
+      excerpt: '记录从一线开发到技术顾问的真实转型经历，包括思维方式、技能储备和业务视角的转变。',
+      date: '2026-04-05',
+      category: '职业发展',
+      readTime: '10 分钟'
+    },
+    {
+      id: 4,
+      title: '用 AI 构建你的个人财务管理系统',
+      excerpt: '一位开发者如何用 AI 辅助，从零打造一套真正适合自己的财务管理工具，规划通往财务自由的路径。',
+      date: '2026-04-12',
+      category: 'AI 应用',
+      readTime: '15 分钟'
+    },
+    {
       id: 5,
-      title: '企业 AI 落地的 5 个坑，我踩过 3 个',
-      excerpt: '分享企业 AI 落地的常见坑和规避方法，避免重复踩坑。',
-      date: '2026-03-05',
-      category: '经验分享',
-      readTime: '7 分钟'
+      title: '普通人的财务自由之路：从记账到被动收入的系统化方法',
+      excerpt: '不是鸡汤文，而是经过验证的可操作方法论。用真实数据和具体步骤，系统性地走向财务自由。',
+      date: '2026-04-12',
+      category: '财富思维',
+      readTime: '12 分钟'
+    },
+    {
+      id: 6,
+      title: '如何用 AIGC 提升团队开发效率？',
+      excerpt: '一线实践总结：从代码生成到架构设计，AI 工具如何真正帮团队提效（而不是制造更多混乱）。',
+      date: '2026-04-12',
+      category: '效率提升',
+      readTime: '10 分钟'
     }
   ];
 
@@ -105,9 +113,7 @@ export default function Blog() {
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                    <Link href={`/blog/${post.id}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                      {post.title}
-                    </Link>
+                    {post.title}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {post.excerpt}
@@ -116,12 +122,6 @@ export default function Blog() {
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
                       {post.date}
                     </span>
-                    <Link
-                      href={`/blog/${post.id}`}
-                      className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-                    >
-                      阅读更多 →
-                    </Link>
                   </div>
                 </div>
               </article>
