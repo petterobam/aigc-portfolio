@@ -1,0 +1,70 @@
+{
+  "id": "aigc-safety-001",
+  "title": "AI 安全评估全指南：从框架到实战",
+  "series": "AIGC原理系列",
+  "category": "大模型安全",
+  "tags": [
+    "AI安全",
+    "大模型",
+    "安全评估",
+    "风险管理",
+    "实战"
+  ],
+  "estimated_data": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80,
+    "favorites_rate": 50
+  },
+  "content": {
+    "word_count": 10000,
+    "code_examples": 12,
+    "read_time_minutes": 30
+  },
+  "quality": {
+    "score": 90,
+    "depth": "技术深度强",
+    "practicality": "实战价值高"
+  },
+  "difficulty": "⭐⭐⭐⭐",
+  "publication": {
+    "platform": "知乎",
+    "type": "专栏文章",
+    "status": "待发布",
+    "created_at": "2026-04-17T16:45:00",
+    "priority": "高优先级"
+  },
+  "monetization": {
+    "path": "付费专栏《大模型安全与对齐实战》",
+    "expected_conversion": "10-20人"
+  },
+  "highlights": [
+    "系统化讲解 AI 安全评估的 5 大核心维度",
+    "深度对比主流评估框架（NIST AI RMF、AI Fairness 360 等）",
+    "提供完整的自动化安全评估系统代码",
+    "包含 12 个完整可运行的代码示例",
+    "实用性强，适合企业开发者"
+  ],
+  "related_topics": [
+    "对抗攻击",
+    "越狱防御",
+    "红队测试",
+    "AI 对齐",
+    "DPO"
+  ],
+  "content_structure": {
+    "introduction": 10,
+    "safety_dimensions": 20,
+    "frameworks_comparison": 20,
+    "best_practices": 30,
+    "code_examples": 15,
+    "summary": 5
+  },
+  "key_metrics": {
+    "technical_depth": "强",
+    "practical_value": "高",
+    "code_quality": "完整可运行",
+    "data_support": "引用权威论文",
+    "market_demand": "企业安全需求上升"
+  }
+}

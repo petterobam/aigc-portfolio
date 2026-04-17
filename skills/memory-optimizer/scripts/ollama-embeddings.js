@@ -34,12 +34,12 @@ const http = require('http');
 const DEFAULT_CONFIG = {
   similarityThreshold: 0.95,    // 相似度阈值 > 0.95 视为重复
   batchSize: 10,                // 批量处理大小
-  model: 'gemma:2b',            // Ollama 模型
+  model: 'nomic-embed-text',    // Ollama 模型（从 gemma:2b 切换到 nomic-embed-text，解决长文本处理问题）
   apiUrl: 'http://localhost:11434',  // Ollama API 地址
-  dimensions: 2048,            // 向量维度（gemma:2b 实测维度）
+  dimensions: 768,             // 向量维度（nomic-embed-text 实测维度，从 2048 改为 768）
   cacheEnabled: true,           // 是否启用缓存
   usePersistence: true,         // 是否使用向量持久化
-  maxContentLength: 20000,      // 最大内容长度（从 10000 增加到 20000，彻底解决长文本截断问题）
+  maxContentLength: 30000,      // 最大内容长度（从 20000 增加到 30000，进一步支持长文本）
   preferSummary: true          // 优先使用 summary 字段生成向量
 };
 

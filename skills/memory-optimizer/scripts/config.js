@@ -83,9 +83,9 @@ const OPTIMIZE_CONFIG = {
   vectorSaveToDB: false,               // 是否将向量存储到数据库
   vectorModel: 'text-embedding-ada-002', // 使用的嵌入模型
 
-  // Ollama 配置（v2.0.0，本地向量生成，零成本）
+  // Ollama 配置（v2.1.0，本地向量生成，零成本）
   ollamaEnabled: true,                 // 是否启用 Ollama 向量去重（优先级高于 OpenAI）
-  ollamaModel: 'gemma:2b',             // Ollama 模型（轻量级，速度快）
+  ollamaModel: 'nomic-embed-text',    // Ollama 模型（从 gemma:2b 切换到 nomic-embed-text，解决长文本处理问题）
   ollamaApiUrl: 'http://localhost:11434/api/embeddings',  // Ollama API 地址
   ollamaSimilarityThreshold: 0.98,     // Ollama 相似度阈值（保持 0.98，进一步降低会增加格式相似记忆的误判）
 };
