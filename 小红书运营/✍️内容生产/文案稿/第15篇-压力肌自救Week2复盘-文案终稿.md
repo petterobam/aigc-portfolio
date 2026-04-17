@@ -168,7 +168,7 @@ A split-screen comparison photo of a young 18-year-old East Asian woman. Left si
 
 **置顶评论**:
 ```
-补充一个Week 2小发现：睡前泡脚真的有助于睡眠！我泡了3次，每次都能睡得更沉，皮肤修复效果更好～姐妹们可以试试！
+补充一个Week 2小发现：睡前泡脚真的有助于睡眠！我泡了3次，每次都能睡得更沉，皮肤修复效果更好~姐妹们可以试试！
 ```
 
 **A/B/C/D选择题**: 压力肌自救心得调查

@@ -281,7 +281,7 @@
      --payload '{"kind":"systemEvent","text":"运行访问追踪系统"}' \
      --sessionTarget isolated \
      --mode agentTurn \
-     --message "cd /Users/oyjie/.openclaw/workspace/skills/memory-optimizer && node scripts/access-tracker.js"
+     --message "cd ~/.openclaw/workspace/skills/memory-optimizer && node scripts/access-tracker.js"
    ```
 
 3. 测试归档效果：

@@ -1,0 +1,28 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景：橙色到红色渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E67E22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C0392B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 渐变背景 -->
+  <rect width="1200" height="675" fill="url(#bgGradient)" />
+
+  <!-- 主标题 -->
+  <text x="600" y="300" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+    技术顾问之路
+  </text>
+
+  <!-- 副标题 -->
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="36" fill="#FFF3E0" text-anchor="middle">
+    从技术人到技术顾问
+  </text>
+
+  <!-- 简单的连接图标（简化版） -->
+  <circle cx="1050" cy="575" r="100" fill="#FFFFFF" fill-opacity="0.1" />
+  <text x="1050" y="590" font-family="Arial, sans-serif" font-size="60" fill="#FFFFFF" fill-opacity="0.2" text-anchor="middle">
+    ⟷
+  </text>
+</svg>

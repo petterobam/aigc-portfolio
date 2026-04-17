@@ -1,0 +1,20 @@
+{
+  "title": "长上下文技术深度解析：从 2K 到 1M tokens",
+  "summary": "GPT-4 的上下文窗口只有 8K tokens，而 Claude 3 已经支持 1M tokens。差距从何而来？这篇文章带你一探究竟，深度解析长上下文技术的挑战与解决方案。",
+  "content_file": "长上下文技术深度解析-从2K到1M tokens.md",
+  "tags": ["长上下文", "Transformer", "大模型", "AIGC", "Claude3", "GPT-4"],
+  "category": "AIGC 原理系列",
+  "priority": "高优先级",
+  "word_count": 22771,
+  "created_at": "2026-03-29T13:52:00Z",
+  "estimated_stats": {
+    "upvotes": 800,
+    "collections": 400,
+    "comments": 100
+  },
+  "monetization_path": "付费专栏《AIGC 核心原理解析》",
+  "code_snippets_count": 10,
+  "technical_depth": "深度解析 35% + 技术方案 40% + 实战代码 20% + 对比分析 5%",
+  "target_audience": ["开发者", "AI 从业者", "技术学习者"],
+  "reading_time": "约 60 分钟"
+}

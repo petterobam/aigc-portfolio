@@ -15,11 +15,11 @@
 
 ## 数据源路径
 
-- 主文档：`/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/README.md`
-- 模型索引：`/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/LLM-VLM-index.md`
-- 学习计划：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/plan/llm-learning-plan.md`
-- 进度文件：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/progress.json`
-- 日志目录：`/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/`
+- 主文档：`~/.openclaw/workspace/github/LLM-RL-Visualized/README.md`
+- 模型索引：`~/.openclaw/workspace/github/LLM-RL-Visualized/LLM-VLM-index.md`
+- 学习计划：`~/.openclaw/workspace/skills/llm-learning/plan/llm-learning-plan.md`
+- 进度文件：`~/.openclaw/workspace/skills/llm-learning/progress.json`
+- 日志目录：`~/.openclaw/workspace/skills/llm-learning/daily-logs/`
 
 ## 核心行为
 
@@ -30,7 +30,7 @@
 3. 总结 3-5 个核心知识点，附代码示例
 4. 给出实践建议与明日预告
 5. 更新 `progress.json`
-6. 生成日志并保存到 `daily-logs/YYYY-MM-DD.md`
+6. 生成日志并保存到 `daily-logs/YYYY-MM-DD-{标题}.md`
 7. **执行推送**（严格遵守 `docs/push-rules.md`）
 
 ### 定时任务（每天 10:30）

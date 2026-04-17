@@ -18,7 +18,7 @@ playwright-browser skill 的脚本执行环境存在问题，`check-fanqie-login
 
 **执行命令**:
 ```bash
-cd /Users/oyjie/.openclaw/workspace && node scripts/check-fanqie-login.js
+cd ~/.openclaw/workspace && node scripts/check-fanqie-login.js
 ```
 
 **错误信息**:

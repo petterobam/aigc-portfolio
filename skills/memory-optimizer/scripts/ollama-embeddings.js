@@ -36,10 +36,10 @@ const DEFAULT_CONFIG = {
   batchSize: 10,                // 批量处理大小
   model: 'gemma:2b',            // Ollama 模型
   apiUrl: 'http://localhost:11434',  // Ollama API 地址
-  dimensions: 768,             // 向量维度（gemma:2b 的维度）
+  dimensions: 2048,            // 向量维度（gemma:2b 实测维度）
   cacheEnabled: true,           // 是否启用缓存
   usePersistence: true,         // 是否使用向量持久化
-  maxContentLength: 2000,       // 最大内容长度（避免超过模型上下文窗口）
+  maxContentLength: 20000,      // 最大内容长度（从 10000 增加到 20000，彻底解决长文本截断问题）
   preferSummary: true          // 优先使用 summary 字段生成向量
 };
 
@@ -456,8 +456,7 @@ class OllamaEmbeddings {
       // 保存向量到 content 表
       this.db.prepare(`
         UPDATE content
-        SET embedding = ?,
-            embedding_updated_at = datetime('now', 'localtime')
+        SET embedding = ?
         WHERE metadata_id = ?
       `).run(JSON.stringify(embedding), memoryId);
 

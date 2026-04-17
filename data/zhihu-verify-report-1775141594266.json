@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-04-02T14:53:14.303Z",
+  "isLoggedIn": false,
+  "isLoginPage": true,
+  "hasLoginButton": true,
+  "userInfo": {
+    "hasAvatar": false,
+    "hasProfile": false
+  },
+  "url": "https://www.zhihu.com/account/unhuman?type=Q8J2L3&need_login=false&session=9ee7dede64124705a203848c1cb2aa35",
+  "title": "安全验证 - 知乎",
+  "screenshotPath": "~/.openclaw/workspace/data/zhihu-verify-1775141594266.png"
+}

@@ -1,0 +1,114 @@
+{
+  "timestamp": "2026-04-03T21:44:07.453Z",
+  "latestFile": "story-list-all-2026-03-27T00-23-25.json",
+  "yesterdayFile": "story-list-all-2026-03-27T00-08-47.json",
+  "summary": {
+    "totalStories": 30,
+    "totalReads": 460,
+    "avgReads": "15.33",
+    "signedCount": 30,
+    "signRate": "100.00%"
+  },
+  "dailyChange": {
+    "newStories": 0,
+    "readChange": 0
+  },
+  "topStories": [
+    {
+      "title": "皇宫里全是弹幕",
+      "read": 291,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "读心宠妃：皇上心里全是弹幕",
+      "read": 52,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "重生之我被逼顶替学籍",
+      "read": 45,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "觉醒读心术后，我发现全家都在演我",
+      "read": 15,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "穿越大秦：为了不陪葬我只能拼命帮政哥养生",
+      "read": 13,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "崇祯听见大臣心声，满朝文武都要亡国那我就先杀光你们",
+      "read": 8,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "相亲读心术，他嘴上说看重人品心里却在算计我的彩礼",
+      "read": 4,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "她死后的第七天给我发了条短信",
+      "read": 4,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "养父母vs亲生父母，他们跪求原谅",
+      "read": 3,
+      "change": {
+        "readDiff": 0
+      }
+    },
+    {
+      "title": "领导让我背锅辞职，我把客户全带走了",
+      "read": 3,
+      "change": {
+        "readDiff": 0
+      }
+    }
+  ],
+  "zeroReadStories": [
+    {
+      "title": "朕知晓了——崇祯帝的逆天改命",
+      "previewId": "7619264173872005694"
+    },
+    {
+      "title": "职场整顿：既然老板想白嫖那我只能送他进去了",
+      "previewId": "7595794277372789310"
+    },
+    {
+      "title": "全人类都装了脑机接口，只有我能听见AI的阴谋",
+      "previewId": "7595780150034186776"
+    },
+    {
+      "title": "我家猫咪在骂我，还帮我搞定了房租",
+      "previewId": "7595778444051350078"
+    },
+    {
+      "title": "我在凶宅听鬼讲八卦，红衣女鬼哭着求我帮她连WiFi",
+      "previewId": "7595776335671214654"
+    },
+    {
+      "title": "听见霸凌者的秘密，我开始了猎杀游戏",
+      "previewId": "7595519054400471576"
+    }
+  ]
+}

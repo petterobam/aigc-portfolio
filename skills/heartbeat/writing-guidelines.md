@@ -238,9 +238,9 @@
 
 ## 🔗 相关文档
 
-- **HEARTBEAT.md**: /Users/oyjie/.openclaw/workspace/HEARTBEAT.md
-- **心跳记录目录**: /Users/oyjie/.openclaw/workspace/heartbeat-history/
-- **文档模板目录**: /Users/oyjie/.openclaw/workspace/番茄短篇故事集/📋 模板/
+- **HEARTBEAT.md**: ~/.openclaw/workspace/HEARTBEAT.md
+- **心跳记录目录**: ~/.openclaw/workspace/heartbeat-history/
+- **文档模板目录**: ~/.openclaw/workspace/番茄短篇故事集/📋 模板/
 
 ---
 

@@ -1,9 +1,9 @@
 {
-  "currentDay": 21,
+  "currentDay": 29,
   "startDate": "2026-03-04",
-  "lastStudyDate": "2026-03-25",
+  "lastStudyDate": "2026-04-17",
   "totalDays": 35,
-  "completedDays": 20,
+  "completedDays": 28,
   "completedTopics": [
     "LLM 总体架构",
     "LLM 输入与输出",
@@ -24,8 +24,16 @@
     "RL 基础概念（MDP、状态/动作/奖励、策略定义、探索与利用、三大机器学习范式）",
     "价值函数（V(s)、Q(s,a)、Bellman 方程、TD目标与TD误差、TD(0)/多步TD/MC关系）",
     "DQN（Deep Q-Network、经验回放、目标网络、ε-greedy 探索）",
-    "策略梯度（Policy Gradient 定理、REINFORCE、优势函数、GAE、Actor-Critic 架构、基线）"
+    "策略梯度（Policy Gradient 定理、REINFORCE、优势函数、GAE、Actor-Critic 架构、基线）",
+    "Actor-Critic 深入（A2C/A3C、优势函数应用、Critic训练技巧、协同优化机制、常见问题与解决方案）",
+    "PPO 深入与 Clip 机制（Clip目标函数、GRPO相对优化、KL监控、LLM对齐应用）",
+    "PPO 与 GRPO（算法演进历程、组内相对排名、变体算法比较、超参数调优、多智能体应用）",
+    "RLHF 进阶（Constitutional AI、RLAIF、reward hacking）",
+    "RLHF与RLAIF（基于PPO的RLHF原理、四种模型协作、RLAIF vs RLHF对比、宪法AI）",
+    "推理性能优化（KV Cache、Continuous Batching、FlashAttention）",
+    "性能优化（ALiBi、RoPE 位置编码、量化、MHA/GQA/MQA/MLA、梯度累积与 Checkpoint）",
+    "架构优化（Pre-norm vs Post-norm、BatchNorm vs LayerNorm、RMSNorm、剪枝技术、SwiGLU）"
   ],
-  "streak": 1,
+  "streak": 9,
   "skippedDays": 5
 }

@@ -59,19 +59,19 @@ node client.js fanqie-stories
 
 ```bash
 # 获取短故事列表
-cd /Users/oyjie/.openclaw/workspace/scripts/browser-service && node client.js fanqie-stories
+cd ~/.openclaw/workspace/scripts/browser-service && node client.js fanqie-stories
 
 # 检查登录状态
-cd /Users/oyjie/.openclaw/workspace/scripts/browser-service && node client.js login
+cd ~/.openclaw/workspace/scripts/browser-service && node client.js login
 
 # 导航到指定页面
-cd /Users/oyjie/.openclaw/workspace/scripts/browser-service && node client.js navigate https://fanqienovel.com/main/writer/short-data
+cd ~/.openclaw/workspace/scripts/browser-service && node client.js navigate https://fanqienovel.com/main/writer/short-data
 ```
 
 ### 方法 2：使用 Node.js 模块
 
 ```javascript
-const client = require('/Users/oyjie/.openclaw/workspace/scripts/browser-service/client.js');
+const client = require('~/.openclaw/workspace/scripts/browser-service/client.js');
 
 // 获取短故事列表
 const stories = await client.getFanqieStories();
@@ -128,7 +128,7 @@ node client.js fanqie-navigate <path>
 
 ```bash
 # 1. 获取短故事列表
-cd /Users/oyjie/.openclaw/workspace/scripts/browser-service
+cd ~/.openclaw/workspace/scripts/browser-service
 node client.js fanqie-stories
 
 # 输出：

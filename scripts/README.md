@@ -62,7 +62,7 @@
 
 #### 1. 登录并保存 Cookie
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node scripts/login-save-cookies.js
 ```
 **流程**：
@@ -73,7 +73,7 @@ node scripts/login-save-cookies.js
 
 #### 2. 查看 Cookie 状态
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node -e "const cm = require('./scripts/cookie-manager.js'); cm.printCookieStatus();"
 ```
 **输出**：
@@ -84,7 +84,7 @@ node -e "const cm = require('./scripts/cookie-manager.js'); cm.printCookieStatus
 
 #### 1. 抓取番茄小说故事列表
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node scripts/fetch-story-list-chrome-v3.js
 ```
 **输出**：
@@ -95,7 +95,7 @@ node scripts/fetch-story-list-chrome-v3.js
 
 #### 2. 抓取短篇小说数据
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node scripts/fetch-short-story-data.js
 ```
 
@@ -103,7 +103,7 @@ node scripts/fetch-short-story-data.js
 
 #### 1. 检查重复段落
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 python3 scripts/check-duplicates-strict.py
 ```
 **输出**：
@@ -113,7 +113,7 @@ python3 scripts/check-duplicates-strict.py
 
 #### 2. 清理章节元数据
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 python3 scripts/clean-chapter-metadata.py
 ```
 
@@ -121,7 +121,7 @@ python3 scripts/clean-chapter-metadata.py
 
 #### 1. 分析发布页面结构（多步骤，支持Cookie）
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node scripts/analyze-publish-page-multi-step-v3.js
 ```
 **功能**：
@@ -270,7 +270,7 @@ main().catch(error => {
 
 ### 安装依赖
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 npm install
 ```
 

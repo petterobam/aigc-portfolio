@@ -93,7 +93,7 @@ def clean_story(story_path):
 
 # 主程序
 if __name__ == '__main__':
-    base_dir = Path("/Users/oyjie/.openclaw/workspace/番茄短篇故事集/stories/归档故事集")
+    base_dir = Path("~/.openclaw/workspace/番茄短篇故事集/stories/归档故事集")
 
     stories_to_clean = [
         "31_历史翻盘_崇祯听见心声_大明朝起死回生",

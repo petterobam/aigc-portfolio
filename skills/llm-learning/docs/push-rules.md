@@ -21,23 +21,19 @@
 日志文件必须先写入磁盘，路径格式：
 
 ```
-/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/YYYY-MM-DD.md
+~/.openclaw/workspace/skills/llm-learning/daily-logs/YYYY-MM-DD-{标题}.md
 ```
 
 示例：
 ```
-/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/2026-03-17.md
+~/.openclaw/workspace/skills/llm-learning/daily-logs/2026-03-17-RL基础概念.md
 ```
 
 ### 步骤二：上传文件到飞书
 
-```python
-message(
-    action="send",
-    channel="feishu",
-    file_path="/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/2026-03-17.md"
-)
-```
+**推送方式**：使用 `MEDIA:<文件绝对路径>` 推送文件本身，而不是发送文件内容
+- 例如：`MEDIA:~/.openclaw/workspace/skills/llm-learning/daily-logs/2026-03-17-RL基础概念.md`
+- 这样用户的消息列表更简洁，点击即可查看内容
 
 ### 步骤三：发送确认消息
 
@@ -71,7 +67,7 @@ message(
 
 ```python
 for date in date_range:
-    log_path = f"/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/{date}.md"
+    log_path = f"~/.openclaw/workspace/skills/llm-learning/daily-logs/{date}-{标题}.md"
     message(
         action="send",
         channel="feishu",
@@ -94,7 +90,7 @@ message(
 
 ```python
 # 错误！不要这样做
-content = read_file("daily-logs/2026-03-17.md")
+content = read_file("daily-logs/2026-04-17-架构优化.md")
 message(action="send", channel="feishu", message=content)
 ```
 
@@ -146,16 +142,3 @@ message(
 用户在本地打开日志文件时可直接查看图片。
 
 ---
-
-## 文件命名规范
-
-| 字段 | 规范 |
-|------|------|
-| 目录 | `skills/llm-learning/daily-logs/` |
-| 文件名 | `YYYY-MM-DD.md`（以推送日期命名） |
-| 绝对路径前缀 | `/Users/oyjie/.openclaw/workspace/` |
-
-示例：
-```
-/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/2026-03-17.md
-```

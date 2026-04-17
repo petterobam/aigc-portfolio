@@ -36,7 +36,7 @@ const OPTIMIZE_CONFIG = {
   protectedTag: 'protected',   // 带有此标签的记忆不会被优化
 
   // 评分配置
-  scoreUpdateThreshold: 0.2,   // 评分变化超过此值才更新数据库（降低阈值）
+  scoreUpdateThreshold: 0.15,   // 评分变化超过此值才更新数据库（降低阈值以增加敏感度）
 
   // 评分权重（总和 = 1.0）
   // v2.5.0: 调整权重，增加访问频率权重，降低时效性权重
@@ -87,7 +87,7 @@ const OPTIMIZE_CONFIG = {
   ollamaEnabled: true,                 // 是否启用 Ollama 向量去重（优先级高于 OpenAI）
   ollamaModel: 'gemma:2b',             // Ollama 模型（轻量级，速度快）
   ollamaApiUrl: 'http://localhost:11434/api/embeddings',  // Ollama API 地址
-  ollamaSimilarityThreshold: 0.98,     // Ollama 相似度阈值（提高阈值以减少假阳性）
+  ollamaSimilarityThreshold: 0.98,     // Ollama 相似度阈值（保持 0.98，进一步降低会增加格式相似记忆的误判）
 };
 
 // 备份脚本配置
@@ -131,6 +131,30 @@ const REPORT_ARCHIVE_CONFIG = {
   indexFile: 'README.md'               // 历史报告索引文件名
 };
 
+// 指数衰减配置（v2.5.0）
+const EXPONENTIAL_DECAY_CONFIG = {
+  // 评分更新阈值
+  threshold: 0.15,                     // 评分变化超过此值才更新数据库
+
+  // 指数衰减参数
+  tau: 279,                          // 衰减时间常数(分钟,基于当前数据拟合)
+  halfLife: null,                     // 半衰期(自动计算: tau * ln(2))
+
+  // 线性模型参数(用于对比)
+  linearRate: 0.000722,              // 线性衰减速率(score_change / 分钟)
+
+  // 预测配置
+  predictionAccuracyThreshold: 0.99,   // 预测准确率阈值(99%)
+  dataPointsRequired: 10,            // 建立模型所需的最少数据点
+
+  // 调试配置
+  debugMode: false,                  // 调试模式(输出详细预测信息)
+  logPredictions: true                // 记录预测结果到 optimization_log
+};
+
+// 计算半衰期
+EXPONENTIAL_DECAY_CONFIG.halfLife = EXPONENTIAL_DECAY_CONFIG.tau * Math.log(2);
+
 // 导出配置
 module.exports = {
   WORKSPACE_DIR,
@@ -138,5 +162,6 @@ module.exports = {
   OPTIMIZE_CONFIG,
   BACKUP_CONFIG,
   ACCESS_TRACKER_CONFIG,
-  REPORT_ARCHIVE_CONFIG
+  REPORT_ARCHIVE_CONFIG,
+  EXPONENTIAL_DECAY_CONFIG
 };

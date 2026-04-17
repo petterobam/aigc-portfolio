@@ -1,0 +1,56 @@
+{
+  "title": "OpenClaw 性能优化：从 10 秒到 0.5 秒的优化之路",
+  "author": "无何有",
+  "publishTime": "2026-04-01T07:30:00+08:00",
+  "tags": ["OpenClaw", "性能优化", "缓存", "并发", "AI工具", "生产力"],
+  "category": "OpenClaw 技巧",
+  "priority": "high",
+  "wordCount": 37730,
+  "codeSnippets": 18,
+  "readingTime": "15 分钟",
+  "difficulty": "中级",
+  "estimatedMetrics": {
+    "likes": 700,
+    "favorites": 350,
+    "comments": 90,
+    "shares": 50
+  },
+  "keywords": [
+    "OpenClaw 性能优化",
+    "缓存优化",
+    "并发请求",
+    "批处理",
+    "模型选择",
+    "流式输出",
+    "上下文管理"
+  ],
+  "summary": "分享 OpenClaw 性能优化的完整经验，涵盖缓存、并发、批处理、模型选择、流式输出、上下文管理 6 大优化策略，每个优化点都有完整代码示例。通过综合优化，性能从 10 秒优化到 0.5 秒，提升 20 倍。",
+  "contentStructure": {
+    "painPoint": 10,
+    "solution": 70,
+    "caseStudy": 15,
+    "summary": 5
+  },
+  "targetAudience": ["OpenClaw 用户", "AI 工具爱好者", "开发者", "技术团队"],
+  "valueProposition": "系统讲解 6 大优化策略，每个策略都有完整可运行的代码示例，实战价值高，看完立刻能用。",
+  "callToAction": "你用 OpenClaw 时遇到过性能问题吗？评论区分享一下你的优化经验！想学习更多 OpenClaw 高级技巧？关注我的专栏《OpenClaw 核心功能全解》。",
+  "publishPlan": {
+    "scheduledTime": "2026-04-01T15:00:00+08:00",
+    "relatedArticles": [
+      "OpenClaw 入门完全指南：10分钟从零搭建 AI 助手工作流",
+      "用 OpenClaw 300天，我总结出10个让效率翻倍的技巧",
+      "OpenClaw 避坑指南：这 8 个错误我踩过，你一定不要再踩"
+    ],
+    "promotionChannels": ["知乎专栏", "技术社区", "开发者社群"]
+  },
+  "references": [
+    "OpenClaw 官方文档",
+    "缓存优化最佳实践",
+    "并发编程模式",
+    "大模型 API 文档"
+  ],
+  "type": "article",
+  "status": "ready_to_publish",
+  "createdAt": "2026-04-01T07:10:00+08:00",
+  "updatedAt": "2026-04-01T07:10:00+08:00"
+}

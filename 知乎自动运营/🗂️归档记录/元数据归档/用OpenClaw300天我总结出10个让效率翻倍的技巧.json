@@ -1,0 +1,37 @@
+{
+  "title": "用 OpenClaw 300 天，我总结出 10 个让效率翻倍的技巧",
+  "type": "OpenClaw 技巧系列",
+  "word_count": 2800,
+  "estimated_likes": 600,
+  "estimated_saves": 250,
+  "estimated_comments": 60,
+  "tags": [
+    "#OpenClaw",
+    "#效率提升",
+    "#自动化",
+    "#生产力",
+    "#AI工具"
+  ],
+  "column": "OpenClaw 核心功能全解",
+  "publish_time": "周日 15:00-17:00",
+  "monetization": {
+    "product": "OpenClaw 效率提升手册",
+    "type": "付费电子书",
+    "price": "99 元（早鸟价 69 元）"
+  },
+  "suggested_images": [
+    "技能库目录结构图",
+    "Agent 工作流程图",
+    "数据对比图表（10 个技巧的效果对比）",
+    "成果展示图（300 天的成果可视化）"
+  ],
+  "interaction_guidance": [
+    "你有哪些提升效率的技巧？评论区分享一下",
+    "想系统学习 OpenClaw？关注我的专栏获取更多实战内容",
+    "点赞 + 收藏，下次想看的时候更容易找到"
+  ],
+  "created_date": "2026-03-28",
+  "created_time": "16:50",
+  "created_duration_minutes": 30,
+  "status": "ready_to_publish"
+}

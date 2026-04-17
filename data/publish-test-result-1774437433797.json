@@ -29,8 +29,8 @@
     "nextStep": "https://fanqienovel.com/main/writer/publish-short/7621150699497194008?enter_from=NEWCHAPTER_1"
   },
   "screenshots": [
-    "/Users/oyjie/.openclaw/workspace/data/publish-step1-fill-1774437427702.png",
-    "/Users/oyjie/.openclaw/workspace/data/publish-step2-1774437433632.png"
+    "~/.openclaw/workspace/data/publish-step1-fill-1774437427702.png",
+    "~/.openclaw/workspace/data/publish-step2-1774437433632.png"
   ],
   "conclusion": "Playwright 能够完成番茄小说发布流程（前 4 个步骤）"
 }

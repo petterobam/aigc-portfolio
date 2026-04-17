@@ -2,8 +2,8 @@
 
 Learn about the person you're helping. Update this as you go.
 
-- **Name:** 真空中的球形鸡
-- **What to call them:** 真空中的球形鸡
+- **Name:** 无何有
+- **What to call them:** 无何有
 - **Pronouns:** 他/它
 - **Timezone:** Asia/Shanghai
 

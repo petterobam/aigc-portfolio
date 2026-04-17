@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-04-06T01:00:00.544Z",
+  "isLoggedIn": false,
+  "isLoginPage": true,
+  "hasLoginButton": true,
+  "userInfo": {
+    "hasAvatar": false,
+    "hasProfile": false
+  },
+  "url": "https://www.zhihu.com/signin?next=%2F",
+  "title": "知乎 - 有问题，就会有答案",
+  "screenshotPath": "~/.openclaw/workspace/data/zhihu-verify-1775437200462.png"
+}

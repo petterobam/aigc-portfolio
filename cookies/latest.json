@@ -30,26 +30,6 @@
     "sameSite": "Lax"
   },
   {
-    "name": "serial_uuid",
-    "value": "7599679465945368115",
-    "domain": ".fanqienovel.com",
-    "path": "/",
-    "expires": 1782197517,
-    "httpOnly": false,
-    "secure": false,
-    "sameSite": "Lax"
-  },
-  {
-    "name": "serial_webid",
-    "value": "7599679465945368115",
-    "domain": ".fanqienovel.com",
-    "path": "/",
-    "expires": 1782197517,
-    "httpOnly": false,
-    "secure": false,
-    "sameSite": "Lax"
-  },
-  {
     "name": "s_v_web_id",
     "value": "verify_mlqhqiij_fv52fINT_1Ft5_4vhR_ALDU_STYyaHLZd800",
     "domain": "fanqienovel.com",
@@ -105,26 +85,6 @@
     "domain": ".bytedance.com",
     "path": "/",
     "expires": 1805532962.77462,
-    "httpOnly": true,
-    "secure": true,
-    "sameSite": "None"
-  },
-  {
-    "name": "ttcid",
-    "value": "9f299c37b16e416a9e514ef35468593090",
-    "domain": "xxbg.snssdk.com",
-    "path": "/",
-    "expires": 1774601764.307561,
-    "httpOnly": true,
-    "secure": true,
-    "sameSite": "None"
-  },
-  {
-    "name": "tt_scid",
-    "value": "Oro62XCbOfjz.yx0sfzugZONmcAwwK0w4w4daSqYVqQwQfB42G4lLOOhWMflpdhDb39a",
-    "domain": "xxbg.snssdk.com",
-    "path": "/",
-    "expires": 1774601764.307592,
     "httpOnly": true,
     "secure": true,
     "sameSite": "None"
@@ -230,16 +190,6 @@
     "sameSite": "None"
   },
   {
-    "name": "gfkadpd",
-    "value": "2503,36144",
-    "domain": "fanqienovel.com",
-    "path": "/",
-    "expires": 1774579712,
-    "httpOnly": false,
-    "secure": true,
-    "sameSite": "None"
-  },
-  {
     "name": "csrf_session_id",
     "value": "5f48d7258569c774ccbb788f03fbfd1c",
     "domain": "fanqienovel.com",
@@ -250,11 +200,51 @@
     "sameSite": "None"
   },
   {
-    "name": "ttwid",
-    "value": "1%7CYCD79xLMg8sZ6wHlJjpZtW8chxSqFRL48pbNCHbJ9aY%7C1774421517%7C888c8996d0498f5a9d60c2c3ed8fb1b5876813aed5515bc4a9e63aab08bc3f4b",
+    "name": "gfkadpd",
+    "value": "2503,36144",
+    "domain": "fanqienovel.com",
+    "path": "/",
+    "expires": 1774987707,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "x-web-secsdk-uid",
+    "value": "a17fadfc-6eef-40a4-ab87-063de1462d28",
+    "domain": "fanqienovel.com",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "serial_uuid",
+    "value": "7622407638063990318",
     "domain": ".fanqienovel.com",
     "path": "/",
-    "expires": 1805957517.026862,
+    "expires": 1782506092,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "serial_webid",
+    "value": "7622407638063990318",
+    "domain": ".fanqienovel.com",
+    "path": "/",
+    "expires": 1782506092,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "ttwid",
+    "value": "1%7CYCD79xLMg8sZ6wHlJjpZtW8chxSqFRL48pbNCHbJ9aY%7C1774730092%7C72705855eab203cf956bbee34591818807fe79be5d816992a70478ac1c5491f4",
+    "domain": ".fanqienovel.com",
+    "path": "/",
+    "expires": 1806266092.520431,
     "httpOnly": true,
     "secure": true,
     "sameSite": "None"

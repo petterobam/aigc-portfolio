@@ -1,0 +1,81 @@
+{
+  "title": "OpenClaw 避坑指南：这 8 个错误我踩过，你一定不要再踩",
+  "author": "无何有",
+  "type": "article",
+  "status": "completed",
+  "priority": "high",
+  "publishTime": "2026-04-01T01:00:00+08:00",
+  "tags": [
+    "#OpenClaw",
+    "#避坑指南",
+    "#AI工具",
+    "#生产力",
+    "#自动化",
+    "#最佳实践"
+  ],
+  "category": "OpenClaw 技巧系列",
+  "series": "OpenClaw 技巧系列",
+  "seriesOrder": 8,
+  "wordCount": 8000,
+  "readingTime": "20-25 分钟",
+  "difficulty": "⭐⭐⭐（中高级）",
+  "codeSnippets": 8,
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80,
+    "views": 5000
+  },
+  "keywords": [
+    "OpenClaw",
+    "避坑指南",
+    "AI工具",
+    "生产力",
+    "自动化",
+    "最佳实践",
+    "错误总结",
+    "经验分享"
+  ],
+  "summary": "本文总结了使用 OpenClaw 的 8 个最常见错误，包括把所有任务都交给 AI、不使用 Skill 系统、提示词太长太复杂、不验证 AI 输出、不保存上下文、不处理错误、不测试代码、不优化性能。每个错误都配有错误示例、解决方案、最佳实践和完整代码示例，帮助读者快速避开这些坑。",
+  "contentStructure": {
+    "introduction": 10,
+    "errorAnalysis": 30,
+    "solution": 35,
+    "bestPractice": 15,
+    "summary": 5,
+    "references": 3,
+    "cta": 2
+  },
+  "targetAudience": [
+    "正在使用 OpenClaw 的开发者",
+    "想提升 AI 工具使用效率的用户",
+    "遇到了 OpenClaw 使用瓶颈的团队"
+  ],
+  "valueProposition": "总结 8 个最常见的 OpenClaw 错误，每个错误都配有错误示例、解决方案、最佳实践和完整代码示例，帮助读者快速避开这些坑。真实感强，实用价值高，收藏潜力大。",
+  "callToAction": "如果你觉得这篇文章对你有帮助，请点赞收藏，方便以后查阅。",
+  "publishPlan": {
+    "recommendTime": "周五 15:00-17:00（下班前，读者正好需要总结经验）",
+    "relatedArticles": [
+      "用 OpenClaw 300 天，我总结出 10 个让效率翻倍的技巧",
+      "OpenClaw 入门完全指南：10 分钟从零搭建 AI 助手工作流",
+      "OpenClaw 进阶：从零开发自定义 Skill（含完整代码）"
+    ]
+  },
+  "references": [
+    "用 OpenClaw 300 天，我总结出 10 个让效率翻倍的技巧",
+    "OpenClaw 入门完全指南：10 分钟从零搭建 AI 助手工作流",
+    "OpenClaw 进阶：从零开发自定义 Skill（含完整代码）"
+  ],
+  "qualityScore": 9.0,
+  "creationDate": "2026-04-01",
+  "lastUpdated": "2026-04-01",
+  "version": "1.0",
+  "metadata": {
+    "project": "知乎自动运营",
+    "task": "创作 OpenClaw 技巧系列选题8",
+    "heartBeat": "第27次心跳",
+    "series": "OpenClaw 技巧系列",
+    "seriesProgress": "8/18（44.4%）",
+    "task3Progress": "从 90% 提升到 92%（+2%）"
+  }
+}

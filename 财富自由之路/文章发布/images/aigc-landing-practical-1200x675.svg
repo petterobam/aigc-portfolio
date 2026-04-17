@@ -1,0 +1,28 @@
+<svg width="1200" height="675" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景：蓝色到紫色渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9B59B6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 渐变背景 -->
+  <rect width="1200" height="675" fill="url(#bgGradient)" />
+
+  <!-- 主标题 -->
+  <text x="600" y="300" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#FFFFFF" text-anchor="middle">
+    AIGC 落地实战
+  </text>
+
+  <!-- 副标题 -->
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="36" fill="#E0F7FA" text-anchor="middle">
+    从 0 到 1 构建企业级 AI 应用
+  </text>
+
+  <!-- 简单的 AI 图标（简化版） -->
+  <circle cx="1050" cy="575" r="100" fill="#FFFFFF" fill-opacity="0.1" />
+  <text x="1050" y="590" font-family="Arial, sans-serif" font-size="80" fill="#FFFFFF" fill-opacity="0.2" text-anchor="middle">
+    AI
+  </text>
+</svg>

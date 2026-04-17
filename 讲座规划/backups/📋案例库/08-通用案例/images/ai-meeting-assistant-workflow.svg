@@ -1,0 +1,138 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fefce8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 通用案例渐变色 - 会议主题 -->
+    <linearGradient id="meetingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 步骤渐变色 -->
+    <linearGradient id="stepGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fed7aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fdba74;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fde68a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fcd34d;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1fae5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 阴影滤镜 -->
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    
+    <!-- 箭头标记 -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <rect x="300" y="30" width="600" height="80" rx="15" fill="url(#meetingGradient)" filter="url(#shadow)"/>
+  <text x="600" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">🤝 AI会议助手工作流程</text>
+  <text x="600" y="100" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">全部门通用会议智能管理解决方案</text>
+  
+  <!-- 效率指标 -->
+  <rect x="50" y="30" width="200" height="80" rx="10" fill="#fde68a" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#b45309">⏱️ 效率提升</text>
+  <text x="150" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#d97706">85%</text>
+  <text x="150" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">5-7小时 → 1.75小时</text>
+  
+  <!-- 质量指标 -->
+  <rect x="950" y="30" width="200" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#064e3b">🎯 质量提升</text>
+  <text x="1050" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#047857">80%+</text>
+  <text x="1050" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#064e3b">执行效率+80%，知识利用率+70%</text>
+  
+  <!-- 步骤1：会议筹备 -->
+  <rect x="100" y="160" width="350" height="100" rx="12" fill="url(#stepGradient1)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#b45309">📋 1. 会议筹备</text>
+  <text x="275" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">会议类型/参会人员/时间安排</text>
+  <text x="275" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">地点安排/议程制定</text>
+  
+  <!-- 步骤2：会前准备 -->
+  <rect x="550" y="160" width="350" height="100" rx="12" fill="url(#stepGradient2)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#d97706">📂 2. 会前准备</text>
+  <text x="725" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">资料收集/预会通知/议题确认</text>
+  <text x="725" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">材料准备/技术测试</text>
+  
+  <!-- 步骤3：会议执行 -->
+  <rect x="100" y="320" width="350" height="100" rx="12" fill="url(#stepGradient3)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#d97706">🎙️ 3. 会议执行</text>
+  <text x="275" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">会议主持/内容记录/决策跟踪</text>
+  <text x="275" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">问题识别/气氛调节</text>
+  
+  <!-- 步骤4：会后管理 -->
+  <rect x="550" y="320" width="350" height="100" rx="12" fill="url(#stepGradient4)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">📄 4. 会后管理</text>
+  <text x="725" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">会议纪要/行动项跟踪/效果评估</text>
+  <text x="725" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">资料归档/反馈收集</text>
+  
+  <!-- 步骤5：持续优化 -->
+  <rect x="325" y="480" width="350" height="100" rx="12" fill="url(#stepGradient5)" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="505" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#047857">🔄 5. 持续优化</text>
+  <text x="500" y="525" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">效果分析/问题诊断/改进建议</text>
+  <text x="500" y="545" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">流程优化/标准建立</text>
+  
+  <!-- 连接箭头 -->
+  <path d="M 450 210 L 550 210" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 260 L 725 290 L 275 290 L 275 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 450 370 L 550 370" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 420 L 725 450 L 500 450 L 500 480" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- 应用场景 -->
+  <rect x="50" y="620" width="1100" height="150" rx="15" fill="#ffffff" stroke="#fbbf24" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="650" font-family="Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#374151">🎯 全部门应用价值</text>
+  
+  <!-- 时间节约 -->
+  <rect x="100" y="670" width="250" height="80" rx="10" fill="#fde68a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="225" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#b45309">⏰ 时间节约</text>
+  <text x="225" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">每个会议节约2-3小时</text>
+  <text x="225" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">年度节省1000+小时</text>
+  
+  <!-- 决策优化 -->
+  <rect x="375" y="670" width="250" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="500" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e40af">🎯 决策优化</text>
+  <text x="500" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">决策准确率提升35%</text>
+  <text x="500" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">决策执行效率+60%</text>
+  
+  <!-- 团队协作 -->
+  <rect x="650" y="670" width="250" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="775" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#047857">👥 团队协作</text>
+  <text x="775" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">协作效率提升50%</text>
+  <text x="775" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">知识共享率+80%</text>
+  
+  <!-- 管理标准化 -->
+  <rect x="925" y="670" width="225" height="80" rx="10" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+  <text x="1037" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#be185d">📋 标准化</text>
+  <text x="1037" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">管理标准化程度+90%</text>
+  <text x="1037" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">流程覆盖100%</text>
+  
+  <!-- 核心优势 -->
+  <text x="600" y="790" font-family="Microsoft YaHei, Arial, sans-serif" font-size="10" text-anchor="middle" fill="#6b7280">华策影视AIGC数字化转型方案 © 2026 | 全员适用 | 智能化会议管理 | 年度节省1000+小时</text>
+</svg>

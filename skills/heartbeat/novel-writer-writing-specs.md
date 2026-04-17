@@ -207,10 +207,10 @@
 
 ## 📚 相关文档
 
-- Novel Writer SKILL.md: `/Users/oyjie/.openclaw/workspace/skills/novel-writer/SKILL.md`
-- Novel Writer Write命令文档: `/Users/oyjie/.openclaw/workspace/skills/novel-writer/docs/commands/write.md`
-- 番茄短篇小说创作模板: `/Users/oyjie/.openclaw/workspace/番茄短篇故事集/🛠️ 自动化系统/templates/番茄短篇小说创作模板.md`
-- 写作优化指南: `/Users/oyjie/.openclaw/workspace/skills/heartbeat/writing-guidelines.md`
+- Novel Writer SKILL.md: `~/.openclaw/workspace/skills/novel-writer/SKILL.md`
+- Novel Writer Write命令文档: `~/.openclaw/workspace/skills/novel-writer/docs/commands/write.md`
+- 番茄短篇小说创作模板: `~/.openclaw/workspace/番茄短篇故事集/🛠️ 自动化系统/templates/番茄短篇小说创作模板.md`
+- 写作优化指南: `~/.openclaw/workspace/skills/heartbeat/writing-guidelines.md`
 
 ---
 

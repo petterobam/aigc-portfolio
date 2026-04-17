@@ -186,7 +186,7 @@ MIT License
 
 ## 联系方式
 
-- 邮箱: aigc-expert@example.com
+- 邮箱: petterobam@gmail.com
 - LinkedIn: linkedin.com/in/aigc-expert
 - GitHub: github.com/aigc-expert
 - 知乎: zhihu.com/people/aigc-expert

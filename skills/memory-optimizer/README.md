@@ -112,7 +112,7 @@ cat data/memory-optimization-report.json | jq
 
 # 设置定时任务（每 30 分钟自动运行）
 crontab -e
-# 添加：*/30 * * * * cd /Users/oyjie/.openclaw/workspace && node skills/memory-optimizer/scripts/optimize.js >> skills/memory-optimizer/logs/cron.log 2>&1
+# 添加：*/30 * * * * cd ~/.openclaw/workspace && node skills/memory-optimizer/scripts/optimize.js >> skills/memory-optimizer/logs/cron.log 2>&1
 ```
 
 ---

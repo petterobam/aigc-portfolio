@@ -7,27 +7,29 @@
  * 输出：优化报告汇总（Markdown格式）
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+const fs = require("fs");
+const path = require("path");
+const { execSync } = require("child_process");
 
 // 工作区根目录（直接指定 workspace 目录）
-const workspaceRoot = '/Users/oyjie/.openclaw/workspace';
+const workspaceRoot = "~/.openclaw/workspace";
 
 // 读取数据文件
 function loadStoriesData() {
-  const dataDir = path.join(workspaceRoot, 'data');
-  const files = fs.readdirSync(dataDir).filter(f => f.startsWith('all-stories-') && f.endsWith('.json'));
+  const dataDir = path.join(workspaceRoot, "data");
+  const files = fs
+    .readdirSync(dataDir)
+    .filter((f) => f.startsWith("all-stories-") && f.endsWith(".json"));
 
   if (files.length === 0) {
-    console.error('❌ 未找到数据文件，请先运行 fanqie-data-fetcher 抓取数据');
+    console.error("❌ 未找到数据文件，请先运行 fanqie-data-fetcher 抓取数据");
     process.exit(1);
   }
 
   files.sort().reverse();
   const latestFile = files[0];
   const filePath = path.join(dataDir, latestFile);
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
   console.log(`✅ 已加载数据文件：${latestFile}`);
   return { data, fileName: latestFile };
@@ -50,11 +52,11 @@ function parseWords(words) {
 // 筛选需要优化的作品
 function filterStories(data, filterType) {
   switch (filterType) {
-    case 'zero-reading':
-      return data.filter(story => parseReading(story.reads) === 0);
-    case 'low-reading':
-      return data.filter(story => parseReading(story.reads) < 3);
-    case 'all':
+    case "zero-reading":
+      return data.filter((story) => parseReading(story.reads) === 0);
+    case "low-reading":
+      return data.filter((story) => parseReading(story.reads) < 3);
+    case "all":
       return data;
     default:
       console.error(`❌ 未知的筛选类型：${filterType}`);
@@ -69,14 +71,16 @@ async function batchOptimize(data, filterType) {
   console.log(`\n📊 筛选结果（${filterType}）：`);
   console.log(`   总故事数：${data.length}`);
   console.log(`   需要优化：${storiesToOptimize.length}`);
-  console.log(`   占比：${((storiesToOptimize.length / data.length) * 100).toFixed(1)}%`);
+  console.log(
+    `   占比：${((storiesToOptimize.length / data.length) * 100).toFixed(1)}%`,
+  );
 
   if (storiesToOptimize.length === 0) {
-    console.log('\n✅ 没有需要优化的作品！');
+    console.log("\n✅ 没有需要优化的作品！");
     return;
   }
 
-  console.log('\n🔍 开始批量优化...\n');
+  console.log("\n🔍 开始批量优化...\n");
 
   const results = [];
 
@@ -88,72 +92,87 @@ async function batchOptimize(data, filterType) {
 
     try {
       // 调用单个作品优化脚本
-      const outputDir = path.join(workspaceRoot, '番茄短篇故事集', 'analysis');
-      const outputFile = path.join(outputDir, `batch-optimization-${story.id || 'unknown'}-${Date.now()}.md`);
+      const outputDir = path.join(workspaceRoot, "番茄短篇故事集", "analysis");
+      const outputFile = path.join(
+        outputDir,
+        `batch-optimization-${story.id || "unknown"}-${Date.now()}.md`,
+      );
 
       // 简化版优化（不调用外部脚本，直接分析）
       const result = {
         title: story.title,
         reading: parseReading(story.reads),
         wordCount: parseWords(story.words),
-        genre: story.genre || '未知',
+        genre: story.genre || "未知",
         issues: [],
         suggestions: [],
-        newTitles: []
+        newTitles: [],
       };
 
       // 分析标题长度
       if (story.title.length > 25) {
-        result.issues.push('标题过长');
-        result.suggestions.push('缩短标题到≤15字');
+        result.issues.push("标题过长");
+        result.suggestions.push("缩短标题到≤15字");
       }
 
       // 分析金手指
-      const hasGoldenFinger = /读心|重生|觉醒|隐藏|系统|透视|预知/.test(story.title);
+      const hasGoldenFinger = /读心|重生|觉醒|隐藏|系统|透视|预知/.test(
+        story.title,
+      );
       if (!hasGoldenFinger) {
-        result.issues.push('金手指不明确');
-        result.suggestions.push('在标题中添加金手指关键词');
+        result.issues.push("金手指不明确");
+        result.suggestions.push("在标题中添加金手指关键词");
       }
 
       // 分析题材
-      const lowPerformanceGenres = ['科幻', '历史穿越', '规则怪谈'];
-      const isLowPerformance = lowPerformanceGenres.some(g =>
-        story.genre && story.genre.includes(g)
+      const lowPerformanceGenres = ["科幻", "历史穿越", "规则怪谈"];
+      const isLowPerformance = lowPerformanceGenres.some(
+        (g) => story.genre && story.genre.includes(g),
       );
 
       if (isLowPerformance) {
         result.issues.push(`题材"${story.genre}"表现差`);
-        result.suggestions.push('改为重生复仇、读心术类');
+        result.suggestions.push("改为重生复仇、读心术类");
       }
 
       // 生成新标题
       result.newTitles = [
-        '读心术后，我反转了局面',
-        '重生后我不做圣母了',
-        '觉醒金手指，所有人都跪了'
+        "读心术后，我反转了局面",
+        "重生后我不做圣母了",
+        "觉醒金手指，所有人都跪了",
       ];
 
       results.push(result);
 
       console.log(`       ✅ 完成`);
-
     } catch (error) {
       console.error(`       ❌ 失败：${error.message}`);
     }
   }
 
   // 生成汇总报告
-  const summary = generateSummaryReport(data, storiesToOptimize, results, filterType);
+  const summary = generateSummaryReport(
+    data,
+    storiesToOptimize,
+    results,
+    filterType,
+  );
 
   // 保存报告
-  const outputDir = path.join(workspaceRoot, '番茄短篇故事集', 'analysis');
+  const outputDir = path.join(workspaceRoot, "番茄短篇故事集", "analysis");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
-  const outputFile = path.join(outputDir, `batch-optimization-${filterType}-${timestamp}.md`);
-  fs.writeFileSync(outputFile, summary, 'utf-8');
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/[:.]/g, "-")
+    .split("T")[0];
+  const outputFile = path.join(
+    outputDir,
+    `batch-optimization-${filterType}-${timestamp}.md`,
+  );
+  fs.writeFileSync(outputFile, summary, "utf-8");
 
   console.log(`\n✅ 批量优化报告已保存：${outputFile}`);
 }
@@ -162,7 +181,7 @@ async function batchOptimize(data, filterType) {
 function generateSummaryReport(allData, optimizedData, results, filterType) {
   const summary = `# 番茄短篇故事批量优化报告
 
-**优化时间**：${new Date().toISOString().split('T')[0]}
+**优化时间**：${new Date().toISOString().split("T")[0]}
 **筛选条件**：${filterType}
 
 ---
@@ -181,36 +200,46 @@ function generateSummaryReport(allData, optimizedData, results, filterType) {
 
 ### 高优先级（立即优化）
 ${results
-  .filter(r => r.reading === 0 && r.issues.length >= 2)
-  .map((r, i) => `${i + 1}. **${r.title}** (${r.reading}阅读，${r.issues.length}个问题)`)
-  .join('\n')}
+  .filter((r) => r.reading === 0 && r.issues.length >= 2)
+  .map(
+    (r, i) =>
+      `${i + 1}. **${r.title}** (${r.reading}阅读，${r.issues.length}个问题)`,
+  )
+  .join("\n")}
 
 ### 中优先级（本周优化）
 ${results
-  .filter(r => r.reading > 0 && r.reading < 3)
-  .map((r, i) => `${i + 1}. **${r.title}** (${r.reading}阅读，${r.issues.length}个问题)`)
-  .join('\n')}
+  .filter((r) => r.reading > 0 && r.reading < 3)
+  .map(
+    (r, i) =>
+      `${i + 1}. **${r.title}** (${r.reading}阅读，${r.issues.length}个问题)`,
+  )
+  .join("\n")}
 
 ---
 
 ## 📋 详细优化清单
 
-${results.map((r, i) => `
+${results
+  .map(
+    (r, i) => `
 ### ${i + 1}. ${r.title}
 
 **当前状态**：${r.reading}阅读，${r.wordCount}字，${r.genre}
 
 **问题诊断**：
-${r.issues.map(issue => `- ❌ ${issue}`).join('\n')}
+${r.issues.map((issue) => `- ❌ ${issue}`).join("\n")}
 
 **优化建议**：
-${r.suggestions.map(s => `- ✅ ${s}`).join('\n')}
+${r.suggestions.map((s) => `- ✅ ${s}`).join("\n")}
 
 **备选新标题**：
-${r.newTitles.map(t => `- ${t}`).join('\n')}
+${r.newTitles.map((t) => `- ${t}`).join("\n")}
 
 ---
-`).join('\n')}
+`,
+  )
+  .join("\n")}
 
 ## 💡 批量优化建议
 
@@ -234,7 +263,7 @@ ${r.newTitles.map(t => `- ${t}`).join('\n')}
 
 ---
 
-**报告生成时间**：${new Date().toISOString().split('T')[0]}
+**报告生成时间**：${new Date().toISOString().split("T")[0]}
 `;
 
   return summary;
@@ -243,9 +272,11 @@ ${r.newTitles.map(t => `- ${t}`).join('\n')}
 // 主函数
 async function main() {
   const args = process.argv.slice(2);
-  const filterType = args.find(arg => arg.startsWith('--filter='))?.split('=')[1] || 'zero-reading';
+  const filterType =
+    args.find((arg) => arg.startsWith("--filter="))?.split("=")[1] ||
+    "zero-reading";
 
-  console.log('🔍 番茄短篇故事批量优化助手\n');
+  console.log("🔍 番茄短篇故事批量优化助手\n");
 
   // 加载数据
   const { data } = loadStoriesData();
@@ -254,7 +285,7 @@ async function main() {
   await batchOptimize(data, filterType);
 }
 
-main().catch(error => {
-  console.error('❌ 错误：', error.message);
+main().catch((error) => {
+  console.error("❌ 错误：", error.message);
   process.exit(1);
 });

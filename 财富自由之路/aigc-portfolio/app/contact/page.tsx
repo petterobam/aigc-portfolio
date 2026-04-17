@@ -86,7 +86,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">邮箱</h3>
-                    <p className="text-gray-600 dark:text-gray-300">aigc-expert@example.com</p>
+                    <a href="mailto:petterobam@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      petterobam@gmail.com
+                    </a>
                   </div>
                 </div>
 
@@ -99,8 +101,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">LinkedIn</h3>
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">
-                      linkedin.com/in/aigc-expert
+                    <a href="https://www.linkedin.com/in/petterobam/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      linkedin.com/in/petterobam
                     </a>
                   </div>
                 </div>
@@ -114,8 +116,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">GitHub</h3>
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">
-                      github.com/aigc-expert
+                    <a href="https://github.com/petterobam" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      github.com/petterobam
                     </a>
                   </div>
                 </div>
@@ -129,8 +131,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1">知乎</h3>
-                    <a href="#" className="text-blue-600 dark:text-blue-400 hover:underline">
-                      zhihu.com/people/aigc-expert
+                    <a href="https://www.zhihu.com/people/oy6666" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                      zhihu.com/people/oy6666
                     </a>
                   </div>
                 </div>

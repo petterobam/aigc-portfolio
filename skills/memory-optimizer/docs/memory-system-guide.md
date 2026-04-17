@@ -237,7 +237,7 @@ WHERE id = 12;
 crontab -e
 
 # 添加以下内容（每 30 分钟运行一次）
-*/30 * * * * cd /Users/oyjie/.openclaw/workspace && node skills/memory-optimizer/scripts/optimize.js >> skills/memory-optimizer/logs/cron.log 2>&1
+*/30 * * * * cd ~/.openclaw/workspace && node skills/memory-optimizer/scripts/optimize.js >> skills/memory-optimizer/logs/cron.log 2>&1
 ```
 
 验证定时任务已生效：

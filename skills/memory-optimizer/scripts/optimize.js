@@ -21,7 +21,14 @@ const crypto = require('crypto');
 
 // 引入共享配置
 const CONFIG = require('./config.js');
-const { DB_CONFIG, OPTIMIZE_CONFIG, REPORT_ARCHIVE_CONFIG } = CONFIG;
+const { DB_CONFIG, OPTIMIZE_CONFIG, REPORT_ARCHIVE_CONFIG, EXPONENTIAL_DECAY_CONFIG } = CONFIG;
+
+// 引入指数衰减计算器
+const {
+  calculateExponentialDecay,
+  shouldTriggerScoreUpdate,
+  compareModels
+} = require('./decay-calculator.js');
 
 const DB_PATH = DB_CONFIG.dbPath;
 const REPORT_PATH = path.join(DB_CONFIG.dataDir, 'memory-optimization-report.json');
@@ -32,6 +39,40 @@ console.log('  记忆优化器');
 console.log('============================================================\n');
 
 const db = new Database(DB_PATH);
+
+/**
+ * 预测评分更新数量
+ * @param {number} elapsedTimeMinutes - 累积时间（分钟）
+ * @param {Array} memories - 记忆数组
+ * @returns {number} 预测会触发评分更新的记忆数量
+ */
+function predictScoreUpdatesCount(elapsedTimeMinutes, memories) {
+  const weights = OPTIMIZE_CONFIG.scoreWeights;
+  const threshold = OPTIMIZE_CONFIG.scoreUpdateThreshold;
+  let predictedCount = 0;
+
+  memories.forEach(memory => {
+    // 获取当前时效性分数
+    const currentRecency = 1 / Math.max(1, memory.days_since_last_access);
+
+    // 计算新的时效性分数（经过 elapsedTimeMinutes 后）
+    const newDaysSinceLastAccess = memory.days_since_last_access + (elapsedTimeMinutes / (60 * 24));
+    const newRecency = 1 / Math.max(1, newDaysSinceLastAccess);
+
+    // 计算时效性分数的变化
+    const recencyDiff = newRecency - currentRecency;
+
+    // 计算重要性评分的变化（仅时效性维度受影响）
+    const importanceDiff = Math.abs(recencyDiff * weights.recency * 5);
+
+    // 判断是否会触发评分更新
+    if (importanceDiff > threshold) {
+      predictedCount++;
+    }
+  });
+
+  return predictedCount;
+}
 
 // 统计信息
 const stats = {
@@ -141,7 +182,7 @@ function getAllMemories() {
     row.age_days = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
     row.days_since_last_access = row.last_accessed
       ? Math.floor((now - new Date(row.last_accessed)) / (1000 * 60 * 60 * 24))
-      : row.days_since_last_access;
+      : row.age_days;
 
     // 确保最小值为 0
     row.age_days = Math.max(0, row.age_days);
@@ -248,7 +289,17 @@ function updateImportance(memories) {
   memories.forEach(memory => {
     const newImportance = calculateImportance(memory);
     const oldImportance = memory.importance;
-    const importanceDiff = Math.abs(newImportance - oldImportance);
+    // 处理 importance 为 null 的情况（新增记忆）
+    const importanceDiff = oldImportance === null ? newImportance : Math.abs(newImportance - oldImportance);
+
+    // 调试信息：记录所有记忆的评分计算结果（仅前 3 条）
+    if (stats.importanceUpdated === 0) {
+      console.log(`  📊 评分计算详情（前 3 条）:`);
+    }
+    if (stats.importanceUpdated < 3) {
+      console.log(`    ${memory.title}: ${oldImportance} → ${newImportance.toFixed(2)} (diff: ${importanceDiff.toFixed(2)}, threshold: ${OPTIMIZE_CONFIG.scoreUpdateThreshold})`);
+      console.log(`      数据库 ID: ${memory.id}`);
+    }
 
     // 只更新评分变化超过阈值的（使用配置中的阈值）
     if (importanceDiff > OPTIMIZE_CONFIG.scoreUpdateThreshold) {
@@ -460,10 +511,45 @@ function updateReportIndex(report, timestamp) {
 
 // 主流程（支持异步）
 async function main() {
+  const startTime = Date.now();
+  const now = new Date();
+
+  // 读取上次优化运行时间(用于时效性衰减累积规律分析)
+  const lastOptimization = db.prepare(`
+    SELECT * FROM optimization_log
+    ORDER BY id DESC
+    LIMIT 1
+  `).get();
+
+  let elapsedTimeMinutes = 0;
+  let predictedScoreUpdate = null;
+  let linearPrediction = null;
+
+  if (lastOptimization) {
+    const lastTime = new Date(lastOptimization.optimization_at);
+    elapsedTimeMinutes = Math.floor((now - lastTime) / (1000 * 60));
+
+    console.log(`⏱️  时效性衰减累积分析:`);
+    console.log(`   上次运行: ${lastOptimization.optimization_at}`);
+    console.log(`   本次运行: ${now.toISOString()}`);
+    console.log(`   累积时间: ${elapsedTimeMinutes} 分钟 (${(elapsedTimeMinutes / 60).toFixed(2)} 小时)\n`);
+  } else {
+    console.log(`⏱️  首次运行,无历史数据可供预测\n`);
+  }
+
   console.log('📊 扫描所有记忆...');
   const memories = getAllMemories();
   stats.totalProcessed = memories.length;
   console.log(`找到 ${memories.length} 条记忆\n`);
+
+  // 如果有历史数据，使用正确的预测逻辑
+  let predictedScoreUpdatesCount = null;
+  if (lastOptimization && elapsedTimeMinutes > 0) {
+    console.log(`📊 正确预测逻辑（遍历所有记忆）:`);
+    predictedScoreUpdatesCount = predictScoreUpdatesCount(elapsedTimeMinutes, memories);
+    console.log(`   预测会触发评分更新的记忆数量: ${predictedScoreUpdatesCount} 条`);
+    console.log(`   阈值: ${OPTIMIZE_CONFIG.scoreUpdateThreshold}\n`);
+  }
 
   console.log('🔍 识别重复记忆（内容哈希）...');
   const duplicates = findDuplicates(memories);
@@ -582,6 +668,43 @@ async function main() {
       const emoji = rec.type === 'warning' ? '⚠️' : 'ℹ️';
       console.log(`  ${emoji} ${rec.message}`);
     });
+  }
+
+  // 记录优化日志到数据库(用于时效性衰减累积规律分析)
+  const reportJson = JSON.stringify(report);
+
+  db.prepare(`
+    INSERT INTO optimization_log (
+      optimization_at, memories_processed, memories_merged,
+      memories_archived, memories_deleted, report
+    ) VALUES (?, ?, ?, ?, ?, ?)
+  `).run(
+    now.toISOString(),
+    stats.totalProcessed,
+    stats.duplicate,
+    stats.archived,
+    stats.deleted,
+    reportJson
+  );
+
+  // 输出时效性衰减累积规律验证结果（使用正确的预测逻辑）
+  if (lastOptimization && EXPONENTIAL_DECAY_CONFIG.logPredictions && predictedScoreUpdatesCount !== null) {
+    console.log('\n⏱️  时效性衰减累积规律验证:');
+    console.log(`   预测评分更新数量: ${predictedScoreUpdatesCount} 条`);
+    console.log(`   实际评分更新数量: ${stats.importanceUpdated} 条`);
+
+    // 修复验证逻辑：对比预测数量和实际数量
+    let predictionAccuracy;
+    const diff = Math.abs(predictedScoreUpdatesCount - stats.importanceUpdated);
+    if (diff === 0) {
+      predictionAccuracy = '准确 ✅';
+    } else if (diff <= 1) {
+      predictionAccuracy = '接近 ✅ (偏差 ±1)';
+    } else {
+      predictionAccuracy = '偏差 ⚠️';
+      console.log(`   🚨 预测失败: 预测 ${predictedScoreUpdatesCount} 条，实际 ${stats.importanceUpdated} 条，偏差 ${diff} 条`);
+    }
+    console.log(`   预测准确性: ${predictionAccuracy}\n`);
   }
 
   db.close();

@@ -1,0 +1,146 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-27T20:56:54.988Z",
+  "metrics": {
+    "timestamp": "2026-03-27T20:56:54.985Z",
+    "database": {
+      "fileSize": 294912,
+      "pageCount": 72,
+      "pageSize": 4096,
+      "tableCount": 4,
+      "indexCount": 10
+    },
+    "memory": {
+      "total": 15,
+      "active": 12,
+      "archived": 3,
+      "protected": 2,
+      "avgScore": 3.74,
+      "avgAccessCount": 21.533333333333335
+    },
+    "vector": {
+      "totalMemories": 15,
+      "cachedVectors": 0,
+      "avgVectorLength": 0,
+      "modelUsed": "gemma:2b"
+    },
+    "scoring": {
+      "scoreUpdateThreshold": 0.2,
+      "recentScoreChanges": [
+        {
+          "id": 11,
+          "title": "2026-03-17",
+          "score": 5,
+          "age": 7
+        },
+        {
+          "id": 10,
+          "title": "2026-03-18 心跳记录",
+          "score": 5,
+          "age": 7
+        },
+        {
+          "id": 9,
+          "title": "2026-03-19 心跳记录 1 - 爽点公式库 v2.0",
+          "score": 5,
+          "age": 7
+        },
+        {
+          "id": 8,
+          "title": "心跳执行记录 - 2026-03-19 12:30",
+          "score": 5,
+          "age": 7
+        },
+        {
+          "id": 6,
+          "title": "心跳记录 - 2026-03-19 14:30",
+          "score": 5,
+          "age": 7
+        }
+      ],
+      "avgScoreChange": 1.2599999999999998
+    },
+    "accessTracking": {
+      "totalAccessLogs": 35,
+      "avgAccessFrequency": 21.533333333333335,
+      "lastUpdateTime": "2026-03-21 23:08:07"
+    },
+    "optimization": {
+      "totalOptimizations": 0,
+      "lastOptimizationTime": null,
+      "avgOptimizationRate": 0
+    },
+    "timeDecay": {
+      "tau": 279,
+      "halfLife": 193.38806337622472,
+      "linearRate": 0.000722
+    }
+  },
+  "analysis": {
+    "timestamp": "2026-03-27T20:56:54.988Z",
+    "database": {
+      "health": "excellent",
+      "issues": [],
+      "recommendations": []
+    },
+    "memory": {
+      "health": "excellent",
+      "issues": [],
+      "recommendations": []
+    },
+    "vector": {
+      "health": "poor",
+      "issues": [
+        "向量缓存比例过低 (0.0%)"
+      ],
+      "recommendations": [
+        "立即重新运行优化脚本，生成向量缓存"
+      ]
+    },
+    "scoring": {
+      "health": "poor",
+      "issues": [
+        "评分变化过大 (1.260)"
+      ],
+      "recommendations": [
+        "立即检查评分算法，确认是否存在异常"
+      ]
+    },
+    "accessTracking": {
+      "health": "excellent",
+      "issues": [],
+      "recommendations": []
+    },
+    "timeDecay": {
+      "health": "excellent",
+      "issues": [],
+      "recommendations": []
+    },
+    "overall": {
+      "health": "good",
+      "score": 4,
+      "issues": [
+        "向量缓存比例过低 (0.0%)",
+        "评分变化过大 (1.260)"
+      ],
+      "recommendations": [
+        "立即重新运行优化脚本，生成向量缓存",
+        "立即检查评分算法，确认是否存在异常"
+      ]
+    }
+  },
+  "alerts": [
+    {
+      "level": "warning",
+      "message": "向量缓存比例较低: 0.0%",
+      "timestamp": "2026-03-27T20:56:54.988Z"
+    }
+  ],
+  "summary": {
+    "overallHealth": "good",
+    "overallScore": "4.00",
+    "totalIssues": 2,
+    "criticalIssues": 0,
+    "totalRecommendations": 2
+  }
+}

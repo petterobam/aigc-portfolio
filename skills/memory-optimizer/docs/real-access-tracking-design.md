@@ -103,7 +103,7 @@ const accessCount = Math.floor(
    ```javascript
    // 监控 MEMORY.md 文件读取
    const fswatch = require('node-fswatch');
-   fswatch.watch('/Users/oyjie/.openclaw/workspace/MEMORY.md', (filename) => {
+   fswatch.watch('~/.openclaw/workspace/MEMORY.md', (filename) => {
      recordAccess(filename);  // 记录文件访问
    });
    ```
@@ -393,7 +393,7 @@ const accessCount = Math.floor(
    ```javascript
    // 定期分析文件访问
    const analyzer = require('./file-access-analyzer');
-   const MEMORY_PATH = '/Users/oyjie/.openclaw/workspace/MEMORY.md';
+   const MEMORY_PATH = '~/.openclaw/workspace/MEMORY.md';
 
    async function analyzeAndRecord() {
      const accessStats = analyzer.analyzeAccessFrequency(MEMORY_PATH);

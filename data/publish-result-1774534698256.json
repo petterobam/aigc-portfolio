@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-03-26T14:18:18.245Z",
+  "storyId": "39",
+  "storyTitle": "午夜电梯，全死光了",
+  "automatedSteps": [
+    "访问作家后台",
+    "点击\"新建短故事\"按钮",
+    "访问发布页面",
+    "填写标题",
+    "填写正文",
+    "点击\"下一步\"进入设置页面",
+    "勾选发布协议（智能查找）",
+    "选择作品分类（待人工）",
+    "点击\"发布\"按钮"
+  ],
+  "agreementResult": {
+    "success": true,
+    "wasChecked": false,
+    "isChecked": false,
+    "changed": false,
+    "selector": "input[type=\"checkbox\"]",
+    "text": "我已阅读短故事发布事项我已阅读短故事发布事项"
+  },
+  "publishStatus": {
+    "success": true,
+    "error": false,
+    "currentUrl": "https://fanqienovel.com/main/writer/publish-short/7621568248030429720?enter_from=NEWCHAPTER_1"
+  },
+  "screenshots": [
+    "~/.openclaw/workspace/data/publish-page1-1774534646265.png",
+    "~/.openclaw/workspace/data/publish-page2-1774534657264.png"
+  ],
+  "status": "已发布"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "memory-optimizer",
+  "version": "1.0.0",
+  "description": "智能记忆优化系统",
+  "main": "scripts/optimize.js",
+  "scripts": {
+    "optimize": "node scripts/optimize.js",
+    "backup": "node scripts/backup.js",
+    "access-tracker": "node scripts/access-tracker.js",
+    "test": "node test/test-vector-dedup.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.6.0"
+  },
+  "devDependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "keywords": ["memory", "optimization", "ai", "database"],
+  "author": "Memory Optimizer",
+  "license": "MIT"
+}

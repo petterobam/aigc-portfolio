@@ -1,0 +1,62 @@
+{
+  "title": "RAG 优化实战：Evidence Distillation 让你的知识库更聪明",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "RAG",
+    "EvidenceDistillation",
+    "知识库",
+    "大模型",
+    "AI工程"
+  ],
+  "category": "RAG深度实战",
+  "priority": "high",
+  "wordCount": 4500,
+  "codeSnippets": 8,
+  "readingTime": 15,
+  "difficulty": "⭐⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80
+  },
+  "keywords": [
+    "RAG",
+    "Evidence Distillation",
+    "知识库",
+    "检索优化",
+    "准确率提升",
+    "幻觉问题",
+    "Python",
+    "PyTorch"
+  ],
+  "summary": "Evidence Distillation 让 RAG 系统学会\"精读\"知识，大幅提升回答质量。本文提供完整的代码实现，从简单版本到进阶版本，包含训练数据准备指南和模型部署优化技巧。",
+  "contentStructure": {
+    "intro": 10,
+    "simple": 30,
+    "advanced": 40,
+    "deployment": 15,
+    "conclusion": 5
+  },
+  "targetAudience": [
+    "RAG 系统开发者",
+    "AI 工程师",
+    "知识库管理员",
+    "想优化 RAG 的开发者"
+  ],
+  "valueProposition": "完整的 RAG 优化实战教程，从简单版本到进阶版本，包含完整代码实现和部署优化技巧。实战价值高。",
+  "callToAction": "你的知识库有哪些优化技巧？评论区分享一下\n关注我的专栏《RAG 深度实战》，获取更多 RAG 实战技巧！",
+  "publishPlan": {
+    "bestTime": "周四 20:00",
+    "relatedColumn": "RAG 深度实战",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": ""
+  },
+  "references": [
+    "https://arxiv.org/abs/2603.25737",
+    "https://github.com/openclaw/openclaw",
+    "https://www.zhihu.com/column/RAG深度实战"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

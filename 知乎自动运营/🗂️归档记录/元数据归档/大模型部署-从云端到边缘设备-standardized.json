@@ -1,0 +1,220 @@
+{
+  "title": "大模型部署：从云端到边缘设备",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31 22:00",
+  "tags": [
+    "#大模型部署",
+    "#AIGC",
+    "#边缘计算",
+    "#量化",
+    "#剪枝",
+    "#模型压缩",
+    "#TensorRT",
+    "#ONNX",
+    "#CoreML",
+    "#TFLite"
+  ],
+  "category": "AIGC 原理系列（工程实战）",
+  "priority": "high",
+  "wordCount": 10000,
+  "codeSnippets": 18,
+  "readingTime": 25,
+  "difficulty": "进阶",
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "大模型部署",
+    "云端部署",
+    "边缘部署",
+    "模型压缩",
+    "量化",
+    "剪枝",
+    "知识蒸馏",
+    "vLLM",
+    "TensorRT",
+    "ONNX Runtime",
+    "CoreML",
+    "TFLite",
+    "KV Cache",
+    "连续批处理",
+    "成本优化",
+    "性能优化",
+    "硬件适配"
+  ],
+  "summary": "系统讲解大模型从云端到边缘设备的完整部署流程，涵盖云端部署（基础架构、性能优化、成本优化）、边缘部署（模型压缩、推理引擎、硬件适配）、部署策略对比（云端 vs 边缘、部署决策树、成本效益分析）、3 个实战案例（企业知识库问答、手机端离线翻译、IoT 设备语音助手），提供 18 个完整可运行的代码示例，实战价值高，系统性强。",
+  "contentStructure": {
+    "sections": [
+      {
+        "title": "核心结论",
+        "percentage": 5
+      },
+      {
+        "title": "大模型部署挑战",
+        "percentage": 10
+      },
+      {
+        "title": "云端部署方案",
+        "percentage": 25
+      },
+      {
+        "title": "边缘部署方案",
+        "percentage": 30
+      },
+      {
+        "title": "部署策略对比",
+        "percentage": 15
+      },
+      {
+        "title": "实战案例",
+        "percentage": 10
+      },
+      {
+        "title": "最佳实践总结",
+        "percentage": 5
+      },
+      {
+        "title": "延伸思考",
+        "percentage": 5
+      }
+    ]
+  },
+  "targetAudience": "AI 工程师、后端开发、移动端开发、IoT 开发、想了解大模型部署的技术人员",
+  "valueProposition": "从云端到边缘设备，系统讲解大模型部署全流程，涵盖性能优化、成本优化、硬件适配，提供完整可运行的代码示例和 3 个实战案例",
+  "callToAction": "想学习更多 AIGC 实战技巧？关注我的专栏《AIGC 应用实战》",
+  "publishPlan": {
+    "platform": "知乎",
+    "type": "专栏文章",
+    "timeSlot": "周日 15:00-17:00（读者有充足时间阅读和收藏）",
+    "relatedColumns": [
+      "AIGC 核心原理解析",
+      "AIGC 应用实战"
+    ]
+  },
+  "references": [
+    {
+      "name": "vLLM",
+      "url": "https://github.com/vllm-project/vllm"
+    },
+    {
+      "name": "TensorRT",
+      "url": "https://developer.nvidia.com/tensorrt"
+    },
+    {
+      "name": "ONNX Runtime",
+      "url": "https://onnxruntime.ai/"
+    },
+    {
+      "name": "CoreML",
+      "url": "https://developer.apple.com/documentation/coreml"
+    },
+    {
+      "name": "TFLite Micro",
+      "url": "https://www.tensorflow.org/lite/microcontrollers"
+    }
+  ],
+  "type": "技术文章",
+  "status": "待发布",
+  "filePath": "🔥高优先级/大模型部署-从云端到边缘设备.md",
+  "creationDate": "2026-03-31 22:00",
+  "qualityScore": {
+    "technicalDepth": 9,
+    "practicalValue": 10,
+    "codeQuality": 9,
+    "structureClarity": 9,
+    "overall": 9.25
+  },
+  "highlights": [
+    "系统讲解大模型从云端到边缘设备的完整部署流程",
+    "涵盖云端部署（基础架构、性能优化、成本优化）",
+    "涵盖边缘部署（模型压缩、推理引擎、硬件适配）",
+    "部署策略对比（云端 vs 边缘、部署决策树、成本效益分析）",
+    "3 个实战案例（企业知识库问答、手机端离线翻译、IoT 设备语音助手）",
+    "18 个完整可运行的代码示例（云端部署 5 个、边缘部署 8 个、实战案例 5 个）",
+    "实战价值高，系统性强"
+  ],
+  "technicalDepth": "原理讲解 20% + 代码实现 40% + 实战案例 25% + 最佳实践 10% + 延伸思考 5%",
+  "practicalValue": "提供完整可运行的代码示例和 3 个实战案例，涵盖企业知识库问答系统（云端部署）、手机端离线翻译应用（边缘部署）、IoT 设备语音助手（嵌入式部署）",
+  "innovationPoints": [
+    "部署决策树（根据模型规模、并发、延迟、隐私需求自动选择云端/边缘/混合部署）",
+    "成本估算模型（计算云端部署的日成本、月成本、单次推理成本）",
+    "混合量化策略（关键层 FP16/INT8，非关键层 INT4）",
+    "内存优化（定期清理 KV Cache 和中间变量）",
+    "设备能力检测（自动选择最优模型版本 FP16/INT8/INT4）"
+  ],
+  "riskWarnings": [
+    "过度优化导致精度损失（INT4 量化后精度下降严重）",
+    "内存泄漏导致崩溃（长时间运行后内存占用不断增加）",
+    "边缘设备硬件兼容性问题（模型在某些设备上无法运行）"
+  ],
+  "bestPractices": [
+    "云端部署：使用批处理提高吞吐量、启用 KV Cache 减少重复计算、使用连续批处理提升 GPU 利用率、配置缓存层减少重复推理、使用任务队列削峰填谷、监控推理延迟和错误率、自动扩缩容应对流量波动",
+    "边缘部署：模型压缩（剪枝 + 量化 + 蒸馏）、使用专用推理引擎（vLLM/TensorRT/ONNX）、适配目标硬件（CoreML/TFLite Micro）、模型分层加载（按需加载）、离线缓存策略、增量更新机制、本地监控和日志"
+  ],
+  "codeSnippetsList": [
+    "推理服务（FastAPI）",
+    "Batch 推理",
+    "KV Cache",
+    "连续批处理（Continuous Batching）",
+    "成本估算模型",
+    "剪枝（Pruning）",
+    "量化（Quantization）",
+    "知识蒸馏（Knowledge Distillation）",
+    "vLLM 高性能推理引擎",
+    "TensorRT 加速",
+    "ONNX Runtime 加速",
+    "手机端部署（iOS + CoreML）",
+    "Android 端部署（TFLite）",
+    "嵌入式设备部署（MicroPython + CMSIS-NN）",
+    "企业知识库问答系统（云端部署）",
+    "手机端离线翻译应用（边缘部署）",
+    "IoT 设备语音助手（嵌入式部署）",
+    "混合量化策略"
+  ],
+  "dataSources": [
+    "官方文档（vLLM、TensorRT、ONNX Runtime、CoreML、TFLite）",
+    "实践经验（企业知识库问答、手机端离线翻译、IoT 设备语音助手）",
+    "学术研究（模型压缩、量化、知识蒸馏）"
+  ],
+  "relatedArticles": [
+    {
+      "title": "大模型推理加速：从理论到实战",
+      "reason": "推理加速是部署优化的重要组成部分"
+    },
+    {
+      "title": "大模型成本优化：推理、训练、存储",
+      "reason": "成本优化是部署策略的关键考虑因素"
+    },
+    {
+      "title": "AI 应用架构设计：从 MVP 到规模化",
+      "reason": "架构设计是部署规划的基础"
+    }
+  ],
+  "futureUpdates": [
+    "添加更多硬件适配方案（如 NVIDIA Jetson、Google Coral）",
+    "添加更多实战案例（如自动驾驶、医疗影像分析）",
+    "深入探讨模型部署的安全性和隐私保护",
+    "探讨模型部署的监控和运维最佳实践"
+  ],
+  "feedback": {
+    "expectedQuestions": [
+      "如何选择云端 vs 边缘部署？",
+      "量化后精度损失有多大？",
+      "如何部署到 Android 设备？",
+      "如何降低部署成本？",
+      "如何处理边缘设备的硬件兼容性问题？"
+    ],
+    "expectedComments": [
+      "实战案例很实用，直接用上了",
+      "代码示例很完整，可以直接运行",
+      "部署决策树很有帮助，解决了我的选择困难症",
+      "成本估算模型很准确，和实际差不多",
+      "内存优化的解决方案救了我，之前一直有内存泄漏问题"
+    ]
+  },
+  "version": "1.0",
+  "lastUpdated": "2026-03-31 22:00",
+  "notes": "AIGC 原理系列第 18 篇（最后一篇），系统讲解大模型从云端到边缘设备的完整部署流程，提供 18 个完整可运行的代码示例和 3 个实战案例，实战价值高，系统性强。"
+}

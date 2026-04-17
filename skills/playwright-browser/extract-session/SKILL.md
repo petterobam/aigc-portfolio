@@ -55,7 +55,7 @@ Chrome 需以 CDP 调试端口启动（**一次性设置**，完全退出 Chrome
 启动后执行提取脚本：
 
 ```
-exec cd /Users/oyjie/.openclaw/workspace && node scripts/extract-cookies-from-browser.js
+exec cd ~/.openclaw/workspace && node scripts/extract-cookies-from-browser.js
 ```
 
 脚本会自动：
@@ -70,7 +70,7 @@ exec cd /Users/oyjie/.openclaw/workspace && node scripts/extract-cookies-from-br
 运行检查命令：
 
 ```
-exec cd /Users/oyjie/.openclaw/workspace && node scripts/check-cookie-expiry.js
+exec cd ~/.openclaw/workspace && node scripts/check-cookie-expiry.js
 ```
 
 输出示例：

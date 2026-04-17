@@ -1,0 +1,57 @@
+{
+  "title": "OpenClaw ACP 原理深度解析：从零理解 Agent 控制协议",
+  "author": "OpenClaw 深度用户",
+  "publishTime": "2026-03-29",
+  "tags": ["OpenClaw", "ACP", "AI", "Agent", "自动化", "原理深度解析"],
+  "category": "OpenClaw 技巧",
+  "priority": "高优先级",
+  "wordCount": 3500,
+  "estimatedMetrics": {
+    "likes": 500,
+    "favorites": 250,
+    "comments": 80
+  },
+  "keywords": ["OpenClaw", "ACP", "Agent Control Protocol", "AI Agent", "协议", "架构", "实战"],
+  "summary": "OpenClaw Agent Control Protocol (ACP) 是什么？如何通过 ACP 实现 AI Agent 的标准化控制？本文从协议设计、核心架构、实战代码三个维度，带你深入理解 ACP 的工作原理。",
+  "contentStructure": {
+    "introduction": 5,
+    "coreConcepts": 15,
+    "protocolDesign": 20,
+    "architectureAnalysis": 25,
+    "practicalCode": 20,
+    "advancedTopics": 10,
+    "conclusion": 5
+  },
+  "readTime": "8 分钟",
+  "difficulty": "中级",
+  "codeSnippets": 8,
+  "images": 0,
+  "references": [
+    {
+      "title": "OpenClaw 官方文档",
+      "url": "https://docs.openclaw.ai"
+    },
+    {
+      "title": "ACP 协议规范",
+      "url": "https://docs.openclaw.ai/acp"
+    },
+    {
+      "title": "GitHub 仓库",
+      "url": "https://github.com/openclaw/openclaw"
+    }
+  ],
+  "targetAudience": ["开发者", "AI 从业者", "技术学习者", "想用 AI 提效的职场人"],
+  "valueProposition": "深入理解 ACP 协议设计，掌握 Agent 标准化控制方法，提升 AI 应用开发效率",
+  "callToAction": {
+    "followColumn": "关注专栏，获取更多 OpenClaw 技术深度解析",
+    "paidContent": "想系统学习 OpenClaw 高级技巧？关注即将推出的付费专栏"
+  },
+  "publicationPlan": {
+    "platform": "知乎",
+    "type": "专栏文章",
+    "timing": "工作日上午 10 点",
+    "promotion": "发布后转发到技术群、朋友圈、知乎想法"
+  },
+  "status": "待发布",
+  "createdAt": "2026-03-29 16:20:00"
+}

@@ -1,0 +1,101 @@
+{
+  "title": "大模型幻觉问题：检测、缓解、评估",
+  "author": "AI技术分享者",
+  "tags": ["幻觉", "大模型", "AIGC", "事实核查", "RAG"],
+  "category": "AIGC原理",
+  "priority": "高优先级",
+  "word_count": 10000,
+  "code_snippets": 10,
+  "reading_time": "25-30 分钟",
+  "difficulty": "进阶",
+  "estimated_data": {
+    "upvotes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": ["大模型幻觉", "幻觉检测", "幻觉缓解", "事实核查", "RAG", "Self-Consistency", "Fact-Checking", "Uncertainty Estimation", "Entailment Check", "验证链", "自我反思", "FactScore", "评估方法"],
+  "summary": "大模型的幻觉问题不是 bug，而是特征。本文系统讲解幻觉的定义与分类、根本原因、4 大检测方法（自洽性检测、事实核查、不确定性估计、蕴含检查）、4 大缓解策略（数据层面、模型层面、推理层面、系统层面）、3 大评估指标（FactScore、蕴含分数、幻觉率），并提供完整的 RAG 系统幻觉检测与缓解实战案例，帮助读者深入理解和解决大模型幻觉问题。",
+  "content_structure": {
+    "sections": [
+      {
+        "title": "核心结论",
+        "percentage": 5
+      },
+      {
+        "title": "为什么幻觉问题如此重要？",
+        "percentage": 5
+      },
+      {
+        "title": "幻觉的根本原因",
+        "percentage": 15
+      },
+      {
+        "title": "幻觉检测方法（自动检测 + 人工评估）",
+        "percentage": 20
+      },
+      {
+        "title": "幻觉缓解策略（4 大层面）",
+        "percentage": 25
+      },
+      {
+        "title": "幻觉评估方法（自动化指标 + 人工评估）",
+        "percentage": 15
+      },
+      {
+        "title": "实战案例：RAG 系统的幻觉检测与缓解",
+        "percentage": 10
+      },
+      {
+        "title": "最佳实践总结",
+        "percentage": 5
+      }
+    ],
+    "code_snippets": [
+      "Self-Consistency 检测",
+      "Fact-Checking 事实核查",
+      "Uncertainty Estimation 不确定性估计",
+      "Entailment Check 蕴含检查",
+      "数据清洗与事实增强",
+      "RLHF 训练流程",
+      "Constrained Decoding 约束解码",
+      "RAG 系统实现",
+      "Chain-of-Verification 验证链",
+      "Self-Reflexion 自我反思"
+    ]
+  },
+  "target_audience": "AI 从业者、大模型开发者、想要深入理解幻觉问题并掌握解决方案的技术人员",
+  "value_proposition": "系统讲解大模型幻觉问题的完整解决方案，从根本原因分析到实战案例，包含 10 个完整可运行的代码示例，帮助读者深入理解幻觉问题并掌握有效的检测、缓解和评估方法",
+  "engagement_guidance": "你在使用大模型时遇到过幻觉吗？你是如何检测和解决的？评论区分享你的经验。",
+  "publication_plan": {
+    "platform": "知乎",
+    "format": "专栏文章",
+    "schedule": "待发布",
+    "target_date": "2026-04-01"
+  },
+  "references": [
+    "Language Models are Few-Shot Learners (Brown et al., 2020)",
+    "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2022)",
+    "Self-Consistency Improves Chain of Thought Reasoning in Language Models (Wang et al., 2022)",
+    "FactScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation (Min et al., 2023)"
+  ],
+  "type": "技术深度解析",
+  "status": "草稿",
+  "quality_score": {
+    "depth": 9.0,
+    "practicality": 9.0,
+    "clarity": 9.0,
+    "innovation": 9.0,
+    "overall": 9.0
+  },
+  "tech_stack": [
+    "Python",
+    "PyTorch",
+    "Transformers",
+    "Sentence Transformers",
+    "OpenAI API"
+  ],
+  "series": "AIGC原理系列",
+  "series_order": 14,
+  "created_at": "2026-03-31 20:30",
+  "updated_at": "2026-03-31 20:30"
+}

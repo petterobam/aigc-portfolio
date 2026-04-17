@@ -73,7 +73,7 @@ skills/llm-learning/
 
 每天上午 10:30 自动执行学习推送。
 
-配置位置：`/Users/oyjie/.openclaw/workspace/HEARTBEAT.md`
+配置位置：`~/.openclaw/workspace/HEARTBEAT.md`
 
 ## 🔧 工具脚本
 
@@ -101,9 +101,9 @@ python3 learning-helper.py
 
 ## 📝 数据源
 
-- **主文档：** `/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/README.md`
-- **模型索引：** `/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized/LLM-VLM-index.md`
-- **学习计划：** `/Users/oyjie/.openclaw/workspace/skills/llm-learning/plan/llm-learning-plan.md`
+- **主文档：** `~/.openclaw/workspace/LLM-RL-Visualized/README.md`
+- **模型索引：** `~/.openclaw/workspace/LLM-RL-Visualized/LLM-VLM-index.md`
+- **学习计划：** `~/.openclaw/workspace/skills/llm-learning/plan/llm-learning-plan.md`
 
 ## 🎓 学习效果
 

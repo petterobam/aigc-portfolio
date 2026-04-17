@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "version": "1.0",
+    "created_at": "2026-03-29T18:22:00+08:00",
+    "updated_at": "2026-03-29T18:22:00+08:00",
+    "author": "知乎技术分享与知识付费运营 AI",
+    "status": "初稿完成，待发布",
+    "type": "技术深度解析",
+    "category": "AIGC 原理系列"
+  },
+  "content": {
+    "title": "AI Scientist-v2 深度解析：Agentic Tree Search 如何颠覆科研",
+    "summary": "第一个完全由 AI 编写并通过同行评审的 workshop 论文，使用 Agentic Tree Search 实现端到端自动化科研系统。",
+    "word_count": 3500,
+    "reading_time": "12-15 分钟",
+    "tags": [
+      "AI-Scientist",
+      "AgenticTreeSearch",
+      "科研自动化",
+      "AI研究",
+      "机器学习"
+    ],
+    "related_column": "AIGC 核心原理解析"
+  },
+  "quality": {
+    "depth_score": 9.0,
+    "practical_score": 8.5,
+    "innovation_score": 9.5,
+    "overall_score": 9.0,
+    "quality_assessment": "技术深度强（Agentic Tree Search 原理 25% + 系统架构 20% + 实战部署 20% + 成本分析 15% + 风险安全 10% + 未来展望 10%），实战价值高（含完整部署指南和成本分析），稀缺视角（全网首发深度解析），适用场景明确（包含适用/不适用场景对比），风险评估完善（安全措施和风险提示）"
+  },
+  "estimated_metrics": {
+    "likes": 600,
+    "collections": 250,
+    "comments": 80,
+    "views": 10000,
+    "publish_time": "工作日 12:00-13:00（午休时间）",
+    "best_publish_days": ["周一", "周二", "周三"]
+  },
+  "technical_details": {
+    "code_snippets": 6,
+    "diagrams": 3,
+    "formulas": 5,
+    "references": 4,
+    "examples": 10
+  },
+  "monetization": {
+    "path": "付费专栏引流 + 技术咨询服务",
+    "column_name": "AIGC 核心原理解析",
+    "price_range": "299-499 元",
+    "conversion_rate": "3-5%",
+    "expected_revenue": "18-25 元/篇"
+  },
+  "publishing_checklist": {
+    "title_precision": true,
+    "opening_attractiveness": true,
+    "structure_clarity": true,
+    "code_examples": true,
+    "collection_points": true,
+    "interaction_guidance": true,
+    "tags_accuracy": true,
+    "column_association": true,
+    "format_preview": false
+  },
+  "source_materials": {
+    "github_repo": "https://github.com/SakanaAI/AI-Scientist-v2",
+    "paper": "https://pub.sakana.ai/ai-scientist-v2/paper",
+    "blog": "https://sakana.ai/ai-scientist-first-publication/",
+    "workshop": "https://github.com/SakanaAI/AI-Scientist-ICLR2025-Workshop-Experiment",
+    "data_date": "2026-03-29"
+  },
+  "optimization_suggestions": {
+    "before_publish": [
+      "生成可视化图片（架构图、流程图、Tree Search 示意图）",
+      "优化互动提问（引导读者讨论科研自动化的影响）",
+      "添加目录导航（提升长文阅读体验）"
+    ],
+    "after_publish": [
+      "引导读者关注专栏《AIGC 核心原理解析》",
+      "鼓励读者分享自己的科研自动化经验",
+      "收集评论中的问题和反馈，用于后续内容优化"
+    ]
+  },
+  "next_content_ideas": [
+    "AI-Scientist-v1 vs v2 深度对比",
+    "如何用 AI Scientist-v2 加速自己的研究",
+    "科研自动化的未来：从辅助到替代",
+    "Tree Search 在其他 AI 领域的应用"
+  ],
+  "notes": {
+    "innovation_points": [
+      "第一个完全由 AI 编写并通过同行评审的 workshop 论文",
+      "Agentic Tree Search 实现科研流程自动化",
+      "端到端系统：从想法到论文的全流程自动化",
+      "无模板依赖：真正的自主科研能力"
+    ],
+    "key_value_propositions": [
+      "成本可控（$20-30/实验）",
+      "成功率合理（40-60%，取决于模型）",
+      "应用广泛（ML 领域）",
+      "部署简单（1 小时内完成）"
+    ],
+    "target_audience": [
+      "AI 研究员（了解前沿技术）",
+      "科研从业者（提升效率工具）",
+      "开发者（学习 AI 系统架构）",
+      "技术爱好者（关注 AI 自动化）"
+    ]
+  }
+}

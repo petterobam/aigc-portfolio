@@ -1,0 +1,65 @@
+{
+  "title": "AI Agent 架构设计：从零理解智能体协作",
+  "author": "AI 技术探索者",
+  "publishTime": "2026-03-29",
+  "tags": [
+    "AI Agent",
+    "多Agent协作",
+    "AIGC",
+    "人工智能",
+    "自动化"
+  ],
+  "category": "AIGC 原理系列",
+  "priority": "high",
+  "wordCount": 15000,
+  "codeSnippets": 15,
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "AI Agent",
+    "单 Agent",
+    "多 Agent",
+    "架构设计",
+    "协作模式",
+    "层级协作",
+    "并行协作",
+    "沟通协作",
+    "最佳实践",
+    "踩坑指南",
+    "性能优化",
+    "未来趋势"
+  ],
+  "summary": "本文深入解析 AI Agent 的核心架构，从单 Agent 基础到多 Agent 协作，带你理解智能体背后的设计哲学。包含 15 个完整可运行的代码示例，涵盖 Agent 大脑、记忆、工具、规划器、执行器、反思器等核心组件，以及层级、平行、沟通三种协作模式。最后提供最佳实践与踩坑指南，帮助开发者快速上手 AI Agent 开发。",
+  "contentStructure": {
+    "problemIntroduction": 5,
+    "coreConcepts": 15,
+    "singleAgent": 20,
+    "multiAgent": 35,
+    "bestPractices": 20,
+    "futureTrends": 5
+  },
+  "readingTime": 45,
+  "difficulty": "⭐⭐⭐⭐（中高级）",
+  "targetAudience": [
+    "AI 开发者",
+    "算法工程师",
+    "产品经理",
+    "技术研究者"
+  ],
+  "valueProposition": "系统解析 AI Agent 的核心架构，从单 Agent 基础到多 Agent 协作，包含完整可运行的代码示例和最佳实践，帮助开发者快速上手 AI Agent 开发。",
+  "callToAction": "你用 AI Agent 做过什么有趣的项目？评论区分享一下\n你认为 AI Agent 的下一个突破点会在哪里？\n关注我的专栏：《AIGC 核心原理解析》获取更多深度技术内容！",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "付费专栏引流"
+  },
+  "references": [
+    "https://github.com/openclaw/openclaw",
+    "https://github.com/Significant-Gravitas/AutoGPT",
+    "https://github.com/yoheinakajima/babyagi",
+    "https://python.langchain.com/docs/modules/agents/"
+  ]
+}

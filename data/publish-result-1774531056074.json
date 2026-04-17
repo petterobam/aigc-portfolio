@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-03-26T13:17:36.068Z",
+  "storyId": "39",
+  "storyTitle": "午夜电梯，全死光了",
+  "automatedSteps": [
+    "访问作家后台",
+    "点击\"新建短故事\"按钮",
+    "访问发布页面",
+    "填写标题",
+    "填写正文",
+    "点击\"下一步\"进入设置页面",
+    "勾选发布协议"
+  ],
+  "manualSteps": [
+    "设置作品分类",
+    "（可选）上传封面",
+    "点击\"发布\"按钮"
+  ],
+  "screenshots": [
+    "~/.openclaw/workspace/data/publish-page1-1774531014595.png",
+    "~/.openclaw/workspace/data/publish-page2-1774531055891.png"
+  ],
+  "status": "部分自动化（需人工完成剩余步骤）"
+}

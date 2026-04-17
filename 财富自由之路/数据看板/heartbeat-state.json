@@ -1,0 +1,90 @@
+{
+  "lastChecks": {
+    "knowledge_base_update": 1711065600,
+    "heartbeat_log_update": 1711152060,
+    "weekly_plan_review": 1711362240,
+    "bug_fix": 1711368600,
+    "automated_testing": 1711370880
+  },
+  "lastHeartbeat": {
+    "timestamp": "2026-03-29T04:50:00+08:00",
+    "number": "#205",
+    "task": "4月行动计划 Week 1 执行 + 富爸爸穷爸爸学习",
+    "status": {
+      "product": "✅ 100%完成（产品功能完整）",
+      "automated_testing": "✅ 15/15 测试通过",
+      "methodology": "✅ 100%完成（15个方法论）",
+      "documentation": "✅ 100%完成",
+      "weekly_plan": "✅ 第13周计划已制定",
+      "monthly_cashflow": "✅ 已完成（收入30k/支出10k/结余20k/储蓄率66.7%）",
+      "net_assets": "✅ 已完成（现金700k+投资400k-负债80k=1020k）",
+      "daily_accounting": "⏳ 待开始（今天是第3天）",
+      "user_action": "✅ 用户已录入完整财务数据",
+      "bug_fix": "✅ 2个问题已修复（图标+目标显示）"
+    }
+  },
+  "financialData": {
+    "netWorth": 1100000,
+    "monthlyIncome": 30000,
+    "monthlyExpense": 10000,
+    "monthlySavings": 20000,
+    "savingsRate": 0.667,
+    "goals": {
+      "security": {
+        "target": 60000,
+        "current": 1100000,
+        "progress": 17.0,
+        "status": "已完成 ✅"
+      },
+      "safety": {
+        "target": 3160000,
+        "current": 1100000,
+        "progress": 0.323,
+        "gap": 2060000,
+        "etaMonths": 72,
+        "status": "进行中（平衡型模型）"
+      },
+      "freedom": {
+        "target": 3000000,
+        "current": 1100000,
+        "progress": 0.34,
+        "gap": 1900000,
+        "etaMonths": 96,
+        "status": "进行中"
+      }
+    }
+  },
+  "testing": {
+    "unit": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "duration": "1.29s",
+      "coverage": "核心逻辑 100%"
+    },
+    "integration": {
+      "status": "待实施"
+    },
+    "e2e": {
+      "status": "待实施"
+    }
+  },
+  "notes": "3月29日凌晨04:50心跳（心跳 #205）。执行4月行动计划Week 1：✅ 确认梦想生活成本（20,000元/月）、✅ 识别可削减支出（目标节省2,000元/月）、✅ 制定4月预算（目标支出9,000元/月）、✅ 确认投资组合配置（平衡型模型：低50%+中40%+高10%）、✅ 学习《富爸爸穷爸爸》资产与负债的区别（13,000+字详细分析）、✅ 创建投资账户状态检查文档。核心洞察：资产vs负债的核心差异是现金流方向（资产：把钱放进你口袋；负债：把钱从你口袋拿走）。当前财务状况：净资产110万（无债）、投资资产90万、被动收入覆盖率32.7%（预期月收益3,273元）。财务安全目标从150万调整为316万（基于平衡型模型3.8%年化收益），完成度从68%调整为32.3%，预计达成时间从2年调整为6-8年。下一步：Week 2检查投资账户状态，记录4月初资产市值，开始每日支出记录。",
+  "currentWeek": {
+    "week": 14,
+    "date_range": "2026-03-29 ~ 2026-04-04",
+    "phase": "Week 1",
+    "tasks": {
+      "confirm_dream_cost": "✅ 已完成",
+      "identify_cuts": "✅ 已完成",
+      "set_budget": "✅ 已完成",
+      "confirm_portfolio": "✅ 已完成",
+      "check_accounts": "⏳ 待手动填写",
+      "learn_rich_dad": "✅ 已完成",
+      "daily_expense_tracking": "⏳ 待执行"
+    },
+    "key_advantage": "平衡型投资模型（低50%+中40%+高10%，年化3.8%），储蓄率66.7%，财务保障已完成1700%，财务安全32.3%预计6-8年达成",
+    "portfolio_optimization": true,
+    "knowledge_input": true
+  }
+}

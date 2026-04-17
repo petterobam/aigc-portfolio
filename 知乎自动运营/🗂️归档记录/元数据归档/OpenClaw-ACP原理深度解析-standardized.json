@@ -1,0 +1,59 @@
+{
+  "title": "OpenClaw ACP 原理深度解析：从零理解 Agent 控制协议",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "OpenClaw",
+    "ACP",
+    "Agent控制协议",
+    "自动化",
+    "AI工具"
+  ],
+  "category": "OpenClaw技巧系列",
+  "priority": "high",
+  "wordCount": 3500,
+  "codeSnippets": 8,
+  "readingTime": 12,
+  "difficulty": "⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 500,
+    "favorites": 250,
+    "comments": 80
+  },
+  "keywords": [
+    "OpenClaw",
+    "ACP",
+    "Agent控制协议",
+    "会话管理",
+    "Agent通信",
+    "自动化"
+  ],
+  "summary": "深度解析 OpenClaw ACP（Agent Control Protocol）原理，从协议设计到架构解析，从实战代码到最佳实践，系统讲解 ACP 的核心概念、通信机制、会话管理和自定义 ACP 服务器，包含 8 个完整可运行的代码片段。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 60,
+    "practice": 20,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "OpenClaw 开发者",
+    "自动化工程师",
+    "Agent 开发者",
+    "想深入理解 OpenClaw 的用户"
+  ],
+  "valueProposition": "全网首发 OpenClaw ACP 深度解析，技术深度强，实用价值高。系统解析 ACP 的核心概念、协议设计、架构解析、实战代码、自定义 ACP 服务器和最佳实践，包含 8 个完整可运行的代码片段，帮助读者从零理解 Agent 控制协议。",
+  "callToAction": "你用过 OpenClaw 的 ACP 功能吗？有什么心得？评论区聊聊。想深入学习？关注专栏《OpenClaw 核心功能全解》。",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "OpenClaw 核心功能全解",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": "OpenClaw ACP 是什么？如何使用 Agent 控制协议？"
+  },
+  "references": [
+    "OpenClaw 官方文档",
+    "OpenClaw GitHub 仓库",
+    "OpenClaw 社区最佳实践"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

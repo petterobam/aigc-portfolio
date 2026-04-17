@@ -1,0 +1,25 @@
+{
+  "title": "Archon 深度解析：让 AI 编码从碰运气变成确定性流程",
+  "filename": "Archon深度解析-AI编码工作流引擎.md",
+  "type": "article",
+  "column": "AIGC核心原理解析",
+  "priority": "🔥高优先级",
+  "tags": ["AI编码", "工作流引擎", "Archon", "DAG", "确定性", "代码自动化"],
+  "estimated_stats": {
+    "likes": 600,
+    "favorites": 350,
+    "comments": 80
+  },
+  "word_count": 10000,
+  "code_examples": 8,
+  "quality_score": 9.0,
+  "created_at": "2026-04-12",
+  "unique_value": "全网首个 Archon 与 OpenClaw 深度对比分析，YAML 工作流引擎架构解析",
+  "content_structure": {
+    "痛点分析": 20,
+    "架构解析": 25,
+    "实战教程": 30,
+    "对比分析": 15,
+    "深度思考": 10
+  }
+}

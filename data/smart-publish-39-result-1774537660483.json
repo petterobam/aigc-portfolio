@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-03-26T15:07:40.481Z",
+  "storyId": "39",
+  "storyTitle": "午夜电梯，全死光了",
+  "steps": {
+    "title": true,
+    "content": true,
+    "next": true,
+    "category": false,
+    "agreement": false,
+    "publish": true,
+    "isPublished": false
+  },
+  "screenshots": [
+    "~/.openclaw/workspace/data/smart-publish-39-step1-1774537629339.png",
+    "~/.openclaw/workspace/data/smart-publish-39-step2-1774537631413.png",
+    "~/.openclaw/workspace/data/smart-publish-39-step3-1774537637171.png",
+    "~/.openclaw/workspace/data/smart-publish-39-step4-1774537650509.png",
+    "~/.openclaw/workspace/data/smart-publish-39-step5-1774537654662.png",
+    "~/.openclaw/workspace/data/smart-publish-39-step6-1774537660343.png"
+  ],
+  "status": "发布状态未知"
+}

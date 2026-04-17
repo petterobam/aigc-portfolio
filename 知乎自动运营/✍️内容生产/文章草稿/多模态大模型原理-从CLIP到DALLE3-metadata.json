@@ -1,0 +1,77 @@
+{
+  "title": "多模态大模型原理：从 CLIP 到 DALL-E 3",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "CLIP",
+    "DALL-E",
+    "StableDiffusion",
+    "多模态",
+    "AIGC"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 12000,
+  "codeSnippets": 10,
+  "readingTime": 40,
+  "difficulty": "⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "CLIP对比学习",
+    "DALL-E图像生成",
+    "Stable Diffusion",
+    "Latent Diffusion",
+    "ControlNet",
+    "多模态大模型"
+  ],
+  "summary": "从 CLIP 的对比学习到 DALL-E 3 的图像生成，系统讲解多模态大模型的核心原理。包含 10 个完整可运行的代码示例，涵盖 CLIP 零样本分类、DALL-E 两阶段生成、Stable Diffusion 训练与生成、ControlNet 控制生成。技术深度强，实战价值高。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 50,
+    "practice": 30,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "AI开发者",
+    "算法工程师",
+    "深度学习研究者",
+    "AIGC爱好者"
+  ],
+  "valueProposition": "系统讲解多模态大模型原理，从 CLIP 到 DALL-E 3 的完整技术路径，10 个完整代码示例可直接运行。",
+  "callToAction": "你认为多模态大模型最大的挑战是什么？计算成本、安全性、还是可控性？关注我的专栏《AIGC 核心原理解析》",
+  "publishPlan": {
+    "bestTime": "工作日12:00",
+    "relatedColumn": "AIGC核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": ""
+  },
+  "references": [
+    "https://openai.com/research/clip",
+    "https://openai.com/research/dall-e",
+    "https://stability.ai/blog/stable-diffusion-public-release"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish",
+  "qualityScore": {
+    "overall": 90,
+    "depth": 90,
+    "practicality": 90,
+    "clarity": 90,
+    "innovation": 90
+  },
+  "techStack": [
+    "PyTorch",
+    "CLIP",
+    "Stable Diffusion",
+    "Diffusers",
+    "ControlNet"
+  ],
+  "series": "AIGC原理系列",
+  "seriesOrder": 13,
+  "createdTime": "2026-03-31 19:45:00",
+  "lastUpdated": "2026-03-31 19:45:00"
+}

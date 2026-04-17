@@ -1,0 +1,138 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0fdf4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dcfce7;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 财务部门渐变色 -->
+    <linearGradient id="financeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a34a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#15803d;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 步骤渐变色 -->
+    <linearGradient id="stepGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dcfce7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bbf7d0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1fae5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 阴影滤镜 -->
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    
+    <!-- 箭头标记 -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <rect x="300" y="30" width="600" height="80" rx="15" fill="url(#financeGradient)" filter="url(#shadow)"/>
+  <text x="600" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">💰 影视项目智能预算规划流程</text>
+  <text x="600" y="100" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">财务部门影视项目预算管理与成本控制解决方案</text>
+  
+  <!-- 效率指标 -->
+  <rect x="50" y="30" width="200" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#15803d">⚡ 效率提升</text>
+  <text x="150" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#16a34a">85%</text>
+  <text x="150" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">2-4周 → 2-3天</text>
+  
+  <!-- 质量指标 -->
+  <rect x="950" y="30" width="200" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#047857">📊 质量提升</text>
+  <text x="1050" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#059669">92%+</text>
+  <text x="1050" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">预算准确率70%→92%，风险识别率60%→95%</text>
+  
+  <!-- 步骤1：项目信息收集 -->
+  <rect x="100" y="160" width="350" height="100" rx="12" fill="url(#stepGradient1)" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#15803d">📋 1. 项目信息收集</text>
+  <text x="275" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">项目基本信息/历史数据/市场数据</text>
+  <text x="275" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">资源数据/风险数据</text>
+  
+  <!-- 步骤2：预算模型构建 -->
+  <rect x="550" y="160" width="350" height="100" rx="12" fill="url(#stepGradient2)" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#15803d">🏗️ 2. 预算模型构建</text>
+  <text x="725" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">成本结构分析/预算模板建立</text>
+  <text x="725" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">预测模型构建/参数设置/模型验证</text>
+  
+  <!-- 步骤3：AI智能分析 -->
+  <rect x="100" y="320" width="350" height="100" rx="12" fill="url(#stepGradient3)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#d97706">🤖 3. AI智能分析</text>
+  <text x="275" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">成本估算/风险评估/优化建议</text>
+  <text x="275" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">预测分析/敏感性分析</text>
+  
+  <!-- 步骤4：预算审核 -->
+  <rect x="550" y="320" width="350" height="100" rx="12" fill="url(#stepGradient4)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">🔍 4. 预算审核</text>
+  <text x="725" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">预算审核/风险评估/合规检查</text>
+  <text x="725" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">利益平衡/最终确认</text>
+  
+  <!-- 步骤5：执行监控 -->
+  <rect x="325" y="480" width="350" height="100" rx="12" fill="url(#stepGradient5)" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="505" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4338ca">📈 5. 执行监控</text>
+  <text x="500" y="525" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">执行跟踪/偏差分析/调整优化</text>
+  <text x="500" y="545" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">风险预警/报告生成</text>
+  
+  <!-- 连接箭头 -->
+  <path d="M 450 210 L 550 210" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 260 L 725 290 L 275 290 L 275 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 450 370 L 550 370" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 420 L 725 450 L 500 450 L 500 480" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- 应用场景 -->
+  <rect x="50" y="620" width="1100" height="150" rx="15" fill="#ffffff" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="650" font-family="Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#374151">🎯 影视项目财务价值</text>
+  
+  <!-- 成本节约 -->
+  <rect x="100" y="670" width="250" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="225" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#15803d">💰 成本节约</text>
+  <text x="225" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">平均项目成本降低15-25%</text>
+  <text x="225" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#15803d">年度节省成本2000万+</text>
+  
+  <!-- 风险控制 -->
+  <rect x="375" y="670" width="250" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="500" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#047857">🛡️ 风险控制</text>
+  <text x="500" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">风险提前预警率提升300%</text>
+  <text x="500" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">风险识别准确率95%+</text>
+  
+  <!-- 决策支持 -->
+  <rect x="650" y="670" width="250" height="80" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+  <text x="775" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1e40af">🎯 决策支持</text>
+  <text x="775" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">管理决策效率提升60%</text>
+  <text x="775" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e40af">ROI预测准确率+45%</text>
+  
+  <!-- 资源配置 -->
+  <rect x="925" y="670" width="225" height="80" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="1037" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#d97706">⚖️ 资源配置</text>
+  <text x="1037" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">资源配置效率提升40%</text>
+  <text x="1037" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">资源利用率+35%</text>
+  
+  <!-- 核心优势总结 -->
+  <text x="600" y="790" font-family="Microsoft YaHei, Arial, sans-serif" font-size="10" text-anchor="middle" fill="#6b7280">华策影视AIGC数字化转型方案 © 2026 | 财务智能化管理 | 预算准确率70%→92% | 年度风险预警率+300%</text>
+</svg>

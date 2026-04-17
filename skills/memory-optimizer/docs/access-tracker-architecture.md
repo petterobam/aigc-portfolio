@@ -275,7 +275,7 @@ ACCESS_TRACKER_CONFIG = {
 ### 手动运行
 
 ```bash
-cd /Users/oyjie/.openclaw/workspace/skills/memory-optimizer
+cd ~/.openclaw/workspace/skills/memory-optimizer
 node scripts/access-tracker.js
 ```
 

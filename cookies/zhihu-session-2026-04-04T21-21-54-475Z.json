@@ -1,0 +1,72 @@
+[
+  {
+    "name": "_zap",
+    "value": "e06c1e3d-3ca1-4c3d-91ca-9f0981333e7e",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": 1809897407.843223,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_xsrf",
+    "value": "06a05d0d-e92c-40a6-9cd8-b8d2a8b5123f",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "d_c0",
+    "value": "xKTUJm2qFhyPTmFf3qfL0dnn0FyrZVFkm18=|1775337408",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": 1809897408.4195,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49",
+    "value": "1775337408",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": 1806873413,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "HMACCOUNT",
+    "value": "8E5D3F49EC7F9AE1",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "captcha_session_v2",
+    "value": "2|1:0|10:1775337412|18:captcha_session_v2|88:OU9melFHeHFjRUdkMEVDQ09ZU1N5dUYzNGcxb29FOUE4STNiM3hreExZdUJ0cW1lWTd6WjUySlBxY25LSldVUw==|95e74d224f7f30ed5f44a44cf5c2504c8aba55018107d8bb28eccb4126e933af",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": 1777929412.856386,
+    "httpOnly": true,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49",
+    "value": "1775337413",
+    "domain": ".zhihu.com",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  }
+]

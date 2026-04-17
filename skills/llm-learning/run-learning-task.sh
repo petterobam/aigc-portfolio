@@ -2,7 +2,7 @@
 # 大模型学习定时任务脚本
 # 每天 10:30 自动执行
 
-WORKSPACE="/Users/oyjie/.openclaw/workspace"
+WORKSPACE="～/.openclaw/workspace"
 LOG_FILE="$WORKSPACE/skills/llm-learning/schedule.log"
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Learning task started" >> "$LOG_FILE"

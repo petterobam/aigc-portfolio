@@ -1,0 +1,79 @@
+{
+  "title": "向量数据库选型指南：Faiss vs Milvus vs Pinecone，一篇讲透",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31 18:00:00",
+  "tags": [
+    "向量数据库",
+    "Faiss",
+    "Milvus",
+    "Pinecone",
+    "RAG",
+    "向量检索",
+    "AIGC",
+    "LLM",
+    "大模型",
+    "AI",
+    "检索增强生成"
+  ],
+  "category": "AIGC 原理系列",
+  "priority": "high",
+  "wordCount": 10000,
+  "codeSnippets": 9,
+  "readTime": "25 分钟",
+  "difficulty": "中级",
+  "estimatedData": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80
+  },
+  "keywords": [
+    "向量数据库",
+    "Faiss",
+    "Milvus",
+    "Pinecone",
+    "向量检索",
+    "RAG",
+    "检索增强生成",
+    "AIGC",
+    "大模型",
+    "LLM",
+    "AI",
+    "嵌入",
+    "embedding",
+    "相似度搜索",
+    "HNSW",
+    "IVF",
+    "PQ",
+    "性能对比",
+    "选型决策树"
+  ],
+  "summary": "系统讲解三大向量数据库（Faiss、Milvus、Pinecone）的核心原理、性能对比和选型决策。包含 9 个完整可运行的代码示例，覆盖快速上手、高级用法（GPU 加速、混合查询、元数据过滤）、常见陷阱与解决方案。提供性能对比实测数据（QPS、召回率、内存占用）和选型决策树，帮助你根据数据量、预算、运维需求选择最适合的向量数据库，实战价值高。",
+  "targetAudience": "AI 工程师、RAG 实践者、全栈开发者、想学习向量检索的技术人员",
+  "valueProposition": "系统对比三大向量数据库，提供完整可运行的代码示例和实测性能数据，根据不同场景（个人项目、企业生产、创业公司）提供选型决策树和最佳实践，帮助你快速选择最适合的向量数据库，避免走弯路",
+  "callToAction": "想学习更多 RAG 实战技巧？关注我的专栏《RAG 深度实战》，获取更多实战内容。",
+  "publishPlan": {
+    "date": "2026-03-31 18:00-20:00",
+    "relatedColumns": [
+      "RAG 深度实战",
+      "AIGC 核心原理解析"
+    ],
+    "purpose": "为付费专栏《RAG 深度实战》引流"
+  },
+  "references": [
+    "Facebook Research Faiss",
+    "Milvus.io 官方文档",
+    "Pinecone.io 官方文档",
+    "RAG 检索增强生成实战"
+  ],
+  "type": "深度解析 + 选型指南 + 实战教程",
+  "status": "已完成",
+  "qualityScore": {
+    "technicalDepth": 9.0,
+    "codeQuality": 8.5,
+    "practicalValue": 9.0,
+    "clarity": 9.0,
+    "overall": 8.9
+  },
+  "createdDate": "2026-03-31",
+  "lastUpdated": "2026-03-31"
+}

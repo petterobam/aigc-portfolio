@@ -51,7 +51,7 @@
 
 ## 📂 文件位置
 
-发布包目录: `/Users/oyjie/.openclaw/workspace/发布包`
+发布包目录: `~/.openclaw/workspace/发布包`
 
-报告文件: `/Users/oyjie/.openclaw/workspace/data/publish-packages-report-2026-03-19T20-09-57-957Z.md`
+报告文件: `~/.openclaw/workspace/data/publish-packages-report-2026-03-19T20-09-57-957Z.md`
 

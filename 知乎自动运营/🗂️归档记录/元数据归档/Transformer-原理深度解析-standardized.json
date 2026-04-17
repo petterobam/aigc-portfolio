@@ -1,0 +1,61 @@
+{
+  "title": "Transformer 原理深度解析：附完整源码推导",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "Transformer",
+    "深度学习",
+    "NLP",
+    "AIGC",
+    "原理解析"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 21303,
+  "codeSnippets": 9,
+  "readingTime": 60,
+  "difficulty": "⭐⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "Transformer",
+    "自注意力机制",
+    "位置编码",
+    "残差连接",
+    "多头注意力",
+    "PyTorch",
+    "深度学习"
+  ],
+  "summary": "Transformer 不是黑盒，它的每个设计都有深刻的数学直觉。本文详细解析自注意力机制、位置编码、残差连接等核心组件，提供完整的 PyTorch 代码实现，让你真正理解 Transformer 的本质。",
+  "contentStructure": {
+    "intro": 5,
+    "selfAttention": 35,
+    "positionalEncoding": 20,
+    "architecture": 25,
+    "implementation": 10,
+    "practical": 5
+  },
+  "targetAudience": [
+    "深度学习研究者",
+    "NLP 工程师",
+    "想理解 Transformer 的开发者"
+  ],
+  "valueProposition": "系统解析 Transformer 的核心原理，包含完整可运行的 PyTorch 代码。数学推导清晰，代码可直接运行，帮助真正理解 Transformer。",
+  "callToAction": "你理解 Transformer 的自注意力机制了吗？评论区分享你的理解\n关注我的专栏《AIGC 核心原理解析》，获取更多 AIGC 深度内容！",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": ""
+  },
+  "references": [
+    "https://arxiv.org/abs/1706.03762",
+    "https://github.com/openclaw/openclaw",
+    "https://www.zhihu.com/column/AIGC核心原理解析"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

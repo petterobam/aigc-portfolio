@@ -1,0 +1,876 @@
+{
+  "page1": {
+    "url": "https://fanqienovel.com/main/writer/publish-short/7621760188982247960?enter_from=NEWCHAPTER_1",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": "未命名短故事\n已保存\n正文字数 0\n存草稿\n下一步\n暂未设置章节，可以通过设置\n「章节标题」格式划分短故事章节\n智能分章\n\n· 发表超6000字，即有机会签约，享更多流量和作者福利\n· 多使用分段或换行，更方便阅读\n· 剧情完整的内容，更容易获得点赞和关注\n\n\n\n封面设置\n封面制作\n是否使用AI\n是\n否\n作品分类\n请选择作品分类\n最多可选8个分类，其中主分类必选（分类释义详见👉🏻番茄短故事分类释义）\n试读比例\n去设置\n作品试读位置可能会影响用户解锁转化率和作品收入\n发布协议\n我已阅读短故事发布事项\n正文\n错别字\n正文插图\n新增目录设置&智能分章功能\n为了帮助读者更好的阅读，平台支持手动设置章节让结构更清晰、支持智能分章提高分章效率。\n1/2\n下一步"
+  },
+  "page1Buttons": {
+    "allButtons": [
+      {
+        "type": "button",
+        "index": 0,
+        "text": "存草稿",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 1,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "margin-left: 16px; user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 2,
+        "text": "",
+        "className": "arco-switch arco-switch-small arco-switch-type-circle",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "role",
+            "value": "switch"
+          },
+          {
+            "name": "aria-checked",
+            "value": "false"
+          },
+          {
+            "name": "data-tour",
+            "value": "reactour__3"
+          },
+          {
+            "name": "class",
+            "value": "arco-switch arco-switch-small arco-switch-type-circle"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 3,
+        "text": "去设置",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": true,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "disabled",
+            "value": ""
+          },
+          {
+            "name": "style",
+            "value": "pointer-events: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 4,
+        "text": "重新检测",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 5,
+        "text": "申请标注问题",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "id": "",
+        "isVisible": false,
+        "isDisabled": true,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "disabled",
+            "value": ""
+          },
+          {
+            "name": "style",
+            "value": "margin-top: 16px; pointer-events: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 6,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "index": 0,
+        "text": "番茄短故事分类释义",
+        "href": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd",
+        "className": "hoverup",
+        "id": "",
+        "isVisible": true,
+        "attributes": [
+          {
+            "name": "href",
+            "value": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd"
+          },
+          {
+            "name": "target",
+            "value": "_blank"
+          },
+          {
+            "name": "rel",
+            "value": "noopener noreferrer"
+          },
+          {
+            "name": "class",
+            "value": "hoverup"
+          }
+        ]
+      }
+    ],
+    "visibleButtons": [
+      {
+        "type": "button",
+        "index": 0,
+        "text": "存草稿",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 1,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "margin-left: 16px; user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 2,
+        "text": "",
+        "className": "arco-switch arco-switch-small arco-switch-type-circle",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "role",
+            "value": "switch"
+          },
+          {
+            "name": "aria-checked",
+            "value": "false"
+          },
+          {
+            "name": "data-tour",
+            "value": "reactour__3"
+          },
+          {
+            "name": "class",
+            "value": "arco-switch arco-switch-small arco-switch-type-circle"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 4,
+        "text": "重新检测",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 6,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-round serial-arco-btn guide-card-footer-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "index": 0,
+        "text": "番茄短故事分类释义",
+        "href": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd",
+        "className": "hoverup",
+        "id": "",
+        "isVisible": true,
+        "attributes": [
+          {
+            "name": "href",
+            "value": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd"
+          },
+          {
+            "name": "target",
+            "value": "_blank"
+          },
+          {
+            "name": "rel",
+            "value": "noopener noreferrer"
+          },
+          {
+            "name": "class",
+            "value": "hoverup"
+          }
+        ]
+      }
+    ],
+    "nextButton": {
+      "type": "button",
+      "index": 1,
+      "text": "下一步",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+      "id": "",
+      "isVisible": true,
+      "isDisabled": false,
+      "attributes": [
+        {
+          "name": "class",
+          "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+        },
+        {
+          "name": "type",
+          "value": "button"
+        },
+        {
+          "name": "style",
+          "value": "margin-left: 16px; user-select: none;"
+        }
+      ]
+    },
+    "draftButton": {
+      "type": "button",
+      "index": 0,
+      "text": "存草稿",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "id": "",
+      "isVisible": true,
+      "isDisabled": false,
+      "attributes": [
+        {
+          "name": "class",
+          "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+        },
+        {
+          "name": "type",
+          "value": "button"
+        },
+        {
+          "name": "style",
+          "value": "user-select: none;"
+        }
+      ]
+    }
+  },
+  "page2": {
+    "url": "https://fanqienovel.com/main/writer/publish-short/7621760188982247960?enter_from=NEWCHAPTER_1",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": "未命名短故事\n已保存\n正文字数 0\n存草稿\n下一步\n暂未设置章节，可以通过设置\n「章节标题」格式划分短故事章节\n智能分章\n请输入短故事名称\n正文至少输入100字\n\n· 发表超6000字，即有机会签约，享更多流量和作者福利\n· 多使用分段或换行，更方便阅读\n· 剧情完整的内容，更容易获得点赞和关注\n\n\n\n封面设置\n封面制作\n是否使用AI\n是\n否\n作品分类\n请选择作品分类\n最多可选8个分类，其中主分类必选（分类释义详见👉🏻番茄短故事分类释义）\n试读比例\n去设置\n作品试读位置可能会影响用户解锁转化率和作品收入\n发布协议\n我已阅读短故事发布事项\n正文\n错别字\n正文插图"
+  },
+  "page2Buttons": {
+    "allButtons": [
+      {
+        "type": "button",
+        "index": 0,
+        "text": "存草稿",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 1,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "margin-left: 16px; user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 2,
+        "text": "",
+        "className": "arco-switch arco-switch-small arco-switch-type-circle",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "role",
+            "value": "switch"
+          },
+          {
+            "name": "aria-checked",
+            "value": "false"
+          },
+          {
+            "name": "data-tour",
+            "value": "reactour__3"
+          },
+          {
+            "name": "class",
+            "value": "arco-switch arco-switch-small arco-switch-type-circle"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 3,
+        "text": "去设置",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": true,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square arco-btn-disabled"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "disabled",
+            "value": ""
+          },
+          {
+            "name": "style",
+            "value": "pointer-events: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 4,
+        "text": "重新检测",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 5,
+        "text": "申请标注问题",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled",
+        "id": "",
+        "isVisible": false,
+        "isDisabled": true,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-square arco-btn-disabled"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "disabled",
+            "value": ""
+          },
+          {
+            "name": "style",
+            "value": "margin-top: 16px; pointer-events: none;"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "index": 0,
+        "text": "番茄短故事分类释义",
+        "href": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd",
+        "className": "hoverup",
+        "id": "",
+        "isVisible": true,
+        "attributes": [
+          {
+            "name": "href",
+            "value": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd"
+          },
+          {
+            "name": "target",
+            "value": "_blank"
+          },
+          {
+            "name": "rel",
+            "value": "noopener noreferrer"
+          },
+          {
+            "name": "class",
+            "value": "hoverup"
+          }
+        ]
+      }
+    ],
+    "visibleButtons": [
+      {
+        "type": "button",
+        "index": 0,
+        "text": "存草稿",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 1,
+        "text": "下一步",
+        "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          },
+          {
+            "name": "style",
+            "value": "margin-left: 16px; user-select: none;"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 2,
+        "text": "",
+        "className": "arco-switch arco-switch-small arco-switch-type-circle",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "role",
+            "value": "switch"
+          },
+          {
+            "name": "aria-checked",
+            "value": "false"
+          },
+          {
+            "name": "data-tour",
+            "value": "reactour__3"
+          },
+          {
+            "name": "class",
+            "value": "arco-switch arco-switch-small arco-switch-type-circle"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "index": 4,
+        "text": "重新检测",
+        "className": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn",
+        "id": "",
+        "isVisible": true,
+        "isDisabled": false,
+        "attributes": [
+          {
+            "name": "class",
+            "value": "arco-btn arco-btn-primary arco-btn-size-default arco-btn-shape-round serial-arco-btn"
+          },
+          {
+            "name": "type",
+            "value": "button"
+          }
+        ]
+      },
+      {
+        "type": "link",
+        "index": 0,
+        "text": "番茄短故事分类释义",
+        "href": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd",
+        "className": "hoverup",
+        "id": "",
+        "isVisible": true,
+        "attributes": [
+          {
+            "name": "href",
+            "value": "https://bytedance.larkoffice.com/sheets/HlnusgInuhigDntXGbbcpf5cnjd"
+          },
+          {
+            "name": "target",
+            "value": "_blank"
+          },
+          {
+            "name": "rel",
+            "value": "noopener noreferrer"
+          },
+          {
+            "name": "class",
+            "value": "hoverup"
+          }
+        ]
+      }
+    ],
+    "nextButton": {
+      "type": "button",
+      "index": 1,
+      "text": "下一步",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant",
+      "id": "",
+      "isVisible": true,
+      "isDisabled": false,
+      "attributes": [
+        {
+          "name": "class",
+          "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square btn-primary-variant"
+        },
+        {
+          "name": "type",
+          "value": "button"
+        },
+        {
+          "name": "style",
+          "value": "margin-left: 16px; user-select: none;"
+        }
+      ]
+    },
+    "draftButton": {
+      "type": "button",
+      "index": 0,
+      "text": "存草稿",
+      "className": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn",
+      "id": "",
+      "isVisible": true,
+      "isDisabled": false,
+      "attributes": [
+        {
+          "name": "class",
+          "value": "arco-btn arco-btn-secondary arco-btn-size-default arco-btn-shape-square short-publish-save-draft-btn"
+        },
+        {
+          "name": "type",
+          "value": "button"
+        },
+        {
+          "name": "style",
+          "value": "user-select: none;"
+        }
+      ]
+    }
+  },
+  "page2Forms": {
+    "allForms": [
+      {
+        "type": "input",
+        "index": 0,
+        "inputType": "radio",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "1",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "input",
+        "index": 1,
+        "inputType": "radio",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "2",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "input",
+        "index": 2,
+        "inputType": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "textarea",
+        "index": 0,
+        "name": "",
+        "id": "",
+        "placeholder": "请输入短故事名称",
+        "value": "",
+        "className": "byte-textarea serial-textarea",
+        "isVisible": true
+      },
+      {
+        "type": "checkbox",
+        "index": 0,
+        "name": "",
+        "id": "",
+        "className": "",
+        "isChecked": false,
+        "isVisible": true
+      }
+    ],
+    "visibleForms": [
+      {
+        "type": "input",
+        "index": 0,
+        "inputType": "radio",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "1",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "input",
+        "index": 1,
+        "inputType": "radio",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "2",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "input",
+        "index": 2,
+        "inputType": "checkbox",
+        "name": "",
+        "id": "",
+        "placeholder": "",
+        "value": "",
+        "className": "",
+        "isVisible": true
+      },
+      {
+        "type": "textarea",
+        "index": 0,
+        "name": "",
+        "id": "",
+        "placeholder": "请输入短故事名称",
+        "value": "",
+        "className": "byte-textarea serial-textarea",
+        "isVisible": true
+      },
+      {
+        "type": "checkbox",
+        "index": 0,
+        "name": "",
+        "id": "",
+        "className": "",
+        "isChecked": false,
+        "isVisible": true
+      }
+    ],
+    "checkboxes": [
+      {
+        "type": "checkbox",
+        "index": 0,
+        "name": "",
+        "id": "",
+        "className": "",
+        "isChecked": false,
+        "isVisible": true
+      }
+    ],
+    "selects": []
+  }
+}

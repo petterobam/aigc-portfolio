@@ -1,0 +1,138 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0f2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 海外传播渐变色 -->
+    <linearGradient id="globalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 步骤渐变色 -->
+    <linearGradient id="stepGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0f2fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bae6fd;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1fae5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fce7f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbcfe8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 阴影滤镜 -->
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    
+    <!-- 箭头标记 -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <rect x="300" y="30" width="600" height="80" rx="15" fill="url(#globalGradient)" filter="url(#shadow)"/>
+  <text x="600" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">🌍 多语言翻译工作流程</text>
+  <text x="600" y="100" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">海外传播国际影视作品本地化解决方案</text>
+  
+  <!-- 效率指标 -->
+  <rect x="50" y="30" width="200" height="80" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">⚡ 效率提升</text>
+  <text x="150" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#0284c7">85%</text>
+  <text x="150" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0369a1">3-5天 → 1-2天</text>
+  
+  <!-- 质量指标 -->
+  <rect x="950" y="30" width="200" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#064e3b">🌏 质量提升</text>
+  <text x="1050" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#047857">60%+</text>
+  <text x="1050" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#064e3b">文化适配准确率+60%，术语一致性+80%</text>
+  
+  <!-- 步骤1：翻译需求分析 -->
+  <rect x="100" y="160" width="350" height="100" rx="12" fill="url(#stepGradient1)" stroke="#0ea5e9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#0369a1">📋 1. 翻译需求分析</text>
+  <text x="275" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0369a1">翻译类型/目标市场/语言对</text>
+  <text x="275" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0369a1">内容类型/质量要求</text>
+  
+  <!-- 步骤2：素材准备 -->
+  <rect x="550" y="160" width="350" height="100" rx="12" fill="url(#stepGradient2)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#d97706">📂 2. 素材准备</text>
+  <text x="725" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">原文素材/术语库/风格指南</text>
+  <text x="725" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">参考材料/技术要求</text>
+  
+  <!-- 步骤3：AI翻译 -->
+  <rect x="100" y="320" width="350" height="100" rx="12" fill="url(#stepGradient3)" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#047857">🤖 3. AI翻译</text>
+  <text x="275" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">机器翻译/质量评估/文化适配</text>
+  <text x="275" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">专业优化/多版本生成</text>
+  
+  <!-- 步骤4：人工审核 -->
+  <rect x="550" y="320" width="350" height="100" rx="12" fill="url(#stepGradient4)" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#be185d">👤 4. 人工审核</text>
+  <text x="725" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">内容审核/文化审核/语言审核</text>
+  <text x="725" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">专业审核/最终确认</text>
+  
+  <!-- 步骤5：本地化执行 -->
+  <rect x="325" y="480" width="350" height="100" rx="12" fill="url(#stepGradient5)" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="505" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4338ca">🚀 5. 本地化执行</text>
+  <text x="500" y="525" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">格式转换/配音制作/字幕制作</text>
+  <text x="500" y="545" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">质量检测/交付管理</text>
+  
+  <!-- 连接箭头 -->
+  <path d="M 450 210 L 550 210" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 260 L 725 290 L 275 290 L 275 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 450 370 L 550 370" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 420 L 725 450 L 500 450 L 500 480" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- 应用场景 -->
+  <rect x="50" y="620" width="1100" height="150" rx="15" fill="#ffffff" stroke="#0ea5e9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="650" font-family="Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#374151">🎯 全球化传播价值</text>
+  
+  <!-- 时间节约 -->
+  <rect x="100" y="670" width="250" height="80" rx="10" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="225" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0369a1">⏰ 时间节约</text>
+  <text x="225" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0369a1">翻译工作节约60%时间</text>
+  <text x="225" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0369a1">交付周期缩短70%</text>
+  
+  <!-- 质量提升 -->
+  <rect x="375" y="670" width="250" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="500" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#047857">🌟 质量提升</text>
+  <text x="500" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">翻译质量提升40%</text>
+  <text x="500" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">文化适配准确率+60%</text>
+  
+  <!-- 成本节约 -->
+  <rect x="650" y="670" width="250" height="80" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="775" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#d97706">💰 成本节约</text>
+  <text x="775" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">翻译成本降低50%</text>
+  <text x="775" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#d97706">人力成本优化60%</text>
+  
+  <!-- 市场覆盖 -->
+  <rect x="925" y="670" width="225" height="80" rx="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
+  <text x="1037" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4338ca">🌍 市场覆盖</text>
+  <text x="1037" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">国际市场覆盖提升200%</text>
+  <text x="1037" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">50+国家地区覆盖</text>
+  
+  <!-- 核心优势总结 -->
+  <text x="600" y="790" font-family="Microsoft YaHei, Arial, sans-serif" font-size="10" text-anchor="middle" fill="#6b7280">华策影视AIGC数字化转型方案 © 2026 | 全球化传播解决方案 | 年度翻译效率提升85% | 国际市场覆盖+200%</text>
+</svg>

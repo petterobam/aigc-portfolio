@@ -1,0 +1,60 @@
+{
+  "title": "Diffusion 模型从零开始：数学推导 + 代码实现",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "Diffusion",
+    "图像生成",
+    "AI绘画",
+    "StableDiffusion",
+    "数学原理"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 24661,
+  "codeSnippets": 8,
+  "readingTime": 70,
+  "difficulty": "⭐⭐⭐⭐⭐（高级）",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 250,
+    "comments": 70
+  },
+  "keywords": [
+    "Diffusion",
+    "扩散模型",
+    "图像生成",
+    "U-Net",
+    "DDPM",
+    "DDIM",
+    "PyTorch"
+  ],
+  "summary": "从零开始理解 Diffusion 模型，包含前向加噪过程、反向去噪过程的数学推导，以及完整的 PyTorch 代码实现。数学推导清晰，代码可直接运行。",
+  "contentStructure": {
+    "intro": 5,
+    "forward": 25,
+    "reverse": 35,
+    "implementation": 30,
+    "practical": 5
+  },
+  "targetAudience": [
+    "深度学习研究者",
+    "AI 图像生成爱好者",
+    "想理解 Diffusion 的开发者"
+  ],
+  "valueProposition": "从零开始理解 Diffusion 模型，包含完整数学推导和 PyTorch 代码实现。数学推导清晰，代码可直接运行。",
+  "callToAction": "你用过哪些 AI 绘画工具？体验如何？评论区分享一下\n关注我的专栏《AIGC 核心原理解析》，获取更多 AIGC 深度内容！",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": ""
+  },
+  "references": [
+    "https://arxiv.org/abs/2006.11239",
+    "https://github.com/openclaw/openclaw",
+    "https://www.zhihu.com/column/AIGC核心原理解析"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

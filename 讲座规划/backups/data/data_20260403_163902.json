@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "collection_time": "2026-04-03T15:57:00Z",
+    "script_version": "2.0",
+    "data_source": "standard_mock_data"
+  },
+  "overall_metrics": {
+    "completion_rate": 85,
+    "satisfaction_score": 92,
+    "roi_percentage": 140.7,
+    "payback_period_months": 4.8,
+    "overall_score": 89.5
+  },
+  "department_progress": {
+    "编剧部门": {"progress": 100, "test_score": 92, "skill_level": 88, "satisfaction": 94},
+    "导演部门": {"progress": 95, "test_score": 88, "skill_level": 85, "satisfaction": 91},
+    "制片部门": {"progress": 88, "test_score": 85, "skill_level": 82, "satisfaction": 89},
+    "品宣部门": {"progress": 92, "test_score": 90, "skill_level": 87, "satisfaction": 92},
+    "海外传播": {"progress": 85, "test_score": 82, "skill_level": 80, "satisfaction": 88},
+    "财务部门": {"progress": 80, "test_score": 78, "skill_level": 75, "satisfaction": 85},
+    "行政部门": {"progress": 75, "test_score": 75, "skill_level": 72, "satisfaction": 82},
+    "通用案例": {"progress": 90, "test_score": 88, "skill_level": 85, "satisfaction": 90}
+  },
+  "business_metrics": {
+    "efficiency_improvement": {
+      "编剧部门": 750, "导演部门": 850, "制片部门": 680, "品宣部门": 720,
+      "海外传播": 580, "财务部门": 520, "行政部门": 450, "通用案例": 680
+    },
+    "quality_improvement": {
+      "编剧部门": 320, "导演部门": 350, "制片部门": 280, "品宣部门": 300,
+      "海外传播": 250, "财务部门": 220, "行政部门": 200, "通用案例": 290
+    },
+    "cost_savings": {
+      "编剧部门": 850, "导演部门": 920, "制片部门": 780, "品宣部门": 820,
+      "海外传播": 650, "财务部门": 580, "行政部门": 520, "通用案例": 750
+    },
+    "innovation_output": {
+      "编剧部门": 12, "导演部门": 15, "制片部门": 8, "品宣部门": 18,
+      "海外传播": 10, "财务部门": 6, "行政部门": 5, "通用案例": 14
+    }
+  },
+  "financial_data": {
+    "total_cost": 1350000,
+    "direct_benefit": 2050000,
+    "indirect_benefit": 1200000,
+    "total_benefit": 3250000,
+    "roi_percentage": 140.7,
+    "payback_period_months": 4.8
+  },
+  "feedback_data": {
+    "overall_satisfaction": 92,
+    "feedback_count": 320,
+    "positive_feedback": 294,
+    "neutral_feedback": 26,
+    "negative_feedback": 8,
+    "main_issues": ["工具熟练度不足", "应用场景有限", "技术支持不够"]
+  }
+}

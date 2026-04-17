@@ -7,7 +7,7 @@ from pathlib import Path
 
 def fix_story_33():
     """修复33号故事的重复段落"""
-    story_path = Path("/Users/oyjie/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/33_职场逆袭_AI替代_主管PUA说AI能代替我/content")
+    story_path = Path("~/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/33_职场逆袭_AI替代_主管PUA说AI能代替我/content")
 
     print("修复33号故事...")
 
@@ -75,7 +75,7 @@ def fix_story_33():
 
 def fix_story_31():
     """修复31号故事的重复段落"""
-    story_path = Path("/Users/oyjie/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/31_历史翻盘_崇祯听见心声_大明朝起死回生/content")
+    story_path = Path("~/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/31_历史翻盘_崇祯听见心声_大明朝起死回生/content")
 
     print("\n修复31号故事...")
 
@@ -115,7 +115,7 @@ def fix_story_31():
 
 def fix_story_32():
     """修复32号故事的重复段落（只修复最严重的）"""
-    story_path = Path("/Users/oyjie/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/32_断亲复仇_养父母vs亲生父母_他们跪求原谅/content")
+    story_path = Path("~/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/32_断亲复仇_养父母vs亲生父母_他们跪求原谅/content")
 
     print("\n修复32号故事...")
 

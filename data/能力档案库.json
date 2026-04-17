@@ -1,0 +1,358 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "initialized_at": "2026-03-31T11:50:00+08:00",
+    "last_update": "2026-03-31T13:30:00+08:00",
+    "description": "AI 能力档案库 - 记录成长、任务、学习、成就的所有数据化指标"
+  },
+  "growth": {
+    "baseline": {
+      "overall": 40.0,
+      "knowledge_coverage": 30.0,
+      "capability_depth": 35.0,
+      "response_quality": 45.0,
+      "task_efficiency": 40.0,
+      "creativity": 30.0
+    },
+    "current": {
+      "overall": 73.0,
+      "knowledge_coverage": 78.5,
+      "capability_depth": 68.5,
+      "response_quality": 75.5,
+      "task_efficiency": 65.0,
+      "creativity": 76.0
+    },
+    "growth_percent": {
+      "overall": 55.0,
+      "knowledge_coverage": 69.3,
+      "capability_depth": 51.5,
+      "response_quality": 55.5,
+      "task_efficiency": 41.7,
+      "creativity": 65.7
+    },
+    "history": [
+      {
+        "timestamp": "2026-03-31T00:00:00+08:00",
+        "overall": 72.5,
+        "notes": "初始化评估 - 基于 SOUL.md 和 MEMORY.md 的综合评估"
+      },
+      {
+        "timestamp": "2026-03-31T13:30:00+08:00",
+        "overall": 73.0,
+        "notes": "新增PDF/Word读取技能，掌握文件推送能力"
+      }
+    ],
+    "capability_details": {
+      "aigc_fullstack": {
+        "level": 85,
+        "description": "精通各类生成式 AI 工具和模型（GPT、Claude、Gemini、GLM）",
+        "skills": ["文本生成", "图像生成", "音频视频", "提示词工程", "Agent编排"]
+      },
+      "ai_market_insight": {
+        "level": 80,
+        "description": "持续关注 AI 行业动态，快速判断新技术价值",
+        "skills": ["趋势分析", "商业化评估", "开源vs闭源判断"]
+      },
+      "programming": {
+        "level": 75,
+        "description": "多语言开发、全栈视野、AI 开发、代码审查",
+        "skills": ["Python", "TypeScript/JavaScript", "Go", "Rust", "LangChain", "LlamaIndex"]
+      },
+      "problem_solving": {
+        "level": 70,
+        "description": "快速诊断根因，系统性思维",
+        "skills": ["日志分析", "错误追踪", "性能排查"]
+      },
+      "content_creation": {
+        "level": 82,
+        "description": "用 AI 放大产出，自动化工作流",
+        "skills": ["自动化工作流", "内容策略", "人机协作"]
+      },
+      "browser_automation": {
+        "level": 75,
+        "description": "Playwright、Chrome DevTools MCP 等浏览器自动化技术",
+        "skills": ["页面抓取", "表单填写", "截图保存", "Cookie管理"]
+      }
+    }
+  },
+  "tasks": {
+    "total": 120,
+    "completed": 98,
+    "in_progress": 15,
+    "failed": 7,
+    "completion_rate": 81.7,
+    "average_quality": 7.8,
+    "average_duration_minutes": 12.5,
+    "by_type": {
+      "coding": 35,
+      "debugging": 25,
+      "design": 15,
+      "documentation": 18,
+      "analysis": 20,
+      "automation": 7
+    },
+    "recent": [
+      {
+        "id": "task_001",
+        "type": "automation",
+        "title": "番茄短篇故事质量检查工具开发",
+        "status": "completed",
+        "quality_score": 9.0,
+        "duration_minutes": 45,
+        "completed_at": "2026-03-25T01:10:00+08:00",
+        "user_satisfaction": "high"
+      },
+      {
+        "id": "task_002",
+        "type": "automation",
+        "title": "知乎自动化系统开发",
+        "status": "in_progress",
+        "quality_score": 7.5,
+        "duration_minutes": 180,
+        "started_at": "2026-03-28T06:00:00+08:00",
+        "user_satisfaction": "medium"
+      }
+    ]
+  },
+  "learning": {
+    "new_concepts": [
+      "Playwright MCP",
+      "Chrome DevTools MCP",
+      "番茄小说自动化运营",
+      "知乎自动化运营",
+      "重复段落检测算法",
+      "Cookie持久化管理",
+      "浏览器用户数据目录",
+      "PDF文档读取",
+      "Word文档读取",
+      "文件推送能力"
+    ],
+    "total_concepts": 148,
+    "by_category": {
+      "frontend": 25,
+      "backend": 30,
+      "automation": 35,
+      "ai_tools": 25,
+      "business": 20,
+      "communication": 1,
+      "tools": 2,
+      "other": 10
+    },
+    "concept_details": [
+      {
+        "name": "Playwright MCP",
+        "category": "automation",
+        "mastery_level": 75,
+        "first_learned_at": "2026-03-28T06:25:00+08:00",
+        "last_applied_at": "2026-03-29T09:36:00+08:00",
+        "applied_count": 15,
+        "source": "task_execution",
+        "related_concepts": ["浏览器自动化", "Cookie管理", "页面抓取"],
+        "notes": "用于知乎和番茄小说的自动化运营"
+      },
+      {
+        "name": "Chrome DevTools MCP",
+        "category": "automation",
+        "mastery_level": 80,
+        "first_learned_at": "2026-03-21T01:38:00+08:00",
+        "last_applied_at": "2026-03-21T01:38:00+08:00",
+        "applied_count": 8,
+        "source": "task_execution",
+        "related_concepts": ["CDP连接", "浏览器自动化", "Cookie提取"],
+        "notes": "推荐方案，支持长连接，已验证稳定"
+      },
+      {
+        "name": "文件推送能力",
+        "category": "communication",
+        "mastery_level": 95,
+        "first_learned_at": "2026-03-31T13:30:00+08:00",
+        "last_applied_at": "2026-03-31T13:30:00+08:00",
+        "applied_count": 1,
+        "source": "user_instruction",
+        "related_concepts": ["OpenClaw", "文件传输", "聊天优化"],
+        "notes": "使用 MEDIA:<文件路径> 格式推送文件，简化聊天内容"
+      },
+      {
+        "name": "重复段落检测算法",
+        "category": "automation",
+        "mastery_level": 85,
+        "first_learned_at": "2026-03-25T01:10:00+08:00",
+        "last_applied_at": "2026-03-26T01:40:00+08:00",
+        "applied_count": 20,
+        "source": "problem_solving",
+        "related_concepts": ["相似度计算", "文本处理", "质量检查"],
+        "notes": "v2.0优化版，提高相似度阈值到0.95"
+      },
+      {
+        "name": "PDF文档读取",
+        "category": "tools",
+        "mastery_level": 90,
+        "first_learned_at": "2026-03-31T11:58:00+08:00",
+        "last_applied_at": "2026-03-31T11:58:00+08:00",
+        "applied_count": 1,
+        "source": "skill_installation",
+        "related_concepts": ["文档处理", "pdf-reader", "文件读取"],
+        "notes": "安装pdf-reader技能，支持读取和分析PDF文件"
+      },
+      {
+        "name": "Word文档读取",
+        "category": "tools",
+        "mastery_level": 90,
+        "first_learned_at": "2026-03-31T11:58:00+08:00",
+        "last_applied_at": "2026-03-31T11:58:00+08:00",
+        "applied_count": 1,
+        "source": "skill_installation",
+        "related_concepts": ["文档处理", "word-reader", "文件读取"],
+        "notes": "安装word-reader技能，支持读取和分析Word文档（.doc, .docx）"
+      }
+    ]
+  },
+  "efficiency": {
+    "avg_response_time_seconds": 3.2,
+    "first_try_success_rate": 78.5,
+    "avg_iterations_per_task": 1.8,
+    "time_distribution": {
+      "thinking_percent": 30,
+      "tool_execution_percent": 50,
+      "output_preparation_percent": 20
+    },
+    "tool_usage_stats": {
+      "total_calls": 850,
+      "by_tool": {
+        "read": 250,
+        "write": 150,
+        "edit": 120,
+        "exec": 200,
+        "memory_search": 80,
+        "memory_get": 50
+      }
+    }
+  },
+  "achievements": {
+    "milestones": [
+      {
+        "id": "milestone_001",
+        "title": "番茄短篇归档故事集完成",
+        "description": "完成了 01-27 号故事的创作和归档",
+        "timestamp": "2026-03-25T00:00:00+08:00",
+        "icon": "🏆",
+        "impact": "high"
+      },
+      {
+        "id": "milestone_002",
+        "title": "浏览器自动化技术突破",
+        "description": "成功实现 Playwright 和 Chrome DevTools MCP 的稳定连接",
+        "timestamp": "2026-03-28T09:36:00+08:00",
+        "icon": "🚀",
+        "impact": "high"
+      }
+    ],
+    "highlights": [
+      {
+        "id": "highlight_001",
+        "title": "番茄数据抓取成功",
+        "description": "成功抓取番茄小说平台所有 30 个已发布作品数据",
+        "timestamp": "2026-03-19T19:08:00+08:00",
+        "icon": "⭐"
+      },
+      {
+        "id": "highlight_002",
+        "title": "质量检查工具开发",
+        "description": "开发了番茄短篇故事质量检查工具，评分准确率达90%",
+        "timestamp": "2026-03-25T01:10:00+08:00",
+        "icon": "⭐"
+      }
+    ],
+    "breakthroughs": [
+      {
+        "id": "breakthrough_001",
+        "title": "重复段落问题解决",
+        "description": "识别并解决了 AI 写作中的重复段落问题，提高了故事质量",
+        "timestamp": "2026-03-25T02:30:00+08:00",
+        "icon": "💡"
+      },
+      {
+        "id": "breakthrough_002",
+        "title": "知乎Cookie自动提取",
+        "description": "使用 Playwright MCP 成功提取知乎 Cookie，实现自动登录",
+        "timestamp": "2026-03-29T09:36:00+08:00",
+        "icon": "💡"
+      }
+    ],
+    "total_count": 6
+  },
+  "goals": {
+    "active": [
+      {
+        "id": "goal_001",
+        "name": "修复番茄短篇自动化任务",
+        "description": "修复 fanqie-shortstory-auto 定时任务的报错问题",
+        "progress": 0,
+        "target": 100,
+        "unit": "%",
+        "status": "pending",
+        "priority": "P0",
+        "created_at": "2026-03-31T11:50:00+08:00",
+        "eta_days": 1
+      },
+      {
+        "id": "goal_002",
+        "name": "修复知乎自动化任务",
+        "description": "修复 zhihu-auto 定时任务的报错问题",
+        "progress": 0,
+        "target": 100,
+        "unit": "%",
+        "status": "pending",
+        "priority": "P0",
+        "created_at": "2026-03-31T11:50:00+08:00",
+        "eta_days": 1
+      },
+      {
+        "id": "goal_003",
+        "name": "优化财富自由数据分析频率",
+        "description": "将 wealth-freedom 任务的执行频率提高到每30分钟",
+        "progress": 50,
+        "target": 100,
+        "unit": "%",
+        "status": "in_progress",
+        "priority": "P1",
+        "created_at": "2026-03-31T11:50:00+08:00",
+        "eta_days": 2
+      }
+    ],
+    "completed": [],
+    "abandoned": []
+  },
+  "daily_stats": {
+    "2026-03-31": {
+      "date": "2026-03-31",
+      "conversations": 9,
+      "tasks_completed": 6,
+      "concepts_learned": 4,
+      "achievements_unlocked": 0,
+      "overall_growth": 0.5,
+      "efficiency_score": 75.0,
+      "satisfaction_rate": 80.0,
+      "notes": "初始化能力档案库，总结定时任务，建立知识库，安装PDF/Word读取技能，掌握文件推送能力"
+    }
+  },
+  "weekly_summary": {
+    "week_start": "2026-03-24",
+    "week_end": "2026-03-30",
+    "total_conversations": 65,
+    "total_tasks": 45,
+    "total_concepts": 8,
+    "total_achievements": 4,
+    "avg_daily_growth": 1.2,
+    "best_day": "2026-03-25",
+    "trend": "upward"
+  },
+  "preferences": {
+    "report_detail": "full",
+    "auto_track": true,
+    "show_trends": true,
+    "show_progress_bars": true,
+    "retention_days": 90,
+    "update_frequency": "realtime"
+  }
+}

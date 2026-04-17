@@ -1,0 +1,127 @@
+{
+  "title": "OpenClaw 进阶：从零开发自定义 Skill（含完整代码）",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31T23:45:00+08:00",
+  "tags": [
+    "OpenClaw",
+    "Skill开发",
+    "代码审查",
+    "自动化",
+    "GitHub"
+  ],
+  "category": "OpenClaw 技巧系列",
+  "priority": "high",
+  "type": "深度教程",
+  "wordCount": 8000,
+  "codeSnippets": 15,
+  "readingTime": 25,
+  "difficulty": "中级",
+  "estimatedMetrics": {
+    "upvotes": 600,
+    "favorites": 300,
+    "comments": 80,
+    "views": 15000,
+    "conversionRate": 0.05
+  },
+  "keywords": [
+    "OpenClaw Skill",
+    "Skill 开发",
+    "自定义 Skill",
+    "GitHub PR 审查",
+    "代码审查",
+    "自动化代码审查",
+    "GitHub API",
+    "Skill 最佳实践",
+    "Skill 调试",
+    "Skill 发布"
+  ],
+  "summary": "手把手教你从零开发一个完整的 OpenClaw Skill，以 GitHub PR 审查器为例，包含完整代码、测试脚本、最佳实践。学会后你可以：将重复性工作流程自动化、封装专业领域知识、打造专属 AI 助手、与团队共享高效工作流。",
+  "contentStructure": {
+    "核心结论": "5%",
+    "一、什么是 Skill": "5%",
+    "二、Skill 开发完整流程": "5%",
+    "三、Step 1: 创建 Skill 项目": "5%",
+    "四、Step 2: 编写 SKILL.md": "10%",
+    "五、Step 3: 实现核心功能": "40%",
+    "六、Step 4: 本地测试": "10%",
+    "七、Step 5: 编写参考文档": "5%",
+    "八、Step 6: Skill 调试技巧": "8%",
+    "九、最佳实践": "5%",
+    "十、Skill 发布与共享": "5%",
+    "十一、总结": "5%",
+    "延伸学习": "2%",
+    "互动引导": "5%"
+  },
+  "targetAudience": [
+    "OpenClaw 用户",
+    "开发者",
+    "AI 工具爱好者",
+    "自动化需求者",
+    "技术团队负责人"
+  ],
+  "valueProposition": {
+    "coreValue": "从零开发一个完整的 OpenClaw Skill，包含 15 个完整可运行的代码示例，涵盖 Skill 开发的全流程（需求分析 → 项目结构 → SKILL.md → 核心实现 → 本地测试 → 参考文档 → 调试技巧 → 最佳实践 → 发布共享）",
+    "practicalValue": "提供完整的 GitHub PR 审查器 Skill 实现，包含 GitHub API 调用、代码分析、问题检测、报告生成等核心功能，可直接用于实际项目",
+    "differentiation": "全网最完整的 OpenClaw Skill 开发教程，包含从理论到实践的完整代码、测试脚本、调试技巧和最佳实践",
+    "scarcity": "OpenClaw Skill 开发深度教程，全网稀缺内容"
+  },
+  "callToAction": {
+    "question": "你开发了哪些自定义 Skill？分享你的 Skill 创意和实现经验",
+    "column": "OpenClaw 高级开发",
+    "ebook": "OpenClaw Skill 开发实战手册"
+  },
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00（读者有充足时间阅读和收藏）",
+    "relatedArticles": [
+      "OpenClaw 入门完全指南：10分钟从零搭建 AI 助手工作流",
+      "OpenClaw ACP 原理深度解析：从零理解 Agent 控制协议",
+      "后端开发｜用 OpenClaw 自动化 CI/CD，效率提升10倍"
+    ],
+    "relatedColumns": [
+      "OpenClaw 核心功能全解",
+      "OpenClaw 高级开发",
+      "OpenClaw 自动化实战"
+    ],
+    "monetizationPath": "付费专栏《OpenClaw 高级开发》（149 元，早鸟价 99 元）"
+  },
+  "references": [
+    {
+      "type": "官方文档",
+      "title": "OpenClaw 官方文档",
+      "url": "https://docs.openclaw.ai"
+    },
+    {
+      "type": "官方文档",
+      "title": "GitHub API 文档",
+      "url": "https://docs.github.com/en/rest"
+    },
+    {
+      "type": "内部文档",
+      "title": "代码审查清单",
+      "file": "references/code-review-checklist.md"
+    }
+  ],
+  "qualityScore": {
+    "technicalDepth": 9.0,
+    "practicalValue": 9.5,
+    "codeQuality": 9.0,
+    "structureClarity": 9.0,
+    "originality": 8.5,
+    "overall": 9.0,
+    "notes": "技术深度强（Skill 开发全流程）、实用价值高（15 个完整可运行的代码示例）、代码质量高（可直接运行）、结构清晰（从零到完整 Skill）、原创性强（OpenClaw Skill 开发深度教程）"
+  },
+  "innovationPoints": [
+    "完整的 Skill 开发流程（从零到发布）",
+    "15 个完整可运行的代码示例",
+    "GitHub PR 审查器完整实现（包含 API 调用、代码分析、报告生成）",
+    "Skill 调试技巧（日志调试、单元测试、错误处理）",
+    "最佳实践总结（错误处理、性能优化、代码质量、可维护性）",
+    "Skill 发布与共享（ClawHub、团队共享、持续维护）"
+  ],
+  "files": {
+    "markdown": "✍️文章草稿/OpenClaw进阶-从零开发自定义Skill-含完整代码.md",
+    "metadata": "📤待发布/🔥高优先级/OpenClaw进阶-从零开发自定义Skill-含完整代码-standardized.json"
+  },
+  "status": "completed",
+  "completionDate": "2026-03-31T23:40:00+08:00"
+}

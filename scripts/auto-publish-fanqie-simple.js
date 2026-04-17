@@ -27,11 +27,11 @@ const CONFIG = {
   // Cookie 文件路径
   cookieFile: path.join(__dirname, '..', 'cookies', 'latest.json'),
 
-  // 35号故事发布包路径
-  storyPackagePath: path.join(__dirname, '..', '番茄短篇故事集/📦 发布包', '35号故事发布包.json'),
+  // 39号故事发布包路径
+  storyPackagePath: path.join(__dirname, '..', '番茄短篇故事集/📦 发布包', '39号故事发布包.json'),
 
   // 故事内容文件路径
-  storyContentPath: path.join(__dirname, '..', '番茄短篇故事集/📤 待发布', '35号故事-穿成不受宠的太子妃-完整内容-优化版.md'),
+  storyContentPath: path.join(__dirname, '..', '番茄短篇故事集/stories/归档故事集/39_灵异悬疑_午夜电梯/content/full_story.md'),
 
   // 番茄小说作家后台
   writerDashboardUrl: 'https://fanqienovel.com/main/writer/short-manage',
@@ -191,7 +191,7 @@ async function autoPublish() {
 
     // 填写标题
     logStep('填写标题...');
-    const title = storyPackage.title;
+    const title = storyPackage.optimizedTitle || storyPackage.title;
     logInfo(`标题: ${title}`);
 
     const titleTextarea = page.locator('textarea.byte-textarea.serial-textarea');
@@ -275,7 +275,7 @@ async function autoPublish() {
     const publishResult = {
       timestamp: new Date().toISOString(),
       storyId: storyPackage.storyId,
-      storyTitle: storyPackage.title,
+      storyTitle: storyPackage.optimizedTitle || storyPackage.title,
       automatedSteps: [
         '访问作家后台',
         '点击"新建短故事"按钮',

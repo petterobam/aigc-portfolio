@@ -12,7 +12,7 @@
 | 元素找不到（选择器失效） | 页面结构变化 / 选择器过时 | 先截图，再用 `page.evaluate` 打印 HTML 结构确认 |
 | 个人工具 `ref` 不存在 | 快照过期，页面已更新 | 重新执行 `browser_snapshot` 获取新的 `ref` |
 | `browser_run_code` 数据为空 | 动态内容未加载 | 加 `waitForSelector` 等待关键元素出现 |
-| 脚本运行报 `playwright not found` | 依赖未安装 | `cd /Users/oyjie/.openclaw/workspace && npm install` |
+| 脚本运行报 `playwright not found` | 依赖未安装 | `cd ~/.openclaw/workspace && npm install` |
 
 ---
 
@@ -21,7 +21,7 @@
 ### 1. 确认登录状态
 
 ```bash
-cd /Users/oyjie/.openclaw/workspace
+cd ~/.openclaw/workspace
 node scripts/check-fanqie-login.js
 ```
 
@@ -36,7 +36,7 @@ node scripts/login-save-cookies.js
 ### 2. 确认用户数据目录存在
 
 ```bash
-ls -la /Users/oyjie/.openclaw/workspace/data/chrome-user-data/
+ls -la ~/.openclaw/workspace/data/chrome-user-data/
 ```
 
 如果目录为空或不存在，首次运行任意脚本时会自动创建，并提示手动登录。

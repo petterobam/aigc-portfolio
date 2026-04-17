@@ -5,7 +5,7 @@
 ### 文件路径
 
 ```
-/Users/oyjie/.openclaw/workspace/skills/llm-learning/progress.json
+~/.openclaw/workspace/skills/llm-learning/progress.json
 ```
 
 ### 字段说明
@@ -72,7 +72,7 @@ completedTopics 追加当天主题名称
 ### 文件路径
 
 ```
-/Users/oyjie/.openclaw/workspace/skills/llm-learning/daily-logs/YYYY-MM-DD.md
+~/.openclaw/workspace/skills/llm-learning/daily-logs/YYYY-MM-DD-{标题}.md
 ```
 
 ### 文件模板
@@ -167,7 +167,7 @@ completedTopics 追加当天主题名称
 ### 命名规范
 
 - 文件名以**推送日期**命名，而非第几天序号
-- 格式：`YYYY-MM-DD.md`
-- 示例：`2026-03-17.md`
+- 格式：`YYYY-MM-DD-{标题}.md`
+- 示例：`2026-04-17-架构优化.md`
 
 > 如需按天数查找日志，通过 `progress.json` 中的 `startDate` + 天数偏移计算对应日期。

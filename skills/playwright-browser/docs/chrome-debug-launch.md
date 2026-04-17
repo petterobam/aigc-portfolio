@@ -1,206 +1,411 @@
-# Chrome CDP 调试模式启动说明
+# Chrome CDP 调试端口配置指南
 
-Chrome DevTools Protocol（CDP）调试端口是方式 B 自动 Cookie 刷新的前提条件。
-开启后，`extract-cookies-from-browser.js` 可以直接 attach 到已登录的 Chrome，
-无需任何人工操作即可提取完整 Session Cookie。
+## 概述
 
----
+Chrome DevTools Protocol (CDP) 调试端口允许外部工具（如 Playwright）与正在运行的 Chrome 实例通信。启用后，可以自动提取 Cookie、调试页面、分析网络请求等。
 
-## 前提条件
-
-- 必须**完全退出** Chrome 后再以调试模式启动（Chrome 不允许同时运行两个进程）
-- 调试端口默认使用 `9222`，如有冲突可改为其他端口（同步修改脚本中的端口号）
+**关键价值**：启用方式 B 自动刷新，heartbeat job 可自动提取最新 Cookie，无需人工介入。
 
 ---
 
-## macOS 启动命令
+## macOS 配置
 
-### 标准启动（使用默认 Profile）
+### 方法 1：命令行启动（推荐用于测试）
 
 ```bash
+# 1. 完全退出 Chrome（Cmd+Q）
+
+# 2. 以调试模式启动
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
-  --no-first-run \
-  --no-default-browser-check \
-  --profile-directory=Default
+  --user-data-dir="$HOME/Library/Application Support/Google/Chrome_CDP"
 ```
 
-### 指定 Profile 启动（多 Profile 场景）
+**参数说明**：
+- `--remote-debugging-port=9222`：启用 CDP 端口，默认 9222
+- `--user-data-dir=...`：使用独立的用户数据目录，避免与普通 Chrome 冲突
+  - 默认：`~/Library/Application Support/Google/Chrome`
+  - 调试模式：`~/Library/Application Support/Google/Chrome_CDP`
 
+**验证连通性**：
 ```bash
-# 查看所有 Profile 目录名
-ls ~/Library/Application\ Support/Google/Chrome/ | grep ^Profile
-
-# 指定 Profile 启动（将 "Profile 1" 替换为实际目录名）
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --profile-directory="Profile 1"
+curl -s http://localhost:9222/json/version | jq .
 ```
 
-### 后台静默启动（不打开新窗口）
-
-```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --no-first-run \
-  --no-default-browser-check \
-  --profile-directory=Default \
-  --headless=new \
-  about:blank &
-```
-
-> ⚠️ headless 模式下无法手动操作浏览器，仅适合 Cookie 已存在、无需重新登录的场景。
-
----
-
-## 验证连接是否成功
-
-Chrome 启动后，运行以下命令验证 CDP 端口是否可达：
-
-```bash
-# 查看 Chrome 版本信息（成功则返回 JSON）
-curl -s http://localhost:9222/json/version
-
-# 查看当前打开的页面列表
-curl -s http://localhost:9222/json/list
-```
-
-成功返回示例：
-
+预期输出：
 ```json
 {
-  "Browser": "Chrome/123.0.6312.86",
+  "Browser": "Chrome/123.0.6312.58",
   "Protocol-Version": "1.3",
+  "User-Agent": "Mozilla/5.0 ...",
+  "WebKit-Version": "537.36 (...)",
   "webSocketDebuggerUrl": "ws://localhost:9222/devtools/browser/..."
 }
 ```
 
-失败（端口不可达）则无任何输出或返回连接拒绝错误。
+### 方法 2：修改启动配置（推荐用于长期使用）
 
----
-
-## 运行 Cookie 提取脚本
-
-CDP 验证通过后，运行提取脚本：
+#### 步骤 1：修改 Chrome.app 的 Info.plist
 
 ```bash
-cd /Users/oyjie/.openclaw/workspace
-node scripts/extract-cookies-from-browser.js
+# 备份原始文件
+sudo cp /Applications/Google\ Chrome.app/Contents/Info.plist \
+       /Applications/Google\ Chrome.app/Contents/Info.plist.backup
+
+# 编辑 Info.plist
+sudo nano /Applications/Google\ Chrome.app/Contents/Info.plist
 ```
 
-脚本会自动：
-1. 连接 `localhost:9222`
-2. 获取第一个浏览器上下文（用户主 Profile 的已登录会话）
-3. 过滤番茄小说相关 Cookie（约 26 个，含 16 个 httpOnly）
-4. 保存到 `cookies/latest.json`
-
----
-
-## 设置为开机自启（macOS LaunchAgent）
-
-如果希望 Chrome 始终以调试模式运行，可以注册为 LaunchAgent：
-
-**创建 plist 文件**：`~/Library/LaunchAgents/com.chrome.debug.plist`
-
+找到 `<key>LSUIElement</key>`，在其上方添加：
 ```xml
+<key>ChromeArguments</key>
+<array>
+  <string>--remote-debugging-port=9222</string>
+  <string>--user-data-dir=$HOME/Library/Application Support/Google/Chrome_CDP</string>
+</array>
+```
+
+**注意**：macOS 可能会覆盖这个修改，推荐使用方法 3。
+
+#### 步骤 2：重启 Chrome
+
+```bash
+# 完全退出 Chrome
+killall "Google Chrome"
+
+# 启动 Chrome
+open -a "Google Chrome"
+```
+
+### 方法 3：使用 LaunchAgent（推荐用于自动化）
+
+#### 创建 LaunchAgent plist 文件
+
+```bash
+# 创建 LaunchAgent 目录
+mkdir -p ~/Library/LaunchAgents
+
+# 创建 plist 文件
+cat > ~/Library/LaunchAgents/com.google.chrome.cdp.plist << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.chrome.debug</string>
+  <string>com.google.chrome.cdp</string>
   <key>ProgramArguments</key>
   <array>
     <string>/Applications/Google Chrome.app/Contents/MacOS/Google Chrome</string>
     <string>--remote-debugging-port=9222</string>
-    <string>--no-first-run</string>
-    <string>--no-default-browser-check</string>
-    <string>--profile-directory=Default</string>
+    <string>--user-data-dir=$HOME/Library/Application Support/Google/Chrome_CDP</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
-  <false/>
+  <true/>
 </dict>
 </plist>
+EOF
 ```
 
-**加载 LaunchAgent**：
+#### 加载 LaunchAgent
 
 ```bash
-launchctl load ~/Library/LaunchAgents/com.chrome.debug.plist
+# 加载 LaunchAgent
+launchctl load ~/Library/LaunchAgents/com.google.chrome.cdp.plist
+
+# 验证是否加载成功
+launchctl list | grep chrome
 ```
 
-**停用**：
+#### 卸载 LaunchAgent
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.chrome.debug.plist
-```
+# 停止 Chrome
+killall "Google Chrome"
 
-> ⚠️ 注意：LaunchAgent 方案会在登录时自动启动 Chrome。如果你不希望 Chrome 一直在后台运行，建议手动启动即可。
+# 卸载 LaunchAgent
+launchctl unload ~/Library/LaunchAgents/com.google.chrome.cdp.plist
+
+# 删除 plist 文件
+rm ~/Library/LaunchAgents/com.google.chrome.cdp.plist
+```
 
 ---
 
-## 常见问题
+## Linux 配置
 
-### 问题：curl 无输出，连接被拒绝
+### 命令行启动
 
-**原因**：Chrome 未完全退出，或启动命令未正确执行。
-
-**排查**：
 ```bash
-# 检查是否有 Chrome 进程在监听 9222
+# 1. 完全退出 Chrome
+pkill chrome
+
+# 2. 以调试模式启动
+google-chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir=$HOME/.config/google-chrome_cdp
+```
+
+### systemd 服务（推荐用于服务器）
+
+#### 创建服务文件
+
+```bash
+sudo cat > /etc/systemd/system/chrome-cdp.service << 'EOF'
+[Unit]
+Description=Chrome CDP Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/google-chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir=/var/lib/chrome-cdp
+Restart=on-failure
+User=$USER
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+#### 启动服务
+
+```bash
+# 重新加载 systemd
+sudo systemctl daemon-reload
+
+# 启动服务
+sudo systemctl start chrome-cdp
+
+# 开机自启
+sudo systemctl enable chrome-cdp
+
+# 查看状态
+sudo systemctl status chrome-cdp
+```
+
+---
+
+## Windows 配置
+
+### 命令行启动
+
+```cmd
+REM 1. 完全退出 Chrome
+taskkill /F /IM chrome.exe
+
+REM 2. 以调试模式启动
+"C:\Program Files\Google\Chrome\Application\chrome.exe" ^
+  --remote-debugging-port=9222 ^
+  --user-data-dir="%LOCALAPPDATA%\Google\Chrome_CDP"
+```
+
+### 创建快捷方式
+
+1. 右键桌面 → 新建快捷方式
+2. 目标位置：
+   ```
+   "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="%LOCALAPPDATA%\Google\Chrome_CDP"
+   ```
+3. 名称：Chrome CDP
+4. 完成
+
+### 注册表启动项（不推荐，容易被杀毒软件拦截）
+
+```reg
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+"Chrome CDP"="\"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --remote-debugging-port=9222 --user-data-dir=\"%LOCALAPPDATA%\\Google\\Chrome_CDP\""
+```
+
+---
+
+## 验证步骤
+
+### 1. 验证端口是否开放
+
+```bash
+# macOS/Linux
+curl -s http://localhost:9222/json/version | jq .
+
+# Windows PowerShell
+Invoke-WebRequest -Uri http://localhost:9222/json/version | ConvertFrom-Json | Format-List
+```
+
+预期输出：
+```json
+{
+  "Browser": "Chrome/...",
+  "Protocol-Version": "1.3",
+  "User-Agent": "...",
+  "WebKit-Version": "...",
+  "webSocketDebuggerUrl": "ws://localhost:9222/devtools/browser/..."
+}
+```
+
+### 2. 验证 Playwright 能否连接
+
+```bash
+cd ~/.openclaw/workspace
+node scripts/extract-cookies-from-browser.js
+```
+
+预期输出：
+```
+🔍 连接到 Chrome CDP (http://localhost:9222)...
+✅ 连接成功
+📊 找到 26 个 Cookie
+📍 Cookie 已保存到 cookies/latest.json
+```
+
+### 3. 更新系统状态
+
+编辑 `state/current-state.md`：
+
+```markdown
+| CDP 端口（9222） | ✅ 可达 | Chrome 已以 --remote-debugging-port=9222 启动 |
+| 方式 B 自动刷新 | ✅ 可用 | heartbeat job 可自动提取 Cookie |
+```
+
+---
+
+## 故障排查
+
+### 问题 1：端口已被占用
+
+```bash
+# 查找占用端口的进程
 lsof -i :9222
+
+# 杀死占用进程
+kill -9 <PID>
 ```
 
-如果没有输出，说明 Chrome 未以调试模式运行。检查：
-1. 是否用 Cmd+Q 完全退出了 Chrome（不是点 × 关闭窗口）
-2. 启动命令路径是否正确（`/Applications/Google\ Chrome.app/...`）
+### 问题 2：连接超时
 
----
+**原因**：Chrome 未以调试模式启动
 
-### 问题：`open -a "Google Chrome"` 无法添加调试参数
-
-`open` 命令不支持传递参数给 Chrome。必须直接调用二进制文件：
-`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
-
----
-
-### 问题：连接成功但 Cookie 提取为空
-
-**原因**：Chrome 以调试模式启动时创建了新的临时 Profile，而不是你已登录的 Profile。
-
-**解决**：确保 `--profile-directory=Default` 指向的是你平时使用的 Profile 目录。
-可以通过在 Chrome 地址栏输入 `chrome://version/` 查看当前使用的 Profile 路径。
-
----
-
-### 问题：9222 端口被其他程序占用
-
+**解决方案**：
 ```bash
-# 查看占用 9222 端口的进程
-lsof -i :9222
+# 完全退出 Chrome
+killall "Google Chrome"
 
-# 使用其他端口启动（例如 9223）
+# 以调试模式启动
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9223 ...
+  --remote-debugging-port=9222 \
+  --user-data-dir="$HOME/Library/Application Support/Google/Chrome_CDP"
+```
 
-# 同步修改脚本调用
-node scripts/extract-cookies-from-browser.js --port 9223
+### 问题 3：Cookie 提取失败
+
+**原因**：
+- Chrome 中未登录番茄小说
+- Chrome 使用了独立的用户数据目录，需要重新登录
+
+**解决方案**：
+1. 启动调试模式的 Chrome
+2. 访问 https://fanqienovel.com
+3. 登录账号
+4. 重新运行提取脚本
+
+### 问题 4：LaunchAgent 无法加载
+
+**原因**：plist 文件格式错误或路径不正确
+
+**解决方案**：
+```bash
+# 验证 plist 格式
+plutil -lint ~/Library/LaunchAgents/com.google.chrome.cdp.plist
+
+# 查看日志
+log show --predicate 'process == "launchd"' --info --last 1h | grep chrome
 ```
 
 ---
 
 ## 安全注意事项
 
-- CDP 调试端口**仅监听本地 localhost**，外部网络无法直接访问
-- 不要在公共 Wi-Fi 环境下长期开放调试端口
-- 不要将 CDP 端口转发到外网（如 `ngrok` 等工具）
+### 1. 不要暴露 CDP 端口到公网
+
+**错误配置**：
+```bash
+# ❌ 绑定到所有网络接口（不安全）
+--remote-debugging-address=0.0.0.0 --remote-debugging-port=9222
+```
+
+**正确配置**：
+```bash
+# ✅ 默认只绑定到 localhost（安全）
+--remote-debugging-port=9222
+```
+
+### 2. 不要共享用户数据目录
+
+用户数据目录包含：
+- 登录状态（Cookie、Token）
+- 浏览历史
+- 保存的密码
+
+**建议**：
+- 使用独立的用户数据目录（`Chrome_CDP`）
+- 不要共享或上传这个目录到云端
+- 定期清理敏感数据
+
+### 3. 使用防火墙规则限制访问
+
+如果需要在局域网访问 CDP 端口：
+
+```bash
+# macOS pf.conf 示例
+block in proto tcp from any to any port 9222
+pass in proto tcp from 192.168.1.0/24 to any port 9222
+```
 
 ---
 
-**相关文件**：
-- `scripts/extract-cookies-from-browser.js` — Cookie 提取脚本（`--port` 参数支持自定义端口）
-- `extract-session/SKILL.md` — Session 提取子技能说明
-- `state/current-state.md` — CDP 端口当前状态记录
+## 高级配置
+
+### 自定义端口
+
+```bash
+--remote-debugging-port=9333
+```
+
+### 多个 Chrome 实例
+
+```bash
+# 实例 1
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir="$HOME/Library/Application Support/Google/Chrome_CDP_1"
+
+# 实例 2
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --remote-debugging-port=9223 \
+  --user-data-dir="$HOME/Library/Application Support/Google/Chrome_CDP_2"
+```
+
+### 禁用图形界面（Headless 模式）
+
+```bash
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir="$HOME/Library/Application Support/Google/Chrome_CDP" \
+  --headless
+```
+
+---
+
+## 关联任务
+
+- **P1 任务 #1**：配置 Chrome CDP 调试端口（本文档的完整实现）
+- **已知问题 #001**：CDP 端口不可达（完成本文档后即可解决）
+- **方式 B 自动刷新**：启用 CDP 后，heartbeat job 可自动提取 Cookie
+
+---
+
+**维护者**：心跳时刻 - 浏览器自动化守护者
+**创建时间**：2026-03-27 19:06 (Asia/Shanghai)
+**最后更新**：2026-03-27 19:06 (Asia/Shanghai)

@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "article_id": "zhihu-aigc-inference-acceleration",
+    "title": "大模型推理加速：从理论到实战",
+    "subtitle": "从 KV Cache 到量化，从投机采样到批处理优化，推理速度提升 10-100 倍",
+    "type": "技术深度解析",
+    "category": "AIGC 原理系列",
+    "priority": "高优先级",
+    "tags": ["大模型", "推理加速", "AIGC", "LLM", "性能优化", "KV Cache", "量化", "投机采样"],
+    "created_at": "2026-03-29 21:53",
+    "updated_at": "2026-03-29 21:53",
+    "status": "已完成",
+    "publication_status": "待发布"
+  },
+  "content": {
+    "word_count": 19227,
+    "code_snippets": 18,
+    "estimated_reading_time": "15-20 分钟",
+    "structure": {
+      "introduction": 5,
+      "why_accelerate": 10,
+      "kv_cache": 20,
+      "quantization": 20,
+      "speculative_decoding": 15,
+      "batching": 15,
+      "best_practices": 10,
+      "common_pitfalls": 5
+    }
+  },
+  "quality": {
+    "technical_depth": "高",
+    "practical_value": "高",
+    "clarity": "清晰",
+    "originality": "原创",
+    "code_completeness": "完整可运行",
+    "score": {
+      "depth": 9.0,
+      "clarity": 8.5,
+      "practicality": 9.5,
+      "innovation": 8.0,
+      "overall": 87.5,
+      "status": "待评估"
+    }
+  },
+  "expected_metrics": {
+    "views": "5000-10000",
+    "likes": "600-800",
+    "favorites": "300-400",
+    "comments": "80-120",
+    "shares": "50-80",
+    "conversion_rate": "5-8%"
+  },
+  "monetization": {
+    "potential": "高",
+    "paid_column": "AIGC 核心原理解析",
+    "product_type": "付费专栏",
+    "price": "299 元",
+    "conversion_path": "免费内容 → 关注 → 付费专栏"
+  },
+  "distribution": {
+    "platform": "知乎",
+    "format": "专栏文章",
+    "distribution_channels": ["知乎", "公众号", "技术社区"],
+    "seo_keywords": ["大模型推理加速", "KV Cache", "量化", "投机采样", "批处理优化"]
+  },
+  "related_content": {
+    "series": "AIGC 原理系列",
+    "previous_articles": [
+      "Transformer 原理深度解析",
+      "Diffusion 模型从零开始",
+      "RAG 检索增强生成",
+      "RLHF 原理深度解析",
+      "MoE 架构深度解析",
+      "AI Agent 架构设计",
+      "GPT-4V 原理深度解析",
+      "长上下文技术深度解析"
+    ],
+    "follow_up_articles": [
+      "提示词工程进阶：从 CoT 到结构化 Prompt",
+      "大模型微调：LoRA vs P-Tuning vs 全量微调"
+    ]
+  }
+}

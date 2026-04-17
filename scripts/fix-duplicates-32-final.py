@@ -7,7 +7,7 @@ from pathlib import Path
 
 def fix_story_32_final():
     """修复32号故事的剩余4个重复"""
-    story_path = Path("/Users/oyjie/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/32_断亲复仇_养父母vs亲生父母_他们跪求原谅/content")
+    story_path = Path("~/.openclaw/workspace/番茄短篇故事集/stories/归档故事集/32_断亲复仇_养父母vs亲生父母_他们跪求原谅/content")
 
     print("修复32号故事剩余4个重复...")
 

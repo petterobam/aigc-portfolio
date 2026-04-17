@@ -1,0 +1,59 @@
+{
+  "title": "AI Scientist-v2 深度解析：Agentic Tree Search 如何颠覆科研",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "AI-Scientist",
+    "AgenticTreeSearch",
+    "科研自动化",
+    "AI研究",
+    "机器学习"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 3500,
+  "codeSnippets": 6,
+  "readingTime": 12,
+  "difficulty": "⭐⭐⭐⭐（高级）",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 250,
+    "comments": 80
+  },
+  "keywords": [
+    "AI-Scientist",
+    "Agentic Tree Search",
+    "科研自动化",
+    "AI研究",
+    "自动化科研",
+    "学术论文"
+  ],
+  "summary": "深度解析 AI-Scientist-v2，全网首发 Agentic Tree Search 原理、系统架构、实战部署、成本分析和风险评估。这是第一个完全由 AI 编写并通过同行评审的 workshop 论文，代表科研自动化的新纪元。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 60,
+    "practice": 20,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "AI 研究者",
+    "科研工作者",
+    "AI 工程师",
+    "关注 AI 自动化的开发者"
+  ],
+  "valueProposition": "全网首发 AI-Scientist-v2 深度解析，技术深度强（Agentic Tree Search 原理、系统架构），实战价值高（端到端自动化科研系统、完整部署指南、成本分析、风险评估），稀缺视角（科研自动化的新纪元），包含 6 个完整可运行的代码片段和 3 个系统架构图。",
+  "callToAction": "你觉得 AI 自动化科研的未来如何？有什么担忧？评论区聊聊。想深入学习？关注专栏《AIGC 核心原理解析》。",
+  "publishPlan": {
+    "bestTime": "工作日 12:00-13:00（午休时间）",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅 + 技术咨询服务",
+    "questionToAnswer": "AI-Scientist-v2 是什么？Agentic Tree Search 如何颠覆科研？"
+  },
+  "references": [
+    "AI-Scientist-v2 GitHub 仓库",
+    "AI-Scientist-v2 论文",
+    "Agentic Tree Search 论文"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

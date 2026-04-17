@@ -1,0 +1,105 @@
+{
+  "title": "RLHF 原理深度解析：如何让大模型对齐人类偏好？",
+  "category": "AIGC原理系列",
+  "priority": "高优先级",
+  "word_count": 18560,
+  "estimated_reading_time": 20,
+  "created_at": "2026-03-29 12:20",
+  "status": "已完成",
+  "quality_score": {
+    "title": 9.0,
+    "structure": 9.5,
+    "technical_depth": 9.0,
+    "code_quality": 9.0,
+    "practical_value": 9.5,
+    "interactivity": 8.5,
+    "total": 27.5,
+    "percentage": 91.7
+  },
+  "estimated_metrics": {
+    "likes": 500,
+    "favorites": 250,
+    "comments": 80,
+    "views": 5000
+  },
+  "tags": ["RLHF", "深度学习", "大模型", "AIGC", "强化学习"],
+  "monetization": {
+    "path": "文章 → 关注专栏 → 付费订阅《AIGC 核心原理解析》",
+    "price_range": "99-199元",
+    "product": "《AIGC 核心原理解析》付费专栏"
+  },
+  "key_points": [
+    "RLHF 的本质是让大模型学会'讨好人类'",
+    "RLHF 的完整流程：SFT → 奖励模型 → PPO",
+    "奖励模型训练：学习人类偏好排序",
+    "PPO 优化：截断机制保证训练稳定",
+    "常见问题：奖励模型偏差、训练不稳定、数据效率低、模型遗忘",
+    "RLHF 变体：RLAIF、DPO",
+    "最佳实践：数据质量 > 数据数量、奖励模型持续更新、学习率小、多维度评估"
+  ],
+  "code_snippets": {
+    "count": 8,
+    "coverage": [
+      "SFT 监督学习训练",
+      "奖励模型架构与训练",
+      "PPO 训练循环",
+      "GAE 优势函数计算",
+      "梯度裁剪",
+      "AI 辅助标注（RLAIF）",
+      "DPO 损失函数",
+      "多维度评估"
+    ],
+    "runnable": 100
+  },
+  "structure": {
+    "sections": 8,
+    "details": [
+      "核心结论",
+      "为什么需要 RLHF",
+      "RLHF 的完整流程（3个阶段）",
+      "RLHF 的数学本质",
+      "常见问题与解决方案",
+      "RLHF 的变体与改进",
+      "实战案例",
+      "最佳实践总结"
+    ]
+  },
+  "technical_depth": {
+    "mathematical_derivation": 30,
+    "code_implementation": 35,
+    "practical_guidance": 25,
+    "best_practices": 10
+  },
+  "strengths": [
+    "数学推导清晰（排序损失、PPO 截断、KL 散度正则化）",
+    "代码完整可运行（8 个代码片段）",
+    "技术深度高（SFT、奖励模型、PPO、DPO、RLAIF）",
+    "常见问题覆盖全面（4 大问题及解决方案）",
+    "变体与改进丰富（RLAIF、DPO）",
+    "最佳实践有价值（数据质量、奖励模型更新、学习率、评估）"
+  ],
+  "improvements": [
+    "可添加更多可视化图片（奖励模型训练曲线、PPO 训练过程）",
+    "可补充实际训练时间对比（SFT vs RLHF）",
+    "可添加与其他对齐方法的对比表格（Constitutional AI、AI 反馈）",
+    "可补充更多实战案例（如 ChatGPT 的 RLHF 训练细节）"
+  ],
+  "publishing_plan": {
+    "target_platform": "知乎",
+    "target_audience": "AI 从业者、深度学习研究者、大模型开发者",
+    "publishing_time": "待定（等待用户登录完成）",
+    "promotion_strategy": [
+      "发布时 @ 相关技术博主",
+      "在 AI 技术群分享",
+      "添加到专栏《AIGC 核心原理解析》",
+      "引导读者关注专栏"
+    ]
+  },
+  "references": [
+    "InstructGPT: Training language models to follow instructions with human feedback",
+    "PPO: Proximal Policy Optimization Algorithms",
+    "DPO: Direct Preference Optimization",
+    "Constitutional AI: Harmlessness from AI Feedback"
+  ],
+  "version": "v1.0"
+}

@@ -1,0 +1,55 @@
+{
+  "title": "文章标题",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "标签1",
+    "标签2",
+    "标签3",
+    "标签4",
+    "标签5"
+  ],
+  "category": "AIGC原理系列 | OpenClaw技巧系列 | 热点回答 | 实战案例",
+  "priority": "high | medium | low",
+  "wordCount": 0,
+  "codeSnippets": 0,
+  "readingTime": 0,
+  "difficulty": "⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 0,
+    "favorites": 0,
+    "comments": 0
+  },
+  "keywords": [
+    "关键词1",
+    "关键词2",
+    "关键词3"
+  ],
+  "summary": "文章摘要（100-200字）",
+  "contentStructure": {
+    "intro": 0,
+    "core": 0,
+    "practice": 0,
+    "conclusion": 0
+  },
+  "targetAudience": [
+    "AI开发者",
+    "算法工程师",
+    "产品经理",
+    "技术研究者"
+  ],
+  "valueProposition": "文章核心价值主张（50-100字）",
+  "callToAction": "互动引导文案（提问或引导关注专栏）",
+  "publishPlan": {
+    "bestTime": "工作日12:00 | 周末15:00-17:00",
+    "relatedColumn": "关联的付费专栏名称",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": "如果要作为回答发布，填写要回答的问题标题"
+  },
+  "references": [
+    "参考资源链接1",
+    "参考资源链接2"
+  ],
+  "type": "专栏文章 | 回答",
+  "status": "draft | ready_to_publish | published"
+}

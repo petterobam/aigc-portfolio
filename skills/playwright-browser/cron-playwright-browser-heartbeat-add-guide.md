@@ -95,7 +95,7 @@
 ### 心跳检查流程（基于 HEARTBEAT.md）
 
 1. **读取 HEARTBEAT.md**
-   - 文件路径：`/Users/oyjie/.openclaw/workspace/skills/playwright-browser/HEARTBEAT.md`
+   - 文件路径：`~/.openclaw/workspace/skills/playwright-browser/HEARTBEAT.md`
    - 解析心跳任务清单
    - 识别当前优先级
 
@@ -214,7 +214,7 @@
 2. 在 `tasks/task-list.md` 添加 P0 紧急任务
 3. 如果 CDP 端口可达，尝试自动刷新：
    ```bash
-   exec cd /Users/oyjie/.openclaw/workspace && node scripts/extract-cookies-from-browser.js
+   exec cd ~/.openclaw/workspace && node scripts/extract-cookies-from-browser.js
    ```
 4. 如果 CDP 不可达，记录"需要在 Claude/Code 对话中手动提取"
 

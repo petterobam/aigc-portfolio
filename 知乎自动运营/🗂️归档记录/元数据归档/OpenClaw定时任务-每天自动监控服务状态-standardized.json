@@ -1,0 +1,63 @@
+{
+  "title": "OpenClaw 定时任务：每天自动监控服务状态，再也不用手动刷日志了",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-04-01",
+  "tags": [
+    "OpenClaw",
+    "监控",
+    "自动化",
+    "DevOps",
+    "服务器监控"
+  ],
+  "category": "OpenClaw技巧系列",
+  "priority": "high",
+  "wordCount": 13588,
+  "codeSnippets": 8,
+  "readingTime": 45,
+  "difficulty": "⭐⭐⭐（中高级）",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80
+  },
+  "keywords": [
+    "OpenClaw",
+    "定时任务",
+    "服务监控",
+    "自动化运维",
+    "报警系统",
+    "DevOps",
+    "SRE",
+    "监控脚本"
+  ],
+  "summary": "用 OpenClaw 搭建自动化监控系统，7×24 小时自动巡检服务状态，异常实时报警。监控覆盖率从 30% 提升到 95%，故障发现时间从 2 小时缩短到 5 分钟，误报率降低 70%。包含完整代码示例：监控 Agent、定时任务配置、数据采集脚本、3 个实战案例、4 个避坑指南、最佳实践总结。",
+  "contentStructure": {
+    "intro": 15,
+    "core": 45,
+    "practice": 30,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "后端开发工程师",
+    "DevOps 工程师",
+    "SRE 工程师",
+    "运维工程师",
+    "系统架构师",
+    "技术团队 Leader"
+  ],
+  "valueProposition": "系统讲解如何用 OpenClaw 搭建 7×24 小时自动监控系统，从数据采集、异常判断、精准报警到最佳实践，包含 8 个完整可运行的代码示例。实战价值高，看完立刻能用，真正解决监控痛点。",
+  "callToAction": "你现在如何监控系统状态？手动还是自动化？你遇到过最严重的监控漏报是什么？欢迎在评论区分享你的监控经验和踩坑故事！想学习更多 OpenClaw 实战技巧？关注我的专栏《OpenClaw 核心功能全解》，获取更多自动化解决方案。",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00（读者有充足时间阅读和收藏）",
+    "relatedColumn": "OpenClaw 核心功能全解",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费专栏《OpenClaw 核心功能全解》",
+    "questionToAnswer": ""
+  },
+  "references": [
+    "OpenClaw 官方文档",
+    "Linux 系统监控工具",
+    "Grafana 可视化平台"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

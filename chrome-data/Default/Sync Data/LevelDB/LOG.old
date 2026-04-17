@@ -1,3 +1,3 @@
-2026/03/24-23:31:19.047 171b6c2 Reusing MANIFEST /Users/oyjie/.openclaw/workspace/chrome-data/Default/Sync Data/LevelDB/MANIFEST-000001
-2026/03/24-23:31:19.056 171b6c2 Recovering log #3
-2026/03/24-23:31:19.056 171b6c2 Reusing old log /Users/oyjie/.openclaw/workspace/chrome-data/Default/Sync Data/LevelDB/000003.log 
+2026/04/01-12:56:54.601 860931 Reusing MANIFEST ～/.openclaw/workspace/chrome-data/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/04/01-12:56:54.755 860931 Recovering log #3
+2026/04/01-12:56:54.768 860931 Reusing old log ～/.openclaw/workspace/chrome-data/Default/Sync Data/LevelDB/000003.log 

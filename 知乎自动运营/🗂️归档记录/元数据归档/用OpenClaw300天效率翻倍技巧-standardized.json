@@ -1,0 +1,58 @@
+{
+  "title": "用 OpenClaw 300 天，我总结出 10 个让效率翻倍的技巧",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "OpenClaw",
+    "效率提升",
+    "自动化",
+    "生产力",
+    "AI工具"
+  ],
+  "category": "OpenClaw技巧系列",
+  "priority": "high",
+  "wordCount": 2800,
+  "codeSnippets": 0,
+  "readingTime": 10,
+  "difficulty": "⭐⭐（初中级）",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 250,
+    "comments": 60
+  },
+  "keywords": [
+    "OpenClaw",
+    "效率提升",
+    "自动化",
+    "生产力",
+    "AI工具",
+    "工作流"
+  ],
+  "summary": "使用 OpenClaw 300 天的实战经验总结，分享 10 个让效率翻倍的实用技巧。从自动化任务、快捷键、工作流优化到进阶技巧，涵盖新手到高级用户的全部需求。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 60,
+    "practice": 20,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "OpenClaw 新手",
+    "想提升效率的开发者",
+    "AI 工具爱好者",
+    "职场人士"
+  ],
+  "valueProposition": "10 个实用技巧，每一条都是 300 天实战经验的精华，看完立刻能用，让效率真正翻倍。适合新手快速上手，也适合老用户发现新技巧。",
+  "callToAction": "这 10 个技巧你用过了几个？有什么其他 OpenClaw 效率技巧？评论区分享。想深入学习？关注专栏《OpenClaw 核心功能全解》。",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "OpenClaw 核心功能全解",
+    "monetizationPath": "免费内容引流 -> 电子书购买 -> 付费专栏",
+    "questionToAnswer": "如何用 OpenClaw 提升效率？"
+  },
+  "references": [
+    "OpenClaw 官方文档",
+    "OpenClaw 社区最佳实践"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

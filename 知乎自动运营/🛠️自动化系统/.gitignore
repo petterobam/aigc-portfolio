@@ -1,0 +1,35 @@
+# 认证信息（包含登录凭证，绝对不能提交）
+auth/
+*.json
+
+# 日志文件
+logs/*.log
+logs/*.txt
+
+# 数据文件（包含用户数据，不要提交）
+data/
+*.csv
+*.xlsx
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# Node.js
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db

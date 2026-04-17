@@ -1,0 +1,59 @@
+{
+  "title": "GPT-4V 原理深度解析：多模态大模型是如何工作的？",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "GPT-4V",
+    "多模态大模型",
+    "CLIP",
+    "AIGC",
+    "人工智能"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 8500,
+  "codeSnippets": 9,
+  "readingTime": 30,
+  "difficulty": "⭐⭐⭐⭐（高级）",
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "GPT-4V",
+    "多模态大模型",
+    "视觉编码器",
+    "CLIP",
+    "跨模态对齐",
+    "VQA"
+  ],
+  "summary": "深度解析 GPT-4V 的多模态架构，从视觉编码器到 CLIP，从跨模态对齐到实战代码，系统讲解多模态大模型的核心原理、技术挑战与解决方案，包含 9 个完整可运行的代码片段。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 60,
+    "practice": 20,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "多模态大模型研究者",
+    "计算机视觉工程师",
+    "AI 工程师",
+    "想了解 GPT-4V 的开发者"
+  ],
+  "valueProposition": "系统解析 GPT-4V 的多模态架构，涵盖视觉编码器、CLIP、跨模态对齐、VQA、图像描述、文档理解等核心主题，包含 9 个完整可运行的代码片段，帮助读者从原理到实践真正理解多模态大模型。",
+  "callToAction": "你觉得多模态大模型最大的挑战是什么？有其他多模态方案吗？评论区聊聊。想深入学习？关注专栏《AIGC 核心原理解析》。",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": "GPT-4V 原理是什么？多模态大模型如何工作？"
+  },
+  "references": [
+    "GPT-4V System Card",
+    "CLIP 论文",
+    "Visual Question Answering 论文"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

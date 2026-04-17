@@ -169,7 +169,7 @@
 
 ## 数据源
 
-- 主仓库：`/Users/oyjie/.openclaw/workspace/LLM-RL-Visualized`
+- 主仓库：`~/.openclaw/workspace/LLM-RL-Visualized`
 - 主要文档：
   - `README.md` - 100+ 原创架构图
   - `LLM-VLM-index (汇总).md` - 模型索引

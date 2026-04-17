@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-03-22T01:17:06.379Z",
+  "timestamp": "2026-04-04T19:00:51.428Z",
   "backup": {
-    "file": "/Users/oyjie/.openclaw/workspace/skills/memory-optimizer/backups/memory-db-2026-03-22.tar.gz",
-    "size": 41976,
-    "sizeMB": 0.04,
+    "file": "～/.openclaw/workspace/skills/memory-optimizer/backups/memory-db-2026-04-05.tar.gz",
+    "size": 3500533,
+    "sizeMB": 3.34,
     "alreadyExists": false
   },
   "cleanup": {
     "deleted": 0,
-    "kept": 1
+    "kept": 3
   },
   "verification": {
     "verified": true,
@@ -16,17 +16,17 @@
       {
         "name": "源文件大小验证",
         "status": "passed",
-        "message": "源文件大小: 176128 字节"
+        "message": "源文件大小: 8171520 字节"
       },
       {
         "name": "备份文件大小验证",
         "status": "passed",
-        "message": "备份文件大小: 41976 字节 (压缩率: 23.8%)"
+        "message": "备份文件大小: 3500533 字节 (压缩率: 42.8%)"
       },
       {
         "name": "备份文件内容验证",
         "status": "passed",
-        "message": "解压成功，文件大小: 176128 字节"
+        "message": "解压成功，文件大小: 8171520 字节"
       },
       {
         "name": "数据完整性校验",
@@ -34,15 +34,15 @@
         "message": "哈希值 100% 一致"
       }
     ],
-    "sourceFileSize": 176128,
-    "backupFileSize": 41976,
-    "sourceHash": "015efa618373e837f2ee9749d0a922a936a5ad7239a8ef773ad80454e81f3db5",
-    "backupHash": "015efa618373e837f2ee9749d0a922a936a5ad7239a8ef773ad80454e81f3db5"
+    "sourceFileSize": 8171520,
+    "backupFileSize": 3500533,
+    "sourceHash": "961aafc725785296f7e1e9997dd89b27b23b363b8fb430f4a1e665ba0d6fa3cf",
+    "backupHash": "961aafc725785296f7e1e9997dd89b27b23b363b8fb430f4a1e665ba0d6fa3cf"
   },
   "summary": {
-    "totalBackups": 1,
+    "totalBackups": 3,
     "deletedOldBackups": 0,
-    "backupDir": "/Users/oyjie/.openclaw/workspace/skills/memory-optimizer/backups",
+    "backupDir": "～/.openclaw/workspace/skills/memory-optimizer/backups",
     "verified": true
   }
 }

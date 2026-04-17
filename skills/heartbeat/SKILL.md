@@ -16,11 +16,11 @@
 ├── skills/heartbeat/                      # 心跳系统详细文档
 │   ├── SKILL.md                          # 本文件
 │   ├── current-state.md                  # 当前状态
-│   └── task-list.md                      # 任务列表
-├── heartbeat-history/                    # 历史记录存储目录
-│   ├── 2026-03/                          # 按月份组织
-│   ├── latest.md                         # 最新执行记录（快捷链接）
-│   └── stats.json                        # 统计数据
+│   ├── task-list.md                      # 任务列表
+|   └── heartbeat-history/                    # 历史记录存储目录
+│          ├── 2026-03/                          # 按月份组织
+│          ├── latest.md                         # 最新执行记录（快捷链接）
+│          └── stats.json                        # 统计数据
 └── 番茄短篇故事集/                       # 番茄短篇故事创作运营工作目录
 ```
 

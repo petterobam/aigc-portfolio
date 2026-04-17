@@ -1,0 +1,132 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 通用案例渐变色 - 数据分析主题 -->
+    <linearGradient id="dataGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 步骤渐变色 -->
+    <linearGradient id="stepGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c7d2fe;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ddd6fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c4b5fd;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fce7f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbcfe8;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1fae5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="stepGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fed7aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fdba74;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 阴影滤镜 -->
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    
+    <!-- 箭头标记 -->
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <rect x="300" y="30" width="600" height="80" rx="15" fill="url(#dataGradient)" filter="url(#shadow)"/>
+  <text x="600" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">📊 AI数据分析助手工作流程</text>
+  <text x="600" y="100" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" text-anchor="middle" fill="white">财务/制片/投资部数据驱动解决方案</text>
+  
+  <!-- 效率指标 -->
+  <rect x="50" y="30" width="200" height="80" rx="10" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#5b21b6">⚡ 效率提升</text>
+  <text x="150" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#6d28d9">80-85%</text>
+  <text x="150" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5b21b6">2-3天 → 2-4小时</text>
+  
+  <!-- 质量指标 -->
+  <rect x="950" y="30" width="200" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1050" y="55" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#064e3b">🎯 准确率提升</text>
+  <text x="1050" y="75" font-family="Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#047857">95%+</text>
+  <text x="1050" y="95" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#064e3b">65% → 95% (分析准确率)</text>
+  
+  <!-- 步骤1：数据收集 -->
+  <rect x="100" y="160" width="350" height="100" rx="12" fill="url(#stepGradient1)" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4338ca">📥 1. 数据收集</text>
+  <text x="275" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">内部数据/外部数据/历史数据</text>
+  <text x="275" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4338ca">实时数据/预测数据</text>
+  
+  <!-- 步骤2：数据处理 -->
+  <rect x="550" y="160" width="350" height="100" rx="12" fill="url(#stepGradient2)" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="185" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#5b21b6">🔧 2. 数据处理</text>
+  <text x="725" y="205" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5b21b6">数据验证/异常处理/数据标准化</text>
+  <text x="725" y="225" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5b21b6">数据整合/数据存储</text>
+  
+  <!-- 步骤3：AI分析 -->
+  <rect x="100" y="320" width="350" height="100" rx="12" fill="url(#stepGradient3)" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <text x="275" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#be185d">🤖 3. AI分析</text>
+  <text x="275" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">描述性分析/诊断性分析</text>
+  <text x="275" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">预测性分析/建议性分析/可视化分析</text>
+  
+  <!-- 步骤4：结果输出 -->
+  <rect x="550" y="320" width="350" height="100" rx="12" fill="url(#stepGradient4)" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="345" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#047857">📋 4. 结果输出</text>
+  <text x="725" y="365" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">数据洞察/预测模型/风险评估</text>
+  <text x="725" y="385" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">优化建议/决策支持</text>
+  
+  <!-- 步骤5：应用优化 -->
+  <rect x="325" y="480" width="350" height="100" rx="12" fill="url(#stepGradient5)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="505" font-family="Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#b45309">🔄 5. 应用优化</text>
+  <text x="500" y="525" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">效果验证/反馈收集/模型优化</text>
+  <text x="500" y="545" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#b45309">流程优化/知识沉淀</text>
+  
+  <!-- 连接箭头 -->
+  <path d="M 450 210 L 550 210" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 260 L 725 290 L 275 290 L 275 320" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 450 370 L 550 370" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 725 420 L 725 450 L 500 450 L 500 480" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- 应用场景 -->
+  <rect x="50" y="620" width="1100" height="150" rx="15" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="650" font-family="Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#374151">🎯 应用场景与价值</text>
+  
+  <!-- 财务部门 -->
+  <rect x="100" y="670" width="300" height="80" rx="10" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1"/>
+  <text x="250" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#5b21b6">💰 财务部门</text>
+  <text x="250" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5b21b6">预算分析效率+400%，成本控制精度+300%</text>
+  <text x="250" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5b21b6">预算分析、成本控制、财务预测</text>
+  
+  <!-- 制片部门 -->
+  <rect x="450" y="670" width="300" height="80" rx="10" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+  <text x="600" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#be185d">🎬 制片部门</text>
+  <text x="600" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">风险预警准确率+300%，进度跟踪效率+500%</text>
+  <text x="600" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#be185d">项目管理、风险评估、进度跟踪</text>
+  
+  <!-- 投资部 -->
+  <rect x="800" y="670" width="300" height="80" rx="10" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text x="950" y="695" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#047857">📈 投资部</text>
+  <text x="950" y="715" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">投资回报预测准确率+45%，风险评估覆盖度+200%</text>
+  <text x="950" y="735" font-family="Microsoft YaHei, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#047857">市场分析、风险评估、投资决策支持</text>
+  
+  <!-- 关键指标提升 -->
+  <text x="600" y="790" font-family="Microsoft YaHei, Arial, sans-serif" font-size="10" text-anchor="middle" fill="#6b7280">华策影视AIGC数字化转型方案 © 2026 | 分析准确率65%→95%，预测误差率30%→8%</text>
+</svg>

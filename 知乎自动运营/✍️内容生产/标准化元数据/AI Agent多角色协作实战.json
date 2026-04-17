@@ -1,0 +1,44 @@
+{
+  "articleId": "ai-agent-multi-role-collaboration",
+  "title": "AI Agent多角色协作实战：构建企业级智能助手系统",
+  "series": "AIGC原理系列",
+  "seriesId": "aigc-principles-series",
+  "articleType": "技术深度解析",
+  "targetPlatform": "知乎",
+  "status": "草稿完成",
+  "wordCount": 10112,
+  "codeExamples": 15,
+  "estimatedMetrics": {
+    "expectedLikes": 1200,
+    "expectedCollections": 600,
+    "expectedComments": 150,
+    "expectedFollows": 80
+  },
+  "tags": ["AI Agent", "多角色协作", "企业级应用", "智能系统", "技术实战"],
+  "keywords": ["AI Agent", "多角色协作", "智能调度", "上下文管理", "企业级应用"],
+  "targetAudience": "AI开发者、技术架构师、企业CTO、AI研究人员",
+  "creationDate": "2026-04-08",
+  "contentQuality": {
+    "depth": "高",
+    "practicality": "高",
+    "innovation": "中高",
+    "readability": "中",
+    "completeness": "高"
+  },
+  "qualityScore": 8.5,
+  "relatedArticles": [
+    "AI Agent架构设计：从零理解智能体协作",
+    "大模型推理加速：从理论到实战",
+    "RAG检索增强生成：从原理到实战"
+  ],
+  "nextSteps": [
+    "优化文章结构和表达",
+    "增加更多实际案例",
+    "完善代码示例",
+    "准备发布到知乎"
+  ],
+  "files": {
+    "article": "/Users/oyjie/.openclaw/workspace/知乎自动运营/✍️内容生产/文章草稿/AI Agent多角色协作实战.md",
+    "metadata": "/Users/oyjie/.openclaw/workspace/知乎自动运营/✍️内容生产/标准化元数据/AI Agent多角色协作实战.json"
+  }
+}

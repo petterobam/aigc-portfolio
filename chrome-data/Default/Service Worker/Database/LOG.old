@@ -1,2 +1,3 @@
-2026/03/24-23:31:19.406 171b69f Creating DB /Users/oyjie/.openclaw/workspace/chrome-data/Default/Service Worker/Database since it was missing.
-2026/03/24-23:31:19.409 171b69f Reusing MANIFEST /Users/oyjie/.openclaw/workspace/chrome-data/Default/Service Worker/Database/MANIFEST-000001
+2026/04/01-12:56:54.601 860940 Reusing MANIFEST ～/.openclaw/workspace/chrome-data/Default/Service Worker/Database/MANIFEST-000001
+2026/04/01-12:56:54.755 860940 Recovering log #3
+2026/04/01-12:56:54.768 860940 Reusing old log ～/.openclaw/workspace/chrome-data/Default/Service Worker/Database/000003.log

@@ -1,0 +1,67 @@
+{
+  "title": "Transformer 原理深度解析：附完整源码推导",
+  "type": "专栏文章",
+  "category": "AIGC 原理系列",
+  "priority": "高优先级",
+  "wordCount": 21303,
+  "estimatedData": {
+    "likes": 800,
+    "collections": 400,
+    "comments": 100
+  },
+  "tags": [
+    "Transformer",
+    "深度学习",
+    "NLP",
+    "AIGC",
+    "原理解析"
+  ],
+  "summary": "Transformer 不是黑盒，它的每个设计都有深刻的数学直觉。本文详细解析自注意力机制、位置编码、残差连接等核心组件，提供完整的 PyTorch 代码实现，让你真正理解 Transformer 的本质。",
+  "contentStructure": {
+    "intro": 5,
+    "selfAttention": 35,
+    "positionalEncoding": 20,
+    "architecture": 25,
+    "implementation": 10,
+    "practical": 5
+  },
+  "keyPoints": [
+    "自注意力机制的数学原理和代码实现",
+    "为什么用 √d_k 归一化（数学证明）",
+    "多头注意力为什么需要多个头",
+    "Sinusoidal 位置编码 vs RoPE",
+    "残差连接为什么有效（梯度流）",
+    "完整 Transformer 从零实现",
+    "文本分类实战案例"
+  ],
+  "codeSnippets": 9,
+  "images": [
+    "Transformer 完整架构图",
+    "自注意力机制示意图",
+    "多头注意力可视化",
+    "位置编码波形图",
+    "残差连接示意图",
+    "训练过程曲线图"
+  ],
+  "targetAudience": [
+    "深度学习研究者",
+    "NLP 工程师",
+    "想理解 Transformer 的开发者"
+  ],
+  "difficulty": "进阶（⭐⭐⭐⭐）",
+  "readingTime": "12 分钟",
+  "monetization": {
+    "path": "付费专栏《AIGC 核心原理解析》",
+    "productType": "付费专栏"
+  },
+  "interactionPrompt": "你理解了自注意力机制的数学直觉吗？评论区告诉我你的理解！",
+  "cta": "想深入学习更多 AIGC 原理？关注我的专栏《AIGC 核心原理解析》",
+  "nextArticle": "下一篇预告：Diffusion 模型从零开始（数学推导 + 代码实现）",
+  "publishTime": "周日 15:00-17:00",
+  "relatedTopics": [
+    "深度学习",
+    "自然语言处理",
+    "大模型",
+    "机器学习"
+  ]
+}

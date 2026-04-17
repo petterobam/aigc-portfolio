@@ -1,0 +1,84 @@
+{
+  "title": "大模型微调：LoRA vs P-Tuning vs 全量微调，一篇讲透",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31 16:00:00",
+  "tags": [
+    "大模型微调",
+    "LoRA",
+    "P-Tuning",
+    "全量微调",
+    "AIGC",
+    "LLM",
+    "Python",
+    "微调方法"
+  ],
+  "category": "AIGC 原理系列",
+  "priority": "高",
+  "wordCount": 12000,
+  "codeSnippets": 10,
+  "readingTime": "40分钟",
+  "difficulty": "中级",
+  "estimatedMetrics": {
+    "likes": "700+",
+    "favorites": "350+",
+    "comments": "90+"
+  },
+  "keywords": [
+    "大模型微调",
+    "LoRA",
+    "Low-Rank Adaptation",
+    "P-Tuning",
+    "Prompt Tuning",
+    "全量微调",
+    "Fine-tuning",
+    "大模型",
+    "LLM",
+    "GPT",
+    "微调方法",
+    "参数高效微调",
+    "PEFT"
+  ],
+  "summary": "系统讲解大模型微调的三大主流方法：全量微调、LoRA、P-Tuning。从核心原理、代码实现、性能对比到实战案例，全面解析三者的优缺点和适用场景。提供 10 个完整可运行的代码示例，涵盖医疗问答、代码生成等实战场景，帮助你选择最适合的微调方法。",
+  "contentStructure": [
+    "核心结论",
+    "什么是微调？为什么需要微调？",
+    "全量微调（原理 + 代码 + 优缺点）",
+    "LoRA（原理 + 代码 + 进阶技巧 + 优缺点）",
+    "P-Tuning（原理 + 代码 + 进阶技巧 + 优缺点）",
+    "三者性能对比",
+    "实战案例：医疗问答系统",
+    "最佳实践和选择建议",
+    "总结",
+    "互动",
+    "为什么订阅本专栏"
+  ],
+  "targetAudience": [
+    "开发者",
+    "AI 从业者",
+    "想学习大模型微调的技术人员"
+  ],
+  "valueProposition": "系统讲解三大微调方法的原理和实战技巧，提供完整可运行的代码示例，对比三者的性能、成本和适用场景，帮助你选择最适合的微调方法，实战价值高",
+  "callToAction": "想学习更多大模型微调技巧？关注我的专栏《大模型微调实战》，获取更多实战内容。",
+  "publishPlan": {
+    "publishDate": "2026-03-31 16:00-18:00",
+    "relatedColumn": "大模型微调实战",
+    "columnPurpose": "为付费专栏引流"
+  },
+  "references": [
+    "LoRA: Low-Rank Adaptation of Large Language Models",
+    "The Power of Scale for Parameter-Efficient Prompt Tuning",
+    "P-Tuning v2: Prompt Tuning Can Be Comparable to Fine-tuning Universally"
+  ],
+  "type": "深度解析 + 实战教程 + 对比分析",
+  "status": "已完成",
+  "qualityScore": {
+    "technicalDepth": 9.0,
+    "codeQuality": 8.5,
+    "practicalValue": 9.0,
+    "clarity": 9.0,
+    "overall": 8.9
+  },
+  "createdDate": "2026-03-31",
+  "lastUpdated": "2026-03-31",
+  "notes": "本文系统讲解三大微调方法，包含 10 个代码示例，覆盖医疗问答实战案例。文章结构清晰，对比性强，适合收藏学习。"
+}

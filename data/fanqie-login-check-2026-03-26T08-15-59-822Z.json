@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-03-26T08:15:59.817Z",
+  "pageInfo": {
+    "url": "https://fanqienovel.com/main/writer/short-manage",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": ""
+  },
+  "loginStatus": {
+    "loggedIn": false,
+    "loggedOut": false
+  },
+  "userInfo": {
+    "name": null,
+    "hasPublishPermission": false
+  },
+  "checkUrls": {
+    "loginPage": "https://fanqienovel.com/main/writer/login",
+    "shortManagePage": "https://fanqienovel.com/main/writer/short-manage",
+    "writerDashboard": "https://fanqienovel.com/main/writer"
+  }
+}

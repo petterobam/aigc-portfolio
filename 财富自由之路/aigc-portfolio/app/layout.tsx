@@ -13,9 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIGC Expert - 帮助企业快速落地 AI 应用",
-  description: "AIGC 技术专家，帮助企业用 AI 提升效率。提供技术咨询、定制开发、培训课程、技术评估服务。",
-  keywords: "AIGC, 人工智能, AI 咨询, LangChain, RAG, 提示词工程, AI 应用开发",
+  title: "欧阳洁 | AIGC技术咨询专家 - 帮助企业快速落地 AI 应用",
+  description: "AIGC 技术咨询专家欧阳洁，帮助企业用 AI 提升效率。提供技术咨询、定制开发、培训课程、技术评估服务。",
+  keywords: "AIGC, 人工智能, AI 咨询, LangChain, RAG, 提示词工程, AI 应用开发, 欧阳洁",
+  authors: [{ name: "欧阳洁", url: "https://github.com/petterobam" }],
 };
 
 export default function RootLayout({

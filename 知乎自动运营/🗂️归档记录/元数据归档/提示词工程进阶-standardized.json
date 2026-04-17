@@ -1,0 +1,56 @@
+{
+  "title": "提示词工程进阶：从 CoT 到结构化 Prompt",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31T15:00:00+08:00",
+  "tags": ["提示词工程", "CoT", "Few-shot Learning", "结构化 Prompt", "AIGC", "LLM", "Python"],
+  "category": "AIGC 原理系列",
+  "priority": "high",
+  "wordCount": 10000,
+  "codeSnippets": 15,
+  "readingTime": 30,
+  "difficulty": "中级",
+  "estimatedMetrics": {
+    "likes": 600,
+    "favorites": 300,
+    "comments": 80,
+    "views": 5000
+  },
+  "keywords": ["提示词工程", "Chain-of-Thought", "CoT", "Few-shot Learning", "结构化 Prompt", "大模型", "LLM", "GPT", "提示词优化", "A/B 测试"],
+  "summary": "系统讲解提示词工程的核心原理和实战技巧，包括 Chain-of-Thought (CoT)、Few-shot Learning、结构化 Prompt 设计、提示词优化策略和 A/B 测试流程。提供 15 个完整可运行的代码示例，涵盖数学推理、逻辑推理、代码生成、文本分析等多个应用场景。",
+  "contentStructure": {
+    "sections": [
+      {"name": "核心结论", "percentage": 5},
+      {"name": "什么是提示词工程", "percentage": 10},
+      {"name": "Chain-of-Thought (CoT) 深度解析", "percentage": 30},
+      {"name": "Few-shot Learning 深度解析", "percentage": 15},
+      {"name": "结构化 Prompt 设计", "percentage": 20},
+      {"name": "提示词优化策略", "percentage": 15},
+      {"name": "互动引导", "percentage": 3},
+      {"name": "专栏订阅引导", "percentage": 2}
+    ]
+  },
+  "targetAudience": "开发者、AI 从业者、想学习提示词工程的技术人员",
+  "valueProposition": "系统讲解 CoT、Few-shot、结构化 Prompt 的原理和实战技巧，提供完整可运行的代码示例，实战价值高",
+  "callToAction": "想学习更多提示词工程技巧？关注我的专栏《Prompt 工程进阶》",
+  "publishPlan": {
+    "plannedTime": "2026-03-31 15:00-17:00",
+    "associatedColumn": "Prompt 工程进阶",
+    "promotionStrategy": "关联付费专栏引流"
+  },
+  "references": [
+    "《Few-Shot Learning with Language Models》",
+    "《Chain-of-Thought Prompting Elicits Reasoning in Large Language Models》"
+  ],
+  "type": "深度解析 + 实战教程",
+  "status": "completed",
+  "qualityScore": {
+    "technicalDepth": 9,
+    "codeQuality": 9,
+    "practicalValue": 9,
+    "clarity": 9,
+    "overall": 9
+  },
+  "creationDate": "2026-03-31",
+  "lastUpdated": "2026-03-31",
+  "markdownFile": "提示词工程进阶-从CoT到结构化Prompt.md"
+}

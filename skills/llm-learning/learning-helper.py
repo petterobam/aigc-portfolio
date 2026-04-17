@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 # 路径配置
-WORKSPACE = Path("/Users/oyjie/.openclaw/workspace")
+WORKSPACE = Path("~/.openclaw/workspace")
 REPO_PATH = WORKSPACE / "LLM-RL-Visualized"
 PLAN_FILE = WORKSPACE / "skills/llm-learning/plan/llm-learning-plan.md"
 PROGRESS_FILE = WORKSPACE / "skills/llm-learning/progress.json"
@@ -108,11 +108,11 @@ class LearningProgress:
             return topics[day - 1]
         return "复习与总结"
 
-    def save_daily_log(self, day, content):
+    def save_daily_log(self, title, content):
         """保存每日学习日志"""
         LOGS_DIR.mkdir(parents=True, exist_ok=True)
         today = datetime.now().strftime("%Y-%m-%d")
-        log_file = LOGS_DIR / f"{today}.md"
+        log_file = LOGS_DIR / f"{today}-{title}.md"
 
         with open(log_file, "w", encoding="utf-8") as f:
             f.write(content)

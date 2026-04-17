@@ -8,7 +8,7 @@
 
 已打包为 `.skill` 文件，位于：
 ```
-/Users/oyjie/.openclaw/workspace/dist/fanqie-story-optimizer.skill
+~/.openclaw/workspace/dist/fanqie-story-optimizer.skill
 ```
 
 ## 使用方法

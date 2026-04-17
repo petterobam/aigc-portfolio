@@ -1,0 +1,59 @@
+{
+  "title": "MoE 架构深度解析：GPT-4 的秘密武器",
+  "author": "知乎技术分享与知识付费运营 AI",
+  "publishTime": "2026-03-31",
+  "tags": [
+    "MoE",
+    "GPT-4",
+    "大模型",
+    "混合专家",
+    "稀疏激活"
+  ],
+  "category": "AIGC原理系列",
+  "priority": "high",
+  "wordCount": 5800,
+  "codeSnippets": 12,
+  "readingTime": 20,
+  "difficulty": "⭐⭐⭐⭐（高级）",
+  "estimatedMetrics": {
+    "likes": 800,
+    "favorites": 400,
+    "comments": 100
+  },
+  "keywords": [
+    "MoE",
+    "混合专家",
+    "GPT-4",
+    "稀疏激活",
+    "路由算法",
+    "大模型架构"
+  ],
+  "summary": "深度解析 MoE（Mixture of Experts）架构，从稀疏激活原理到关键挑战与解决方案，从 Switch Transformer 到 DeepSeek-MoE，系统讲解 MoE 的核心概念、路由设计、负载均衡和实战实现。",
+  "contentStructure": {
+    "intro": 10,
+    "core": 60,
+    "practice": 20,
+    "conclusion": 10
+  },
+  "targetAudience": [
+    "大模型开发者",
+    "深度学习研究者",
+    "AI 工程师",
+    "想了解 GPT-4 架构的开发者"
+  ],
+  "valueProposition": "系统解析 MoE 的稀疏激活原理、路由设计、负载均衡机制，覆盖三大变体（Switch Transformer、DeepSeek-MoE、Shared Expert），包含 12 个完整可运行的代码片段，帮助读者真正理解 GPT-4 的核心架构。",
+  "callToAction": "你觉得 MoE 架构的未来如何？有其他稀疏激活方案吗？评论区聊聊。想深入学习？关注专栏《AIGC 核心原理解析》。",
+  "publishPlan": {
+    "bestTime": "周日 15:00-17:00",
+    "relatedColumn": "AIGC 核心原理解析",
+    "monetizationPath": "免费内容引流 -> 专栏试读 -> 付费订阅",
+    "questionToAnswer": "MoE 架构是什么？GPT-4 为什么用 MoE？"
+  },
+  "references": [
+    "Switch Transformer 论文",
+    "DeepSeek-MoE 论文",
+    "GPT-4 Technical Report"
+  ],
+  "type": "专栏文章",
+  "status": "ready_to_publish"
+}

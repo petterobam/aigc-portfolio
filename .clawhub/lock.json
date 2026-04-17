@@ -4,6 +4,54 @@
     "elite-longterm-memory": {
       "version": "1.2.3",
       "installedAt": 1773748178366
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1774841490977
+    },
+    "anthropic-frontend-design": {
+      "version": "1.1.0",
+      "installedAt": 1774863222726
+    },
+    "self-improving-agent": {
+      "version": "3.0.10",
+      "installedAt": 1774871966986
+    },
+    "ontology": {
+      "version": "1.0.4",
+      "installedAt": 1774872053047
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1774872205474
+    },
+    "ffmpeg-video-editor": {
+      "version": "1.0.0",
+      "installedAt": 1774872288777
+    },
+    "image-ocr": {
+      "version": "1.0.0",
+      "installedAt": 1774872302747
+    },
+    "slidespeak": {
+      "version": "1.0.0",
+      "installedAt": 1774872318625
+    },
+    "voice-reply": {
+      "version": "1.0.0",
+      "installedAt": 1774872332605
+    },
+    "context-manager": {
+      "version": "1.0.3",
+      "installedAt": 1774872409412
+    },
+    "growth-tracker": {
+      "version": "1.0.0",
+      "installedAt": 1774928947803
+    },
+    "multi-search-engine": {
+      "version": "2.0.1",
+      "installedAt": 1775117728883
     }
   }
 }

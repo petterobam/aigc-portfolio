@@ -2,6 +2,7 @@
  * 优化后的番茄小说数据抓取脚本
  *
  * 改进点：
+ * - 使用 cookies/latest.json 方式，与 check-fanqie-login.js 保持一致
  * - 在抓取完成后立即关闭浏览器，而不是等待5分钟
  * - 优化等待时间，加快抓取速度
  * - 改进错误处理
@@ -13,25 +14,37 @@ const path = require('path');
 
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 
-// 使用专用的用户数据目录（避免与主 Chrome 冲突）
-const USER_DATA_DIR = path.join(__dirname, '../data/chrome-user-data');
+// 配置
+const CONFIG = {
+  // Cookie 文件路径
+  cookieFile: path.join(__dirname, '..', 'cookies', 'latest.json'),
+};
+
+/**
+ * 加载 Cookie
+ */
+function loadCookies() {
+  if (!fs.existsSync(CONFIG.cookieFile)) {
+    throw new Error(`Cookie 文件不存在: ${CONFIG.cookieFile}`);
+  }
+
+  const cookies = JSON.parse(fs.readFileSync(CONFIG.cookieFile, 'utf8'));
+  console.log(`✅ 已加载 ${cookies.length} 个 Cookie`);
+
+  return cookies;
+}
 
 async function fetchStoryList(pageIndex = 1, maxPages = 3) {
   console.log('\n========================================');
-  console.log('📚 番茄小说短故事管理页面抓取 V4');
-  console.log('  使用 Chrome 用户数据 + 正确选择器');
+  console.log('📚 番茄小说短故事管理页面抓取 V5');
+  console.log('  使用 cookies/latest.json 方式');
   console.log('  优化版本：立即关闭浏览器');
   console.log('========================================\n');
 
   console.log('🚀 启动浏览器（使用 Chrome）...\n');
 
-  // 创建用户数据目录（如果不存在）
-  if (!fs.existsSync(USER_DATA_DIR)) {
-    fs.mkdirSync(USER_DATA_DIR, { recursive: true });
-    console.log('📁 创建用户数据目录:', USER_DATA_DIR);
-  }
-
-  const browser = await chromium.launchPersistentContext(USER_DATA_DIR, {
+  // 启动浏览器
+  const browser = await chromium.launch({
     headless: false,
     channel: 'chrome', // 使用系统安装的 Chrome
     viewport: { width: 1920, height: 1080 },
@@ -40,11 +53,15 @@ async function fetchStoryList(pageIndex = 1, maxPages = 3) {
     ],
   });
 
-  // 使用 browser.pages() 获取页面
-  const pages = browser.pages();
-  const page = pages.length > 0 ? pages[0] : await browser.newPage();
+  // 创建页面
+  const page = await browser.newPage();
 
   try {
+    // 加载 Cookie
+    console.log('📍 加载 Cookie...');
+    const cookies = loadCookies();
+    await page.context().addCookies(cookies);
+
     // 访问短故事管理页面
     console.log('📡 步骤 1: 访问短故事管理页面...');
     await page.goto('https://fanqienovel.com/main/writer/short-manage', {
@@ -58,15 +75,11 @@ async function fetchStoryList(pageIndex = 1, maxPages = 3) {
     // 检查是否需要登录
     if (url.includes('login') || url.includes('passport')) {
       console.log('\n⚠️  需要登录！');
-      console.log('请在浏览器中完成登录...');
-      console.log('登录成功后，脚本会自动继续\n');
+      console.log('Cookie 可能已失效，请运行 cookie-manager.js 提取最新 Cookie');
+      console.log('或者使用浏览器手动登录后重新提取 Cookie\n');
 
-      // 等待登录成功
-      await page.waitForURL('**/writer/short-manage**', {
-        timeout: 600000, // 10 分钟超时
-      });
-
-      console.log('✅ 登录成功！\n');
+      await browser.close();
+      return;
     } else {
       console.log('✅ 已登录状态\n');
     }

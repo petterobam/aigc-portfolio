@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-03-27T14:52:52.334Z",
+  "pageInfo": {
+    "url": "https://fanqienovel.com/main/writer/short-manage",
+    "title": "作家专区-番茄小说网-番茄小说旗下原创文学平台",
+    "bodyText": "作家专区\n番茄小说网\n作家课堂\n作家福利\n消息通知1\n帅帅它爸\n工作台\n作品管理\n小说\n短故事\n数据中心\n小说数据\n短故事数据\n收益分析\n小说收益\n短故事稿费\n互动管理\n评论管理\n打赏管理\n有话说管理\n粉丝管理\n开书灵感\n作品运营\n推荐素材\n新书预热\n改编书名\n福利管理\n作家等级\n© 2026 北京时光荏苒科技有限公司\n帮助中心"
+  },
+  "loginStatus": {
+    "loggedIn": true,
+    "loggedOut": false
+  },
+  "userInfo": {
+    "name": "帅帅它爸",
+    "hasPublishPermission": false
+  },
+  "checkUrls": {
+    "loginPage": "https://fanqienovel.com/main/writer/login",
+    "shortManagePage": "https://fanqienovel.com/main/writer/short-manage",
+    "writerDashboard": "https://fanqienovel.com/main/writer"
+  }
+}
