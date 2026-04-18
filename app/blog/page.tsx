@@ -153,6 +153,14 @@ export default function Blog() {
       date: '2026-04-17',
       category: '职业发展',
       readTime: '12 分钟'
+    },
+    {
+      id: 20,
+      title: '从打工到自由职业：技术人的收入转型路线图',
+      excerpt: '不是辞职，而是渐进演化。用12-18个月构建多元收入来源，从单一工资到投资+副业+产品+咨询的收入矩阵。',
+      date: '2026-04-18',
+      category: '职业发展',
+      readTime: '15 分钟'
     }
   ];
 
