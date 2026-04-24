@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:local": "rsync -a --exclude node_modules --exclude .next . /tmp/aigc-portfolio-eng/ && cd /tmp/aigc-portfolio-eng && pnpm install --silent && next build", 
     "start": "next start",
     "lint": "eslint"
   },
