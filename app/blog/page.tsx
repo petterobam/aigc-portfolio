@@ -1,168 +1,32 @@
 import Link from 'next/link';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+const articlesDir = path.resolve(process.cwd(), 'content/articles');
+
+function getPosts() {
+  try {
+    const files = fs.readdirSync(articlesDir).filter(f => f.endsWith('.md'));
+    return files.map(file => {
+      const raw = fs.readFileSync(path.join(articlesDir, file), 'utf-8');
+      const { data } = matter(raw);
+      return {
+        slug: file.replace('.md', ''),
+        title: data.title || file,
+        excerpt: data.description || data.excerpt || '',
+        date: data.date || '2026-05-09',
+        category: Array.isArray(data.tags) ? data.tags[0] : (data.category || '技术'),
+        tags: data.tags || [],
+      };
+    }).sort((a, b) => (a.date > b.date ? -1 : 1));
+  } catch {
+    return [];
+  }
+}
 
 export default function Blog() {
-  const posts = [
-    {
-      id: 1,
-      title: 'AIGC 落地实战：从 0 到 1 构建企业级 AI 应用',
-      excerpt: '分享企业 AI 落地的常见误区、技术选型、快速验证方法论和成本控制策略，帮助企业少走弯路。',
-      date: '2026-04-05',
-      category: '实战指南',
-      readTime: '15 分钟'
-    },
-    {
-      id: 2,
-      title: 'AIGC 时代的技术管理：如何带领团队拥抱 AI？',
-      excerpt: 'AI 不是取代团队，而是放大团队能力。分享如何在技术管理中有效整合 AI 工具和工作流。',
-      date: '2026-04-07',
-      category: '技术管理',
-      readTime: '12 分钟'
-    },
-    {
-      id: 3,
-      title: '从技术人到技术顾问：我的转型之路',
-      excerpt: '记录从一线开发到技术顾问的真实转型经历，包括思维方式、技能储备和业务视角的转变。',
-      date: '2026-04-05',
-      category: '职业发展',
-      readTime: '10 分钟'
-    },
-    {
-      id: 4,
-      title: '用 AI 构建你的个人财务管理系统',
-      excerpt: '一位开发者如何用 AI 辅助，从零打造一套真正适合自己的财务管理工具，规划通往财务自由的路径。',
-      date: '2026-04-12',
-      category: 'AI 应用',
-      readTime: '15 分钟'
-    },
-    {
-      id: 5,
-      title: '普通人的财务自由之路：从记账到被动收入的系统化方法',
-      excerpt: '不是鸡汤文，而是经过验证的可操作方法论。用真实数据和具体步骤，系统性地走向财务自由。',
-      date: '2026-04-12',
-      category: '财富思维',
-      readTime: '12 分钟'
-    },
-    {
-      id: 6,
-      title: '如何用 AIGC 提升团队开发效率？',
-      excerpt: '一线实践总结：从代码生成到架构设计，AI 工具如何真正帮团队提效（而不是制造更多混乱）。',
-      date: '2026-04-12',
-      category: '效率提升',
-      readTime: '10 分钟'
-    },
-    {
-      id: 7,
-      title: '个人开发者如何为 SaaS 产品定价',
-      excerpt: '定价不是拍脑袋。从免费版到终身版，系统分析三层定价模型，帮你找到利润最大化的甜蜜点。',
-      date: '2026-04-14',
-      category: '独立开发',
-      readTime: '10 分钟'
-    },
-    {
-      id: 8,
-      title: '独立开发者增长实战：从0到1000用户的增长手册',
-      excerpt: '不靠广告、不靠融资，一个独立开发者如何用内容和社区驱动实现用户增长的真实方法论。',
-      date: '2026-04-14',
-      category: '增长策略',
-      readTime: '12 分钟'
-    },
-    {
-      id: 9,
-      title: '用 Electron + Vue3 构建桌面财务应用',
-      excerpt: '从技术选型到跨平台打包的完整实战记录，分享开发桌面应用踩过的坑和学到的经验。',
-      date: '2026-04-14',
-      category: '技术实战',
-      readTime: '11 分钟'
-    },
-    {
-      id: 10,
-      title: '复利思维：程序员的长期主义投资指南',
-      excerpt: '代码可以重构，但时间不能回滚。用程序员的系统思维构建财富复利引擎，让两个复利同时运转。',
-      date: '2026-04-14',
-      category: '财富思维',
-      readTime: '15 分钟'
-    },
-    {
-      id: 11,
-      title: '开源项目变现指南：从 Star 到收入',
-      excerpt: '开源不是慈善，是获客漏斗。5种变现模式、真实案例分析，教你把开源项目变成可持续的商业模式。',
-      date: '2026-04-14',
-      category: '独立开发',
-      readTime: '11 分钟'
-    },
-    {
-      id: 12,
-      title: '技术写作的 ROI 分析：为什么每个程序员都该写博客',
-      excerpt: '技术写作是最被低估的投资。10篇文章带来的真实收益分析，帮你找到高ROI的选题方向。',
-      date: '2026-04-14',
-      category: '个人品牌',
-      readTime: '10 分钟'
-    },
-    {
-      id: 13,
-      title: '程序员的时间投资学：用投资思维管理时间',
-      excerpt: '时间和金钱一样需要资产配置。50/30/20时间模型 + AI工具加持，每天多出2小时。',
-      date: '2026-04-14',
-      category: '效率提升',
-      readTime: '11 分钟'
-    },
-    {
-      id: 14,
-      title: '从0到1的产品思维：技术人的商业觉醒',
-      excerpt: '技术能力是下限，产品思维是上限。5个核心转变 + 30天行动计划，帮技术人补上最缺的一课。',
-      date: '2026-04-14',
-      category: '产品思维',
-      readTime: '11 分钟'
-    },
-    {
-      id: 15,
-      title: 'AI 时代的个人护城河：技术人如何建立不可替代的竞争优势',
-      excerpt: 'AI 拉平了技能差距，但拉大了思维差距。四个维度构建属于你的个人护城河 + 30天行动计划。',
-      date: '2026-04-14',
-      category: '职业发展',
-      readTime: '12 分钟'
-    },
-    {
-      id: 16,
-      title: '独立开发者的财务规划：从自由职业到财务自由的系统化路径',
-      excerpt: '独立开发不是逃离体制，而是进入更残酷的自由市场。四层收入模型 + 三账户系统 + 财务自由路径图。',
-      date: '2026-04-14',
-      category: '财富思维',
-      readTime: '15 分钟'
-    },
-    {
-      id: 17,
-      title: '技术人的副业选择指南：从时间变现到资产构建',
-      excerpt: '从外包到SaaS，从咨询到开源，系统梳理程序员可执行的5条副业路径，附推荐启动顺序和避坑指南。',
-      date: '2026-04-17',
-      category: '独立开发',
-      readTime: '12 分钟'
-    },
-    {
-      id: 18,
-      title: '程序员的极简投资组合：不用盯盘也能跑赢 80% 的基民',
-      excerpt: '用写代码的思维方式做投资：3个篮子、每月定投、年度再平衡，一套可工程化执行的极简投资系统。',
-      date: '2026-04-17',
-      category: '财富思维',
-      readTime: '15 分钟'
-    },
-    {
-      id: 19,
-      title: '技术人的个人品牌建设：从默默无闻到行业影响力',
-      excerpt: '个人品牌不是包装自己，而是释放价值。从定位到持续输出，系统化建立你的技术影响力，让机会主动找到你。',
-      date: '2026-04-17',
-      category: '职业发展',
-      readTime: '12 分钟'
-    },
-    {
-      id: 20,
-      title: '从打工到自由职业：技术人的收入转型路线图',
-      excerpt: '不是辞职，而是渐进演化。用12-18个月构建多元收入来源，从单一工资到投资+副业+产品+咨询的收入矩阵。',
-      date: '2026-04-18',
-      category: '职业发展',
-      readTime: '15 分钟'
-    }
-  ];
+  const posts = getPosts();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -211,9 +75,9 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {posts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
               <article
-                key={post.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow h-full"
               >
                 <div className="p-6 sm:p-8">
                   <div className="flex items-center gap-4 mb-4">
@@ -221,7 +85,7 @@ export default function Blog() {
                       {post.category}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 text-sm">
-                      {post.readTime}
+                      {post.date}
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
@@ -230,13 +94,12 @@ export default function Blog() {
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
-                      {post.date}
-                    </span>
-                  </div>
+                  <span className="text-blue-600 dark:text-blue-400 text-sm font-medium">
+                    阅读全文 →
+                  </span>
                 </div>
               </article>
+              </Link>
             ))}
           </div>
         </div>
