@@ -29,9 +29,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) return { title: 'Not Found' };
+  const title = `${article.meta.title || slug} | Wealth Freedom Blog`;
+  const description = article.meta.description || article.meta.excerpt || 'A deep dive into personal finance, wealth building, and indie hacking.';
+  const url = `https://aigc-portfolio-rho.vercel.app/blog/${slug}`;
   return {
-    title: `${article.meta.title || slug} | Wealth Freedom Blog`,
-    description: article.meta.description || article.meta.excerpt || '',
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      type: 'article',
+      publishedTime: article.meta.date,
+      tags: article.meta.tags,
+      siteName: 'Wealth Freedom Blog',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: { canonical: url },
   };
 }
 
